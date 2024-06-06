@@ -8,8 +8,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.red,
       appBar: AppBar(
         title: Text("Trang chủ"),
+      ),
+      body: Center(
+        child: Text("Trang chủ"),
       ),
     );
   }

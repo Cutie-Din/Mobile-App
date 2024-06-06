@@ -8,8 +8,12 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       appBar: AppBar(
         title: Text("Cài đặt"),
+      ),
+      body: Center(
+        child: Text("Cài đặt"),
       ),
     );
   }
