@@ -3,12 +3,20 @@ import 'package:to_do/util/button.dart';
 
 class DialogBox extends StatelessWidget {
   final controller;
-  const DialogBox({super.key, required this.controller});
+  VoidCallback onSave;
+  VoidCallback onCancel;
+
+  DialogBox({
+    super.key,
+    required this.controller,
+    required this.onSave,
+    required this.onCancel,
+  });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.purple[300],
+      backgroundColor: Colors.white,
       content: Container(
         height: 120,
         child: Column(
@@ -26,14 +34,14 @@ class DialogBox extends StatelessWidget {
               children: [
                 Button(
                   text: "Lưu",
-                  onPressed: () {},
+                  onPressed: onSave,
                 ),
                 const SizedBox(
                   width: 8,
                 ),
                 Button(
                   text: "Huỷ",
-                  onPressed: () {},
+                  onPressed: onCancel,
                 ),
               ],
             ),
