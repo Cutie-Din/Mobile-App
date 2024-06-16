@@ -64,7 +64,7 @@ class IntroPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.grey[900],
                     borderRadius: BorderRadius.circular(12)),
-                width: 300,
+                width: 200,
                 padding: const EdgeInsets.all(25),
                 child: const Center(
                   child: const Text(
