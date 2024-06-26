@@ -51,7 +51,7 @@ class Cart extends ChangeNotifier {
   }
 
   // Xoá sản phẩm trong giỏ hàng
-  void removeItemFromList(Shoe shoe) {
+  void removeItemFromCart(Shoe shoe) {
     userCart.remove(shoe);
     notifyListeners();
   }
