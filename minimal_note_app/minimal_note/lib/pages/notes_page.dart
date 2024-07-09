@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:minimal_note/components/drawer.dart';
+import 'package:minimal_note/components/note_tile.dart';
 import 'package:minimal_note/models/note_database.dart';
 import 'package:provider/provider.dart';
 
@@ -146,23 +147,10 @@ class _NotesPageState extends State<NotesPage> {
                 final note = currentNotes[index];
 
                 // Trả về giao diện người dùng
-                return ListTile(
-                  title: Text(note.text),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Nút sửa
-                      IconButton(
-                        onPressed: () => updateNote(note),
-                        icon: const Icon(Icons.edit),
-                      ),
-                      // Nút xoá
-                      IconButton(
-                        onPressed: () => deleteNote(note.id),
-                        icon: const Icon(Icons.delete),
-                      ),
-                    ],
-                  ),
+                return NoteTile(
+                  text: note.text,
+                  onEditPressed: () => updateNote(note),
+                  onDeletePressed: () => deleteNote(note.id),
                 );
               },
             ),
