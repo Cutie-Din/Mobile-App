@@ -1,11 +1,11 @@
 class AppTexts {
   // Global Texts
-  static const String and = "and";
-  static const String skip = "Skip";
-  static const String done = "Done";
-  static const String submit = "Submit";
-  static const String appName = "Fortune Cat";
-  static const String appContinue = "Continue";
+  static const String and = "và";
+  static const String skip = "Bỏ qua";
+  static const String done = "Hoàn thành";
+  static const String submit = "Xác nhận";
+  static const String appName = "Quản lý chi tiêu";
+  static const String appContinue = "Tiếp tục";
 
   // OnBoarding Texts
   static const String onBoardingTitle1 = "Quản lý tiết kiệm";
@@ -44,20 +44,19 @@ class AppTexts {
   static const String loginTitle = "Chào mừng,";
   static const String loginSubTitle =
       "Hãy chi tiêu một cách thận trọng và hợp lý!";
-  static const String signupTitle = "Let’s create your account";
-  static const String forgetPasswordTitle = "Forget password";
+  static const String signupTitle = "Tạo tài khoản";
+  static const String forgetPasswordTitle = "Quên mật khẩu";
   static const String forgetPasswordSubTitle =
-      "Don’t worry sometimes people can forget too, enter your email and we will send you a password reset link.";
-  static const String changeYourPasswordTitle = "Password Reset Email Sent";
+      "Nhập email để nhận mail khôi phục mật khẩu";
+  static const String changeYourPasswordTitle =
+      "Email khôi phục mật khẩu đã được gửi";
   static const String changeYourPasswordSubTitle =
-      "Your Account Security is Our Priority! We've Sent You a Secure Link to Safely Change Your Password and Keep Your Account Protected.";
-  static const String confirmEmail = "Verify your email address!";
+      "Bảo mật thông tin của bạn là ưu tiên hàng đầu của chúng tôi! Chúng tôi đã gửi link bảo mật cho tài khoản của bạn.";
+  static const String confirmEmail = "Xác thực địa chỉ Email của bạn!";
   static const String confirmEmailSubTitle =
-      "Congratulations! Your Account Awaits: Verify Your Email to Start Shopping and Experience a World of Unrivaled Deals and Personalized Offers.";
+      "Đăng ký tài khoản thành công! Vui lòng xác thực Email để có thể tận hưởng những dịch vụ tốt nhất từ nhà phát triển";
   static const String emailNotReceivedMessage =
-      "Didn’t get the email? Check your junk/spam or resend it.";
-  static const String yourAccountCreatedTitle =
-      "Your account successfully created!";
-  static const String yourAccountCreatedSubTitle =
-      "Welcome to Your Ultimate Shopping Destination: Your Account is Created, Unleash the Joy of Seamless Online Shopping!";
+      "Không nhận được Email? Vui lòng chắc toàn bộ tin nhắn và tin rác trong hộp thư!";
+  static const String yourAccountCreatedTitle = "Xác thực tài khoản thành công";
+  static const String yourAccountCreatedSubTitle = "Hãy trải nghiệm ứng dụng!";
 }

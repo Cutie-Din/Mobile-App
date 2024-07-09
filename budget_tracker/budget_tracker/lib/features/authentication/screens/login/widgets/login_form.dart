@@ -1,4 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:budget_tracker/features/authentication/screens/password/forget_password.dart';
+import 'package:budget_tracker/features/authentication/screens/signup/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../../utils/constants/colors.dart';
@@ -64,7 +69,7 @@ class AppLoginForm extends StatelessWidget {
 
                 /// Forget Password
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () => Get.to(() => const ForgetPassword()),
                   child: Text(
                     AppTexts.forgetPassword,
                   ),
@@ -91,7 +96,7 @@ class AppLoginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
-                onPressed: () {},
+                onPressed: () => Get.to(() => const SignupScreen()),
                 child: Text(AppTexts.createAccount),
               ),
             ),

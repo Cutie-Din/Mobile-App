@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../common/widgets.login_signup/social_buttons.dart';
+import '../../../../common/widgets/login_signup/social_buttons.dart';
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/constants/text_strings.dart';
-import '../../../../common/widgets.login_signup/from_divider.dart';
+import '../../../../common/widgets/login_signup/from_divider.dart';
 import 'widgets/login_form.dart';
 import 'widgets/login_header.dart';
 
@@ -35,7 +35,10 @@ class LoginScreen extends StatelessWidget {
               AppLoginForm(dark: dark),
 
               /// Divider
-              AppFormDivider(dark: dark),
+              AppFormDivider(
+                dark: dark,
+                dividerText: AppTexts.orSignInWith.capitalize!,
+              ),
               const SizedBox(
                 height: AppSizes.spaceBtwSections,
               ),

@@ -74,8 +74,8 @@ flutter:
     - assets/images/on_boarding_images/Spending.gif
     - assets/logos/facebook.png
     - assets/logos/google.png
-    - assets/logos/Logo.png
-
+    - assets/logos/logo-black.png
+    - assets/logos/logo-white.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

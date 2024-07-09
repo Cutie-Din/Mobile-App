@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/constants/colors.dart';
-import '../../utils/constants/text_strings.dart';
-
-extension StringExtension on String {
-  String get capitalize {
-    if (this.isEmpty) {
-      return this;
-    }
-    return this[0].toUpperCase() + substring(1);
-  }
-}
+import '../../../utils/constants/colors.dart';
+import '../../../utils/constants/text_strings.dart';
 
 class AppFormDivider extends StatelessWidget {
   const AppFormDivider({
     super.key,
     required this.dark,
+    required this.dividerText,
   });
 
   final bool dark;
-
+  final String dividerText;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -34,7 +26,7 @@ class AppFormDivider extends StatelessWidget {
           ),
         ),
         Text(
-          AppTexts.orSignInWith.capitalize,
+          dividerText,
           style: Theme.of(context).textTheme.labelMedium,
         ),
         Flexible(
