@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../constants/colors.dart';
+
 class AppAppBarTheme {
   AppAppBarTheme._();
 
   // Light Theme
   static const lightAppBarTheme = AppBarTheme(
-    elevation: 0,
+    elevation: 3,
     centerTitle: false,
     scrolledUnderElevation: 0,
     backgroundColor: Colors.transparent,
@@ -27,7 +29,7 @@ class AppAppBarTheme {
 
   // Dark Theme
   static const darkAppBarTheme = AppBarTheme(
-    elevation: 0,
+    elevation: 3,
     centerTitle: false,
     scrolledUnderElevation: 0,
     backgroundColor: Colors.transparent,

@@ -8,6 +8,8 @@ import 'package:budget_tracker/utils/theme/custom_themes/text_theme.dart';
 import 'package:budget_tracker/utils/theme/custom_themes/textfield_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../constants/colors.dart';
+
 class AppTheme {
   AppTheme._();
   // Light Theme
@@ -15,7 +17,8 @@ class AppTheme {
     useMaterial3: true,
     fontFamily: "RobotoMono",
     brightness: Brightness.light,
-    primaryColor: Colors.purple,
+    // primaryColor: AppColors.primary,
+    colorSchemeSeed: AppColors.primary,
     scaffoldBackgroundColor: Colors.white,
     textTheme: AppTextTheme.lightTextTheme,
     chipTheme: AppChipThem.lightChipTheme,
@@ -32,7 +35,8 @@ class AppTheme {
     useMaterial3: true,
     fontFamily: "RobotoMono",
     brightness: Brightness.dark,
-    primaryColor: Colors.purple,
+    // primaryColor: AppColors.primary,
+    colorSchemeSeed: AppColors.primary,
     scaffoldBackgroundColor: Colors.black,
     textTheme: AppTextTheme.darkTextTheme,
     chipTheme: AppChipThem.darkChipTheme,

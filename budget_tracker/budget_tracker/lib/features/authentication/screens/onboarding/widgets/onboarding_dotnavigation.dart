@@ -1,7 +1,6 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:budget_tracker/utils/helpers/helper_functions.dart';
-import 'package:budget_tracker/utils/http/http_client.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

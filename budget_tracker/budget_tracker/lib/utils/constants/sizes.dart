@@ -50,20 +50,4 @@ class AppSizes {
   // Input field
   static const double inputFieldRadious = 12.0;
   static const double spaceBtwInputFields = 16.0;
-
-  // Card sizes
-  static const double cardRadiousXs = 6.0;
-  static const double cardRadiousSm = 10.0;
-  static const double cardRadiousMd = 12.0;
-  static const double cardRadiousLg = 16.0;
-  static const double cardRadiousElevation = 2.0;
-
-  // Image carousel height
-  static const double imageCarouselHeight = 200.0;
-
-  // Loading indicator size
-  static const double loadingIndicatorSize = 36.0;
-
-  // Grid view spacing
-  static const double gridViewSpacing = 16.0;
 }

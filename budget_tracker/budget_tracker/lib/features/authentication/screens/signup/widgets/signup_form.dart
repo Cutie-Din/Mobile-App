@@ -7,13 +7,33 @@ import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
 import '../verify.dart';
 
-class AppSignUpForm extends StatelessWidget {
+class AppSignUpForm extends StatefulWidget {
   const AppSignUpForm({
     super.key,
     required this.dark,
   });
 
   final bool dark;
+
+  @override
+  State<AppSignUpForm> createState() => _AppSignUpFormState();
+}
+
+class _AppSignUpFormState extends State<AppSignUpForm> {
+  bool _isChecked = false;
+  bool _isVisible = false;
+
+  void _handleCheckboxChange(bool? value) {
+    setState(() {
+      _isChecked = value ?? false;
+    });
+  }
+
+  void _toggleVisibility() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,24 +83,33 @@ class AppSignUpForm extends StatelessWidget {
 
           /// Password
           TextFormField(
+            obscureText: !_isVisible,
             expands: false,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: AppTexts.password,
               prefixIcon: Icon(Iconsax.password_check),
-              suffixIcon: Icon(Iconsax.eye_slash),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _isVisible ? Iconsax.eye : Iconsax.eye_slash,
+                ),
+                onPressed: _toggleVisibility,
+              ),
             ),
           ),
           const SizedBox(
             height: AppSizes.spaceBtwSections,
           ),
 
-          /// Terms&Conditions Checkbox
+          /// Terms & Conditions Checkbox
           Row(
             children: [
               SizedBox(
                 width: 24,
                 height: 24,
-                child: Checkbox(value: true, onChanged: (value) {}),
+                child: Checkbox(
+                  value: _isChecked,
+                  onChanged: _handleCheckboxChange,
+                ),
               ),
               const SizedBox(
                 width: AppSizes.spaceBtwItems,
@@ -96,10 +125,13 @@ class AppSignUpForm extends StatelessWidget {
                       TextSpan(
                         text: '${AppTexts.privacyPolicy} ',
                         style: Theme.of(context).textTheme.bodyMedium!.apply(
-                              color: dark ? AppColors.white : AppColors.black,
+                              color: widget.dark
+                                  ? AppColors.white
+                                  : AppColors.black,
                               decoration: TextDecoration.underline,
-                              decorationColor:
-                                  dark ? AppColors.white : AppColors.black,
+                              decorationColor: widget.dark
+                                  ? AppColors.white
+                                  : AppColors.black,
                             ),
                       ),
                       TextSpan(
@@ -109,10 +141,13 @@ class AppSignUpForm extends StatelessWidget {
                       TextSpan(
                         text: AppTexts.termsOfUse,
                         style: Theme.of(context).textTheme.bodyMedium!.apply(
-                              color: dark ? AppColors.white : AppColors.black,
+                              color: widget.dark
+                                  ? AppColors.white
+                                  : AppColors.black,
                               decoration: TextDecoration.underline,
-                              decorationColor:
-                                  dark ? AppColors.white : AppColors.black,
+                              decorationColor: widget.dark
+                                  ? AppColors.white
+                                  : AppColors.black,
                             ),
                       ),
                     ],

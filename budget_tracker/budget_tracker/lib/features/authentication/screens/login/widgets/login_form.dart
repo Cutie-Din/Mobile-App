@@ -2,22 +2,41 @@
 
 import 'package:budget_tracker/features/authentication/screens/password/forget_password.dart';
 import 'package:budget_tracker/features/authentication/screens/signup/signup.dart';
+import 'package:budget_tracker/features/personalization/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../../../utils/constants/colors.dart';
-import '../../../../../utils/constants/image_strings.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
 
-class AppLoginForm extends StatelessWidget {
-  const AppLoginForm({
+class AppLoginForm extends StatefulWidget {
+  AppLoginForm({
     super.key,
     required this.dark,
   });
 
   final bool dark;
+
+  @override
+  State<AppLoginForm> createState() => _AppLoginFormState();
+}
+
+class _AppLoginFormState extends State<AppLoginForm> {
+  bool _isChecked = false;
+  bool _isVisible = false;
+
+  void _handleRememberMeChange(bool? value) {
+    setState(() {
+      _isChecked = value ?? false;
+    });
+  }
+
+  void _toggleVisibility() {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +57,16 @@ class AppLoginForm extends StatelessWidget {
               height: AppSizes.spaceBtwInputFields,
             ),
             TextFormField(
-              decoration: const InputDecoration(
+              obscureText: !_isVisible,
+              decoration: InputDecoration(
                 prefixIcon: Icon(Iconsax.password_check),
                 labelText: AppTexts.password,
-                suffixIcon: Icon(Iconsax.eye_slash),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isVisible ? Iconsax.eye : Iconsax.eye_slash,
+                  ),
+                  onPressed: _toggleVisibility,
+                ),
               ),
             ),
             const SizedBox(
@@ -56,35 +81,35 @@ class AppLoginForm extends StatelessWidget {
                 Row(
                   children: [
                     Checkbox(
-                      value: true,
-                      onChanged: (value) {},
+                      value: _isChecked,
+                      onChanged: _handleRememberMeChange,
                     ),
                     const Text(
                       AppTexts.rememberMe,
-                      style: TextStyle(
-                          fontSize: 11.0, fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
 
                 /// Forget Password
-                TextButton(
-                  onPressed: () => Get.to(() => const ForgetPassword()),
-                  child: Text(
-                    AppTexts.forgetPassword,
+                Flexible(
+                  child: TextButton(
+                    onPressed: () => Get.to(() => const ForgetPassword()),
+                    child: Text(
+                      AppTexts.forgetPassword,
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  height: AppSizes.spaceBtwSections,
-                ),
               ],
+            ),
+            const SizedBox(
+              height: AppSizes.spaceBtwInputFields,
             ),
 
             /// Sign In
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () => Get.to(() => const HomeScreen()),
                 child: Text(AppTexts.signIn),
               ),
             ),

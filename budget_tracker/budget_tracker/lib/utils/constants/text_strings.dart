@@ -16,8 +16,16 @@ class AppTexts {
       "Người biết chi tiêu là một nghệ sĩ";
 
   // Home
-  static const String homeAppbarTitle = "";
-  static const String homeAppbarSubTitle = "";
+  static const String homeAppbarTitle = "Trang chủ";
+  static const String homeAppbarSubTitle = "Thống kê";
+  static const String homeTotal = "Tổng số dư";
+  static const String homeTotalBalance = "xx.xxx \đ";
+  static const String homeIncome = "Thu nhập";
+  static const String homeTotalIncome = "xx.xxx \đ";
+  static const String homeExpense = "Chi phí";
+  static const String homeTotalExpense = "xx.xxx \đ";
+  static const String homeReport = "Báo cáo chi tiêu";
+  static const String homeViewAll = "Xem tất cả";
 
   // -- Authentication Forms
   static const String firstName = "Họ";
@@ -27,7 +35,7 @@ class AppTexts {
   static const String newPassword = "Mật khẩu mới";
   static const String username = "Tên người dùng";
   static const String phoneNo = "SĐT";
-  static const String rememberMe = "Ghi nhớ mật khẩu";
+  static const String rememberMe = "Ghi nhớ";
   static const String forgetPassword = "Quên mật khẩu?";
   static const String signIn = "Đăng nhập";
   static const String createAccount = "Tạo tài khoản";

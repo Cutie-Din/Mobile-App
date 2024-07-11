@@ -2,14 +2,11 @@
 
 import 'package:budget_tracker/common/widgets/login_signup/from_divider.dart';
 import 'package:budget_tracker/common/widgets/login_signup/social_buttons.dart';
-import 'package:budget_tracker/features/authentication/screens/login/login.dart';
 import 'package:budget_tracker/utils/constants/sizes.dart';
 import 'package:budget_tracker/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 
-import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/text_strings.dart';
 import 'widgets/signup_form.dart';
 
