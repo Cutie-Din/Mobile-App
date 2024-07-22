@@ -1,3 +1,4 @@
+import 'package:budget_tracker/features/authentication/controller/register_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -5,6 +6,7 @@ import 'package:iconsax/iconsax.dart';
 import '../../../../../utils/constants/colors.dart';
 import '../../../../../utils/constants/sizes.dart';
 import '../../../../../utils/constants/text_strings.dart';
+import '../../../controller/login_controller.dart';
 import '../verify.dart';
 
 class AppSignUpForm extends StatefulWidget {
@@ -20,6 +22,8 @@ class AppSignUpForm extends StatefulWidget {
 }
 
 class _AppSignUpFormState extends State<AppSignUpForm> {
+  RegisterController registerController = Get.put(RegisterController());
+
   bool _isChecked = false;
   bool _isVisible = false;
 
@@ -40,30 +44,13 @@ class _AppSignUpFormState extends State<AppSignUpForm> {
     return Form(
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  expands: false,
-                  decoration: const InputDecoration(
-                    labelText: AppTexts.firstName,
-                    prefixIcon: Icon(Iconsax.user),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: AppSizes.spaceBtwInputFields,
-              ),
-              Expanded(
-                child: TextFormField(
-                  expands: false,
-                  decoration: const InputDecoration(
-                    labelText: AppTexts.lastName,
-                    prefixIcon: Icon(Iconsax.user),
-                  ),
-                ),
-              ),
-            ],
+          TextFormField(
+            controller: registerController.nameController,
+            expands: false,
+            decoration: const InputDecoration(
+              labelText: AppTexts.name,
+              prefixIcon: Icon(Iconsax.user),
+            ),
           ),
           const SizedBox(
             height: AppSizes.spaceBtwInputFields,
@@ -71,9 +58,10 @@ class _AppSignUpFormState extends State<AppSignUpForm> {
 
           /// Email
           TextFormField(
+            controller: registerController.eOrPController,
             expands: false,
             decoration: const InputDecoration(
-              labelText: AppTexts.email,
+              labelText: AppTexts.eOrp,
               prefixIcon: Icon(Iconsax.user_edit),
             ),
           ),
@@ -83,6 +71,7 @@ class _AppSignUpFormState extends State<AppSignUpForm> {
 
           /// Password
           TextFormField(
+            controller: registerController.passwordController,
             obscureText: !_isVisible,
             expands: false,
             decoration: InputDecoration(
@@ -165,7 +154,7 @@ class _AppSignUpFormState extends State<AppSignUpForm> {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () => Get.to(() => const VerifyScreen()),
+              onPressed: () => registerController.register(),
               child: const Text(AppTexts.createAccount),
             ),
           ),

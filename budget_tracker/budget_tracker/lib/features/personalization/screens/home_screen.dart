@@ -2,49 +2,59 @@
 
 import 'dart:math';
 
+import 'package:budget_tracker/features/personalization/screens/add_screen.dart';
+import 'package:budget_tracker/features/personalization/screens/fund_screen.dart';
 import 'package:budget_tracker/features/personalization/screens/main_screen.dart';
+import 'package:budget_tracker/features/authentication/screens/logout/personal_screen.dart';
+import 'package:budget_tracker/features/personalization/screens/widgets/TabItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../utils/constants/colors.dart';
-import '../../../utils/constants/text_strings.dart';
+import 'stat_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
   });
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final pages = <Widget>[
+    AddScreen(),
+    StatScreen(),
+    FundScreen(),
+    PersonalScreen(),
+  ];
+
+  int index = 0;
+  late Color selectedItem = AppColors.primary;
+  Color unselectedItem = AppColors.darkerGrey;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.grey,
 
+      extendBody: true,
+
       /// App Bar
       appBar: AppBar(
         automaticallyImplyLeading: false,
       ),
-      bottomNavigationBar: ClipRRect(
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(30),
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: AppColors.primaryBackground,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          elevation: 3,
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.home),
-                label: AppTexts.homeAppbarTitle),
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.graph_circle_fill),
-                label: AppTexts.homeAppbarSubTitle),
-          ],
-        ),
+
+      bottomNavigationBar: Tabitem(
+        index: index,
+        onChangedTab: onChangedTab,
       ),
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => Get.to(() => const AddScreen()),
         shape: CircleBorder(),
         child: Container(
           width: 60,
@@ -66,7 +76,19 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: const MainScreen(),
+      body: index == 0
+          ? MainScreen()
+          : index == 1
+              ? StatScreen()
+              : index == 2
+                  ? FundScreen()
+                  : PersonalScreen(),
     );
+  }
+
+  void onChangedTab(int index) {
+    setState(() {
+      this.index = index;
+    });
   }
 }

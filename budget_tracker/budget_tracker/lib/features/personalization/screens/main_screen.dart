@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:budget_tracker/data/repositories/data.dart';
 import 'package:budget_tracker/utils/device/device_utility.dart';
 import 'package:budget_tracker/utils/theme/custom_themes/text_theme.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +21,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
         child: Column(
           children: [
             /// User display
@@ -61,7 +62,7 @@ class MainScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "#Tên",
+                          "Din",
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -73,11 +74,11 @@ class MainScreen extends StatelessWidget {
                   ],
                 ),
 
-                /// Icon button
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(CupertinoIcons.settings),
-                ),
+                // /// Icon button
+                // IconButton(
+                //   onPressed: () {},
+                //   icon: Icon(CupertinoIcons.settings),
+                // ),
               ],
             ),
             const SizedBox(
@@ -176,7 +177,7 @@ class MainScreen extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: 6,
+                itemCount: transactionData.length,
                 itemBuilder: (context, int i) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
@@ -199,22 +200,16 @@ class MainScreen extends StatelessWidget {
                                       width: 50,
                                       height: 50,
                                       decoration: BoxDecoration(
-                                        color: Color(0xFFFF8D6C),
+                                        color: transactionData[i]['color'],
                                         shape: BoxShape.circle,
                                       ),
                                     ),
-                                    Icon(
-                                      Icons.food_bank,
-                                      color: AppColors.light,
-                                    ),
+                                    transactionData[i]['icon'],
                                   ],
                                 ),
                               ),
-                              const SizedBox(
-                                width: AppSizes.spaceBtwItems,
-                              ),
                               Text(
-                                "Đồ ăn",
+                                transactionData[i]['name'],
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: AppColors.black,
@@ -227,12 +222,13 @@ class MainScreen extends StatelessWidget {
                             ],
                           ),
                           Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
+                                    horizontal: 10.0),
                                 child: Text(
-                                  "-140.000\đ",
+                                  transactionData[i]['totalAmount'],
                                   style: TextStyle(
                                     fontSize: 14,
                                     color: AppColors.black,
@@ -240,12 +236,16 @@ class MainScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Text(
-                                "Hôm nay",
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.darkGrey,
-                                  fontWeight: FontWeight.w400,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                child: Text(
+                                  transactionData[i]['date'],
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: AppColors.darkGrey,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
                               ),
                             ],

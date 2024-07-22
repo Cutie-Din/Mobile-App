@@ -1,4 +1,4 @@
-import 'package:budget_tracker/features/authentication/controller%20onboarding/onboarding_controller.dart';
+import 'package:budget_tracker/features/authentication/controller/onboarding_controller.dart';
 import 'package:budget_tracker/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';

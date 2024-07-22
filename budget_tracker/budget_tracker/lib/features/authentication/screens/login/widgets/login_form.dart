@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables
 
+import 'package:budget_tracker/features/authentication/controller/login_controller.dart';
 import 'package:budget_tracker/features/authentication/screens/password/forget_password.dart';
 import 'package:budget_tracker/features/authentication/screens/signup/signup.dart';
-import 'package:budget_tracker/features/personalization/screens/home_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -23,6 +24,7 @@ class AppLoginForm extends StatefulWidget {
 }
 
 class _AppLoginFormState extends State<AppLoginForm> {
+  LoginController loginController = Get.put(LoginController());
   bool _isChecked = false;
   bool _isVisible = false;
 
@@ -48,15 +50,17 @@ class _AppLoginFormState extends State<AppLoginForm> {
           children: [
             // Email
             TextFormField(
+              controller: loginController.eOrPController,
               decoration: const InputDecoration(
                 prefixIcon: Icon(Iconsax.direct_right),
-                labelText: AppTexts.email,
+                labelText: AppTexts.eOrp,
               ),
             ),
             const SizedBox(
               height: AppSizes.spaceBtwInputFields,
             ),
             TextFormField(
+              controller: loginController.passwordController,
               obscureText: !_isVisible,
               decoration: InputDecoration(
                 prefixIcon: Icon(Iconsax.password_check),
@@ -109,7 +113,7 @@ class _AppLoginFormState extends State<AppLoginForm> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => Get.to(() => const HomeScreen()),
+                onPressed: () => loginController.login(),
                 child: Text(AppTexts.signIn),
               ),
             ),

@@ -1,10 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../utils/constants/colors.dart';
-import '../../../../utils/constants/sizes.dart';
 import '../../../../utils/constants/text_strings.dart';
 
 class Expense extends StatelessWidget {

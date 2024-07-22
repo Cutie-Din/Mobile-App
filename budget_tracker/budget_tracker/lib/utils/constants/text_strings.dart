@@ -19,17 +19,26 @@ class AppTexts {
   static const String homeAppbarTitle = "Trang chủ";
   static const String homeAppbarSubTitle = "Thống kê";
   static const String homeTotal = "Tổng số dư";
-  static const String homeTotalBalance = "xx.xxx \đ";
+  static const String homeTotalBalance = "10.000.000 \đ";
   static const String homeIncome = "Thu nhập";
-  static const String homeTotalIncome = "xx.xxx \đ";
+  static const String homeTotalIncome = "10.000.000 \đ";
   static const String homeExpense = "Chi phí";
-  static const String homeTotalExpense = "xx.xxx \đ";
-  static const String homeReport = "Báo cáo chi tiêu";
+  static const String homeTotalExpense = "5.000.000 \đ";
+  static const String homeReport = "Chi tiêu";
   static const String homeViewAll = "Xem tất cả";
+  static const String homeAppFund = "Quỹ";
+  static const String homeAppPersonal = "Cá nhân";
+
+  // Adding
+  static const String adding = "Thêm";
+  static const String labelAdding = "Danh mục";
+  static const String dateAdding = "Thời gian";
 
   // -- Authentication Forms
   static const String firstName = "Họ";
   static const String lastName = "Tên";
+  static const String name = "Họ và tên";
+  static const String eOrp = "SĐT/Email";
   static const String email = "Tài khoản";
   static const String password = "Mật khẩu";
   static const String newPassword = "Mật khẩu mới";

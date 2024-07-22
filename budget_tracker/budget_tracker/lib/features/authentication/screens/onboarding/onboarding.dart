@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/constants/image_strings.dart';
-import '../../controller onboarding/onboarding_controller.dart';
+import '../../controller/onboarding_controller.dart';
 import 'widgets/onboarding_dotnavigation.dart';
 import 'widgets/onboarding_nextbutton.dart';
 import 'widgets/onboarding_page.dart';
