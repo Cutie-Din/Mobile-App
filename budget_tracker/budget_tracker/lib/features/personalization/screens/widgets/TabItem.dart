@@ -32,26 +32,30 @@ class _TabitemState extends State<Tabitem> {
     );
     return BottomAppBar(
       shape: CircularNotchedRectangle(),
-      notchMargin: 6,
+      notchMargin: 8,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           buildTabItem(
             index: 0,
             icon: Icon(CupertinoIcons.home),
+            label: 'Trang chủ',
           ),
           buildTabItem(
             index: 1,
             icon: Icon(CupertinoIcons.graph_circle_fill),
+            label: 'Thống kê',
           ),
           placeholder,
           buildTabItem(
             index: 2,
             icon: Icon(CupertinoIcons.gift),
+            label: 'Ngân sách',
           ),
           buildTabItem(
             index: 3,
             icon: Icon(CupertinoIcons.person),
+            label: 'Tài khoản',
           ),
         ],
       ),
@@ -61,16 +65,30 @@ class _TabitemState extends State<Tabitem> {
   Widget buildTabItem({
     required int index,
     required Icon icon,
+    required String label,
   }) {
     final isSelected = index == widget.index;
 
-    return IconTheme(
-      data: IconThemeData(
-        color: isSelected ? AppColors.primary : AppColors.black,
-      ),
-      child: IconButton(
-        icon: icon,
-        onPressed: () => widget.onChangedTab(index),
+    return GestureDetector(
+      onTap: () => widget.onChangedTab(index),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          IconTheme(
+            data: IconThemeData(
+              color: isSelected ? AppColors.primary : AppColors.black,
+            ),
+            child: icon,
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              color: isSelected ? AppColors.primary : AppColors.black,
+              fontSize: 12,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:budget_tracker/common/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,7 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: const Onboarding(),
+      home: const SplashScreen(),
     );
   }
 }

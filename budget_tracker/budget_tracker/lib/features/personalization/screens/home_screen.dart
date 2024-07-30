@@ -15,31 +15,39 @@ import '../../../utils/constants/colors.dart';
 import 'stat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({
-    super.key,
-  });
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final pages = <Widget>[
-    AddScreen(),
+  final List<Widget> pages = [
+    MainScreen(),
     StatScreen(),
     FundScreen(),
     PersonalScreen(),
   ];
 
-  int index = 0;
-  late Color selectedItem = AppColors.primary;
-  Color unselectedItem = AppColors.darkerGrey;
+  int _currentIndex = 0;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentIndex);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.grey,
-
       extendBody: true,
 
       /// App Bar
@@ -48,12 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
 
       bottomNavigationBar: Tabitem(
-        index: index,
-        onChangedTab: onChangedTab,
+        index: _currentIndex,
+        onChangedTab: _onChangedTab,
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        elevation: 0,
         onPressed: () => Get.to(() => const AddScreen()),
         shape: CircleBorder(),
         child: Container(
@@ -63,9 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
             shape: BoxShape.circle,
             gradient: LinearGradient(
               colors: <Color>[
+                Color(0xFF3BB44A),
                 Color(0xFFFF8D6C),
                 Color(0xFFE064F7),
-                Color(0xFF00B2E7),
               ],
               transform: const GradientRotation(pi / 4),
             ),
@@ -76,19 +85,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: index == 0
-          ? MainScreen()
-          : index == 1
-              ? StatScreen()
-              : index == 2
-                  ? FundScreen()
-                  : PersonalScreen(),
+
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: _onPageChanged,
+        physics: NeverScrollableScrollPhysics(),
+        children: pages,
+      ),
     );
   }
 
-  void onChangedTab(int index) {
+  void _onChangedTab(int index) {
+    _pageController.animateToPage(
+      index,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onPageChanged(int index) {
     setState(() {
-      this.index = index;
+      _currentIndex = index;
     });
   }
 }

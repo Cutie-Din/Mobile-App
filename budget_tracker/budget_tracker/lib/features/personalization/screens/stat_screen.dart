@@ -7,9 +7,45 @@ import 'package:flutter/material.dart';
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
+import '../../../utils/constants/text_strings.dart';
 
-class StatScreen extends StatelessWidget {
+class StatScreen extends StatefulWidget {
   const StatScreen({super.key});
+
+  @override
+  _StatScreenState createState() => _StatScreenState();
+}
+
+class _StatScreenState extends State<StatScreen> {
+  PageController _pageController = PageController();
+  String selectedText = AppTexts.deposit;
+
+  void _onPageChanged(int index) {
+    setState(() {
+      switch (index) {
+        case 0:
+          selectedText = AppTexts.deposit;
+          break;
+        case 1:
+          selectedText = AppTexts.debt;
+          break;
+        case 2:
+          selectedText = AppTexts.income;
+          break;
+      }
+    });
+  }
+
+  void _onTextTap(String text, int index) {
+    setState(() {
+      selectedText = text;
+      _pageController.animateToPage(
+        index,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,24 +55,115 @@ class StatScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Thống kê chi tiêu',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () => _onTextTap(AppTexts.deposit, 0),
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    decoration: BoxDecoration(
+                      color: selectedText == AppTexts.deposit
+                          ? AppColors.white
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Text(
+                      AppTexts.deposit,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: selectedText == AppTexts.deposit
+                            ? Colors.black
+                            : Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _onTextTap(AppTexts.debt, 1),
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    decoration: BoxDecoration(
+                      color: selectedText == AppTexts.debt
+                          ? AppColors.white
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Text(
+                      AppTexts.debt,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: selectedText == AppTexts.debt
+                            ? Colors.black
+                            : Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _onTextTap(AppTexts.income, 2),
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 300),
+                    decoration: BoxDecoration(
+                      color: selectedText == AppTexts.income
+                          ? AppColors.white
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Text(
+                      AppTexts.income,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: selectedText == AppTexts.income
+                            ? Colors.black
+                            : Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: AppSizes.spaceBtwItems,
             ),
-            Container(
-              width: AppHelperFunctions.screenWidth(),
-              height: AppHelperFunctions.screenWidth(),
-              decoration: BoxDecoration(
-                color: AppColors.light,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              // color: Colors.amber,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 20, 12, 12),
-                child: MyChart(),
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                onPageChanged: _onPageChanged,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  switch (index) {
+                    case 0:
+                      return Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Center(child: Text("Chi tiêu")));
+                    case 1:
+                      return Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Center(child: Text("Nợ")));
+                    case 2:
+                      return Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Center(child: Text("Thu nhập")));
+                    default:
+                      return Container();
+                  }
+                },
               ),
             ),
           ],

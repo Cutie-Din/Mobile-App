@@ -11,9 +11,23 @@ class RegisterController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController eOrPController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  var isTermsAccepted = false.obs; // Observable for the checkbox state
+
+  final formKey = GlobalKey<FormState>();
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   Future<void> register() async {
+    if (!formKey.currentState!.validate() || !isTermsAccepted.value) {
+      if (!isTermsAccepted.value) {
+        Get.snackbar(
+          'Thông báo',
+          'Vui lòng chấp nhận điều khoản và điều kiện.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+      return;
+    }
     try {
       var headers = {'Content-Type': 'application/json'};
       var url = Uri.parse('http://qltcapi.tasvietnam.vn/api/user/Register');

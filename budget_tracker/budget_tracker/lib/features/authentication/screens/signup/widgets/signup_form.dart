@@ -1,4 +1,5 @@
 import 'package:budget_tracker/features/authentication/controller/register_controller.dart';
+import 'package:budget_tracker/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -24,14 +25,7 @@ class AppSignUpForm extends StatefulWidget {
 class _AppSignUpFormState extends State<AppSignUpForm> {
   RegisterController registerController = Get.put(RegisterController());
 
-  bool _isChecked = false;
   bool _isVisible = false;
-
-  void _handleCheckboxChange(bool? value) {
-    setState(() {
-      _isChecked = value ?? false;
-    });
-  }
 
   void _toggleVisibility() {
     setState(() {
@@ -42,9 +36,11 @@ class _AppSignUpFormState extends State<AppSignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: registerController.formKey,
       child: Column(
         children: [
           TextFormField(
+            validator: (value) => AppValidator.validateName(value),
             controller: registerController.nameController,
             expands: false,
             decoration: const InputDecoration(
@@ -58,6 +54,16 @@ class _AppSignUpFormState extends State<AppSignUpForm> {
 
           /// Email
           TextFormField(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Vui lòng nhập Email hoặc số điện thoại.';
+              }
+              if (value.contains('@')) {
+                return AppValidator.validateEmail(value);
+              } else {
+                return AppValidator.validatePhoneNumber(value);
+              }
+            },
             controller: registerController.eOrPController,
             expands: false,
             decoration: const InputDecoration(
@@ -71,6 +77,7 @@ class _AppSignUpFormState extends State<AppSignUpForm> {
 
           /// Password
           TextFormField(
+            validator: (value) => AppValidator.validatePassword(value),
             controller: registerController.passwordController,
             obscureText: !_isVisible,
             expands: false,
@@ -95,10 +102,13 @@ class _AppSignUpFormState extends State<AppSignUpForm> {
               SizedBox(
                 width: 24,
                 height: 24,
-                child: Checkbox(
-                  value: _isChecked,
-                  onChanged: _handleCheckboxChange,
-                ),
+                child: Obx(() => Checkbox(
+                      value: registerController.isTermsAccepted.value,
+                      onChanged: (bool? value) {
+                        registerController.isTermsAccepted.value =
+                            value ?? false;
+                      },
+                    )),
               ),
               const SizedBox(
                 width: AppSizes.spaceBtwItems,

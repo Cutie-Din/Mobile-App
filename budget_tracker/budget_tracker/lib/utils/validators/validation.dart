@@ -1,14 +1,16 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 class AppValidator {
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Email is required.';
+      return 'Vui lòng nhập Email.';
     }
 
     // Regular expression for email validation
     final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if (!emailRegExp.hasMatch(value)) {
-      return 'Invalid email address.';
+      return 'Email không hợp lệ!.';
     }
 
     return null;
@@ -16,27 +18,27 @@ class AppValidator {
 
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Password is required.';
+      return 'Vui lòng nhập mật khẩu.';
     }
 
     // Check for minimum password length
     if (value.length < 6) {
-      return 'Password must be at least 6 characters long.';
+      return 'Mật khẩu phải từ 6 ký tự trở lên.';
     }
 
     // Check for uppercase letters
     if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one uppercase letter.';
+      return 'Mật khẩu phải bao gồm chữ cái hoa và thường.';
     }
 
     // Check for numbers
     if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one number.';
+      return 'Mật khẩu phải bao gồm ít nhất 1 số.';
     }
 
     // Check for special characters
     if (!value.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))) {
-      return 'Password must contain at least one special character.';
+      return 'Mật khẩu phải bao gồm ít nhất 1 ký tự đặc biệt.';
     }
 
     return null;
@@ -44,17 +46,26 @@ class AppValidator {
 
   static String? validatePhoneNumber(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Phone number is required.';
+      return 'Vui lòng nhập số SĐT.';
     }
 
     // Regular expression for phone number validation (assuming a 10-digit US phone number format)
     final phoneRegExp = RegExp(r'^\d{10}$');
 
     if (!phoneRegExp.hasMatch(value)) {
-      return 'Invalid phone number format (10 digits required).';
+      return 'Định dạng SĐT không chính xác (bao gồm 10 ký tự).';
     }
 
     return null;
+  }
+
+  static String? validateName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Vui lòng nhập Họ và tên';
+    }
+    if (value.contains(RegExp(r'[0-9]'))) {
+      return 'Họ và tên không bao gồm số.';
+    }
   }
 
 // Add more custom validators as needed for your specific requirements.

@@ -23,9 +23,9 @@ class _MyChartState extends State<MyChart> {
           toY: y,
           gradient: LinearGradient(
             colors: <Color>[
+              Color(0xFF84CD98),
               Color(0xFFFF8D6C),
               Color(0xFFE064F7),
-              Color(0xFF00B2E7),
             ],
             transform: const GradientRotation(pi / 40),
           ),
