@@ -25,9 +25,12 @@ class AppTexts {
   static const String homeExpense = "Chi phí";
   static const String homeTotalExpense = "5.000.000 \đ";
   static const String total = "Tổng quan";
-  static const String deposit = "Tổng chi";
-  static const String income = "Tổng thu";
-  static const String debt = "Tổng nợ";
+  static const String totaldeposit = "Tổng chi";
+  static const String totalincome = "Tổng thu";
+  static const String totaldebt = "Tổng nợ";
+  static const String deposit = "Khoản chi";
+  static const String income = "Khoản thu";
+  static const String debt = "Nợ";
   static const String homeSort = "Sắp xếp";
   static const String homeAppFund = "Ngân sách";
   static const String homeAppPersonal = "Cá nhân";

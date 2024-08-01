@@ -20,7 +20,7 @@ class SplashScreen extends StatelessWidget {
           Center(child: LottieBuilder.asset("assets/logos/splash.json"))
         ],
       ),
-      duration: 2200,
+      duration: 2205,
       nextScreen: const Onboarding(),
       splashIconSize: 450,
       backgroundColor: AppColors.primaryBackground,

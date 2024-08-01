@@ -22,6 +22,10 @@ class FundScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: AppColors.primary,
+                    width: 3,
+                  ),
                 ),
                 alignment: Alignment.center, // Center align the text
                 child: Text(
@@ -41,6 +45,10 @@ class FundScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(30),
+                  border: Border.all(
+                    color: AppColors.primary,
+                    width: 3,
+                  ),
                 ),
                 alignment: Alignment.center, // Center align the text
                 child: Text(

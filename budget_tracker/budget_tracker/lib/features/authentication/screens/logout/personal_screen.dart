@@ -31,6 +31,10 @@ class _PersonalScreenState extends State<PersonalScreen> {
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: AppColors.primary,
+                    width: 3,
+                  ),
                 ),
                 alignment: Alignment.center, // Center align the text
                 child: Text(
@@ -50,6 +54,10 @@ class _PersonalScreenState extends State<PersonalScreen> {
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: AppColors.primary,
+                    width: 3,
+                  ),
                 ),
                 child: ListView(
                   padding: EdgeInsets.zero,
@@ -63,6 +71,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
                     ),
                     Divider(
                       height: AppSizes.spaceBtwInputFields,
+                      color: AppColors.primary,
                     ),
                     ListTile(
                       leading: Icon(Icons.info_outline),
@@ -73,6 +82,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
                     ),
                     Divider(
                       height: AppSizes.spaceBtwInputFields,
+                      color: AppColors.primary,
                     ),
                     ListTile(
                       leading: Icon(Icons.support_agent),
@@ -83,6 +93,7 @@ class _PersonalScreenState extends State<PersonalScreen> {
                     ),
                     Divider(
                       height: AppSizes.spaceBtwInputFields,
+                      color: AppColors.primary,
                     ),
                     ListTile(
                       leading: Icon(Icons.logout_outlined),

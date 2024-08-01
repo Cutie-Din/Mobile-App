@@ -18,19 +18,16 @@ class StatScreen extends StatefulWidget {
 
 class _StatScreenState extends State<StatScreen> {
   PageController _pageController = PageController();
-  String selectedText = AppTexts.deposit;
+  String selectedText = AppTexts.totaldeposit;
 
   void _onPageChanged(int index) {
     setState(() {
       switch (index) {
         case 0:
-          selectedText = AppTexts.deposit;
+          selectedText = AppTexts.totaldeposit;
           break;
         case 1:
-          selectedText = AppTexts.debt;
-          break;
-        case 2:
-          selectedText = AppTexts.income;
+          selectedText = AppTexts.totalincome;
           break;
       }
     });
@@ -56,73 +53,62 @@ class _StatScreenState extends State<StatScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 GestureDetector(
-                  onTap: () => _onTextTap(AppTexts.deposit, 0),
+                  onTap: () => _onTextTap(AppTexts.totaldeposit, 0),
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 300),
                     decoration: BoxDecoration(
-                      color: selectedText == AppTexts.deposit
-                          ? AppColors.white
+                      color: selectedText == AppTexts.totaldeposit
+                          ? AppColors.primary
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: selectedText == AppTexts.totaldeposit
+                            ? Colors.transparent
+                            : AppColors.primary,
+                        width: 3,
+                      ),
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: Text(
-                      AppTexts.deposit,
+                      AppTexts.totaldeposit,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: selectedText == AppTexts.deposit
-                            ? Colors.black
-                            : Colors.grey,
+                        color: selectedText == AppTexts.totaldeposit
+                            ? Colors.white
+                            : Colors.black,
                       ),
                     ),
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => _onTextTap(AppTexts.debt, 1),
+                  onTap: () => _onTextTap(AppTexts.totalincome, 1),
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 300),
                     decoration: BoxDecoration(
-                      color: selectedText == AppTexts.debt
-                          ? AppColors.white
+                      color: selectedText == AppTexts.totalincome
+                          ? AppColors.primary
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    child: Text(
-                      AppTexts.debt,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: selectedText == AppTexts.debt
-                            ? Colors.black
-                            : Colors.grey,
+                      border: Border.all(
+                        color: selectedText == AppTexts.totalincome
+                            ? Colors.transparent
+                            : AppColors.primary,
+                        width: 3,
                       ),
                     ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => _onTextTap(AppTexts.income, 2),
-                  child: AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
-                    decoration: BoxDecoration(
-                      color: selectedText == AppTexts.income
-                          ? AppColors.white
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     child: Text(
-                      AppTexts.income,
+                      AppTexts.totalincome,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: selectedText == AppTexts.income
-                            ? Colors.black
-                            : Colors.grey,
+                        color: selectedText == AppTexts.totalincome
+                            ? Colors.white
+                            : Colors.black,
                       ),
                     ),
                   ),
@@ -136,7 +122,7 @@ class _StatScreenState extends State<StatScreen> {
               child: PageView.builder(
                 controller: _pageController,
                 onPageChanged: _onPageChanged,
-                itemCount: 3,
+                itemCount: 2,
                 itemBuilder: (context, index) {
                   switch (index) {
                     case 0:
@@ -144,20 +130,22 @@ class _StatScreenState extends State<StatScreen> {
                           decoration: BoxDecoration(
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: AppColors.primary,
+                              width: 3,
+                            ),
                           ),
                           child: Center(child: Text("Chi tiêu")));
+
                     case 1:
                       return Container(
                           decoration: BoxDecoration(
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Center(child: Text("Nợ")));
-                    case 2:
-                      return Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: AppColors.primary,
+                              width: 3,
+                            ),
                           ),
                           child: Center(child: Text("Thu nhập")));
                     default:

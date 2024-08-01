@@ -221,11 +221,11 @@ class _MainScreenState extends State<MainScreen> {
                       itemBuilder: (BuildContext context) => [
                         PopupMenuItem(
                           value: 'Thu',
-                          child: Text('Thu nhập'),
+                          child: Text('Khoản thu'),
                         ),
                         PopupMenuItem(
                           value: 'Chi',
-                          child: Text('Chi tiêu'),
+                          child: Text('Khoản chi'),
                         ),
                         PopupMenuItem(
                           value: 'Nợ',
