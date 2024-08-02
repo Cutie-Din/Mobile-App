@@ -1,13 +1,17 @@
-// ignore_for_file: prefer_const_constructors
-
+import 'package:budget_tracker/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../models/transaction.dart';
 import 'widgets/Icons.dart';
+
+import 'add_screen.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -38,15 +42,17 @@ class _AddScreenState extends State<AddScreen> {
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2024, 01),
-        lastDate: DateTime(2100, 12),
-        initialEntryMode: DatePickerEntryMode.calendarOnly,
-        cancelText: "Huỷ",
-        confirmText: "Xác nhận",
-        helpText: "Chọn ngày",
-        locale: const Locale("vi"));
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2024, 01),
+      lastDate: DateTime(2100, 12),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      cancelText: "Huỷ",
+      confirmText: "Xác nhận",
+      helpText: "",
+      locale: const Locale("vi"),
+    );
+
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
@@ -84,8 +90,39 @@ class _AddScreenState extends State<AddScreen> {
     if (result != null) {
       setState(() {
         selectedIcon = result['icon'];
-        selectedTitle = result['title'];
+        String category = result['category'];
+        String title = result['title'];
+        selectedTitle = "$category - $title";
       });
+    }
+  }
+
+  Future<void> _saveTransaction() async {
+    if (amount != null && note.isNotEmpty && selectedTitle != "Chọn nhóm") {
+      final box = Hive.box<Transaction>('transactions');
+      final transaction = Transaction(
+        amount: amount!,
+        date: selectedDate,
+        note: note,
+        category: selectedTitle,
+        iconCode: selectedIcon.codePoint,
+      );
+
+      // Prevent duplicate transactions
+      final transactions = box.values.toList().cast<Transaction>();
+      final isDuplicate = transactions.any((t) =>
+          t.amount == amount &&
+          t.note == note &&
+          t.category == selectedTitle &&
+          t.date == selectedDate);
+
+      if (!isDuplicate) {
+        await box.add(transaction);
+      } else {
+        print("Duplicate transaction detected.");
+      }
+    } else {
+      print("Lỗi: Vui lòng điền đầy đủ thông tin.");
     }
   }
 
@@ -114,6 +151,7 @@ class _AddScreenState extends State<AddScreen> {
             const SizedBox(
               height: AppSizes.spaceBtwSections,
             ),
+            // Amount input field
             Row(
               children: [
                 Container(
@@ -162,6 +200,7 @@ class _AddScreenState extends State<AddScreen> {
             const SizedBox(
               height: AppSizes.spaceBtwInputFields,
             ),
+            // Icon and title selector
             GestureDetector(
               onTap: _selectIcon,
               child: Row(
@@ -190,10 +229,22 @@ class _AddScreenState extends State<AddScreen> {
                           color: AppColors.primary,
                         ),
                       ),
+                      constraints: BoxConstraints(
+                        minHeight: 48, // Minimum height to maintain consistency
+                        maxHeight: 48, // Fixed height to prevent expansion
+                        minWidth:
+                            150, // Set minimum width to keep consistent layout
+                        maxWidth: 200, // Set maximum width if necessary
+                      ),
                       child: Text(
                         selectedTitle,
                         style: TextStyle(
-                          color: AppColors.black,
+                          color: selectedTitle == "Chọn nhóm"
+                              ? AppColors.black
+                              : selectedTitle.startsWith("Chi")
+                                  ? AppColors.error
+                                  : AppColors.primary,
+                          fontSize: 16,
                         ),
                       ),
                     ),
@@ -204,6 +255,7 @@ class _AddScreenState extends State<AddScreen> {
             const SizedBox(
               height: AppSizes.spaceBtwInputFields,
             ),
+            // Note input field
             Row(
               children: [
                 Container(
@@ -245,6 +297,7 @@ class _AddScreenState extends State<AddScreen> {
             const SizedBox(
               height: AppSizes.spaceBtwInputFields,
             ),
+            // Date selector
             GestureDetector(
               onTap: () {
                 _selectDate(context);
@@ -287,12 +340,15 @@ class _AddScreenState extends State<AddScreen> {
             const SizedBox(
               height: AppSizes.spaceBtwItems,
             ),
-
-            /// Create Account
+            // Save button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  print(selectedIcon);
+                  await _saveTransaction();
+                  Navigator.pop(context); // Close screen after saving
+                },
                 child: Text("Lưu"),
               ),
             ),

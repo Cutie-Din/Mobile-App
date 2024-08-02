@@ -1,20 +1,20 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, sort_child_properties_last
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'dart:math';
 
-import 'package:budget_tracker/data/repositories/data.dart';
-import 'package:budget_tracker/features/personalization/screens/add_screen.dart';
-import 'package:budget_tracker/features/personalization/screens/stat_screen.dart';
-import 'package:budget_tracker/utils/device/device_utility.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart'; // Import intl package
 
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../../../utils/constants/text_strings.dart';
+import '../models/transaction.dart';
 import 'widgets/Expense.dart';
 import 'widgets/Income.dart';
+import 'add_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -24,8 +24,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  String _selectedType = '';
-  List<Map<String, dynamic>> _transactions = transactionData;
+  String _selectedType = 'Tất cả'; // Default to 'Tất cả' to show all records
 
   void _onSelectedSort(String type) {
     setState(() {
@@ -33,18 +32,28 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  List<Map<String, dynamic>> _filterTransactions() {
-    if (_selectedType.isEmpty) return _transactions;
+  // Helper function to format the date
+  String _formatDate(DateTime date) {
+    final now = DateTime.now();
+    final difference = now.difference(date).inDays;
 
-    return _transactions.where((transaction) {
-      return transaction['type'] == _selectedType;
-    }).toList();
+    if (difference == 0) {
+      return 'Hôm nay';
+    } else if (difference == 1) {
+      return 'Hôm qua';
+    } else {
+      return DateFormat('dd/MM/yyyy').format(date);
+    }
+  }
+
+  // Helper function to format the amount with commas
+  String _formatAmount(int amount) {
+    final format = NumberFormat.currency(locale: 'vi_VN', symbol: '');
+    return format.format(amount);
   }
 
   @override
   Widget build(BuildContext context) {
-    final filteredTransactions = _filterTransactions();
-
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -70,7 +79,7 @@ class _MainScreenState extends State<MainScreen> {
                                 Color(0xFFFF8D6C),
                                 Color(0xFFE064F7),
                               ],
-                              transform: const GradientRotation(pi / 4),
+                              transform: GradientRotation(pi / 4),
                             ),
                           ),
                         ),
@@ -114,7 +123,7 @@ class _MainScreenState extends State<MainScreen> {
 
             // Credit card display
             Container(
-              width: AppDeviceUtils.getScreenWidth(context),
+              width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width / 2,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -220,16 +229,16 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       itemBuilder: (BuildContext context) => [
                         PopupMenuItem(
-                          value: 'Thu',
-                          child: Text('Khoản thu'),
+                          value: 'Tất cả',
+                          child: Text('Tất cả'),
                         ),
                         PopupMenuItem(
                           value: 'Chi',
                           child: Text('Khoản chi'),
                         ),
                         PopupMenuItem(
-                          value: 'Nợ',
-                          child: Text('Nợ'),
+                          value: 'Thu',
+                          child: Text('Khoản thu'),
                         ),
                       ],
                     ),
@@ -240,129 +249,153 @@ class _MainScreenState extends State<MainScreen> {
             const SizedBox(
               height: AppSizes.spaceBtwItems,
             ),
-
             Expanded(
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 200),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return ScaleTransition(scale: animation, child: child);
-                },
-                child: ListView.builder(
-                  key: ValueKey(_selectedType),
-                  itemCount: filteredTransactions.length,
-                  itemBuilder: (context, int i) {
-                    final transaction = filteredTransactions[i];
-                    return Dismissible(
-                      key: Key(transaction['name']),
-                      onDismissed: (direction) {
-                        setState(() {
-                          _transactions.remove(transaction);
-                        });
-                      },
-                      direction: DismissDirection.endToStart,
-                      background: Container(
-                        color: Colors.red,
-                        child: Icon(
-                          Icons.delete,
-                          color: Colors.white,
-                        ),
-                        alignment: Alignment.centerRight,
-                        padding: EdgeInsets.only(right: 20),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.light,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        Container(
-                                          width: 50,
-                                          height: 50,
-                                          decoration: BoxDecoration(
-                                            color: transaction['color'],
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                        transaction['icon'],
-                                      ],
-                                    ),
-                                  ),
-                                  Text(
-                                    transaction['name'],
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: AppSizes.spaceBtwItems,
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0),
-                                    child: Text(
-                                      transaction['totalAmount'],
-                                      style: TextStyle(
-                                        fontSize: 13.89,
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0),
-                                    child: Text(
-                                      transaction['date'],
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: AppColors.darkGrey,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10.0),
-                                    child: Text(
-                                      transaction['type'],
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400,
-                                        color: transaction['type'] == 'Chi'
-                                            ? AppColors.error
-                                            : transaction['type'] == 'Thu'
-                                                ? AppColors.primary
-                                                : AppColors.black,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+              child: ValueListenableBuilder<Box<Transaction>>(
+                valueListenable:
+                    Hive.box<Transaction>('transactions').listenable(),
+                builder: (context, box, _) {
+                  final transactions = box.values.toList().cast<Transaction>();
+
+                  final filteredTransactions = _selectedType == 'Tất cả'
+                      ? transactions
+                      : transactions.where((transaction) {
+                          return transaction.category.contains(_selectedType);
+                        }).toList();
+
+                  if (filteredTransactions.isEmpty) {
+                    return Center(
+                      child: Text('Không có dữ liệu!'),
                     );
-                  },
-                ),
+                  }
+
+                  return ListView.builder(
+                    itemCount: filteredTransactions.length,
+                    itemBuilder: (context, index) {
+                      final transaction = filteredTransactions[index];
+
+                      // Extract the part after the dash for the category display
+                      final categoryName = transaction.category.split('-').last;
+                      final type = transaction.category.split('-').first;
+
+                      return Dismissible(
+                        key: Key(
+                            transaction.category + transaction.date.toString()),
+                        onDismissed: (direction) {
+                          // Remove the item from the Hive box
+                          transaction.delete();
+
+                          // Since `ValueListenableBuilder` automatically rebuilds, you don't need to manually call `setState` here.
+                        },
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          color: Colors.red,
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
+                          alignment: Alignment.centerRight,
+                          padding: EdgeInsets.only(right: 20),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.light,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Stack(
+                                        alignment: Alignment.center,
+                                        children: [
+                                          Container(
+                                            width: 50,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.primary,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          FaIcon(
+                                            IconData(
+                                              transaction
+                                                  .iconCode, // Ensure this is a valid FontAwesome icon code
+                                              fontFamily: 'FontAwesomeSolid',
+                                            ),
+                                            color: AppColors.white,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Text(
+                                      categoryName, // Display only the category name
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: AppColors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: AppSizes.spaceBtwItems,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
+                                      child: Text(
+                                        '${_formatAmount(transaction.amount)}đ',
+                                        style: TextStyle(
+                                          fontSize: 13.89,
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
+                                      child: Text(
+                                        _formatDate(transaction.date),
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: AppColors.darkGrey,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10.0),
+                                        child: Text(
+                                          type, // Display only the type
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                            color: type == 'Chi'
+                                                ? AppColors.error
+                                                : AppColors
+                                                    .primary, // Adjust color based on type
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
           ],

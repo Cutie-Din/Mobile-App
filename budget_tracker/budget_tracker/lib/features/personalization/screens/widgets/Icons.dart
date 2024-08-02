@@ -53,17 +53,18 @@ class _IconscreenState extends State<Iconscreen> {
     });
   }
 
-  void _selectIcon(IconData icon, String title) {
+  void _selectIcon(IconData icon, String title, String category) {
     setState(() {
       selectedIcon = icon;
       selectedTitle = title;
     });
-    Navigator.pop(context, {'icon': icon, 'title': title});
+    Navigator.pop(
+        context, {'icon': icon, 'title': title, 'category': category});
   }
 
-  Widget _buildIconTile(IconData icon, String title) {
+  Widget _buildIconTile(IconData icon, String title, String category) {
     return GestureDetector(
-      onTap: () => _selectIcon(icon, title),
+      onTap: () => _selectIcon(icon, title, category),
       child: ListTile(
         leading: FaIcon(icon),
         title: Text(title),
@@ -188,92 +189,93 @@ class _IconscreenState extends State<Iconscreen> {
                             child: ListView(
                               children: [
                                 _buildIconTile(
-                                    FontAwesomeIcons.burger, "Ăn uống"),
+                                    FontAwesomeIcons.burger, "Ăn uống", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
-                                    FontAwesomeIcons.car, "Di chuyển"),
+                                    FontAwesomeIcons.car, "Di chuyển", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
-                                    FontAwesomeIcons.futbol, "Thể thao"),
+                                    FontAwesomeIcons.futbol, "Thể thao", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
-                                    FontAwesomeIcons.cat, "Vật nuôi"),
+                                    FontAwesomeIcons.cat, "Vật nuôi", "Chi"),
+                                Divider(
+                                  height: AppSizes.spaceBtwInputFields,
+                                  color: AppColors.primary,
+                                ),
+                                _buildIconTile(FontAwesomeIcons.gamepad,
+                                    "Giải trí", "Chi"),
+                                Divider(
+                                  height: AppSizes.spaceBtwInputFields,
+                                  color: AppColors.primary,
+                                ),
+                                _buildIconTile(FontAwesomeIcons.notesMedical,
+                                    "Sức khoẻ", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
-                                    FontAwesomeIcons.gamepad, "Vui - chơi"),
+                                    FontAwesomeIcons.receipt, "Hoá đơn", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
-                                    FontAwesomeIcons.notesMedical, "Sức khoẻ"),
+                                    FontAwesomeIcons.seedling, "Đầu tư", "Chi"),
+                                Divider(
+                                  height: AppSizes.spaceBtwInputFields,
+                                  color: AppColors.primary,
+                                ),
+                                _buildIconTile(FontAwesomeIcons.carBurst,
+                                    "Bảo hiểm", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
-                                    FontAwesomeIcons.receipt, "Hoá đơn"),
-                                Divider(
-                                  height: AppSizes.spaceBtwInputFields,
-                                  color: AppColors.primary,
-                                ),
-                                _buildIconTile(
-                                    FontAwesomeIcons.seedling, "Đầu tư"),
-                                Divider(
-                                  height: AppSizes.spaceBtwInputFields,
-                                  color: AppColors.primary,
-                                ),
-                                _buildIconTile(
-                                    FontAwesomeIcons.carBurst, "Bảo hiểm"),
-                                Divider(
-                                  height: AppSizes.spaceBtwInputFields,
-                                  color: AppColors.primary,
-                                ),
-                                _buildIconTile(
-                                    FontAwesomeIcons.bars, "Dịch vụ"),
+                                    FontAwesomeIcons.bars, "Dịch vụ", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(FontAwesomeIcons.boxesStacked,
-                                    "Chi phí khác"),
+                                    "Chi phí khác", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
-                                    FontAwesomeIcons.school, "Giáo dục"),
+                                    FontAwesomeIcons.school, "Giáo dục", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
                                     FontAwesomeIcons.handHoldingHeart,
-                                    "Quà tặng & quyên góp"),
+                                    "Quà tặng & quyên góp",
+                                    "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
-                                    FontAwesomeIcons.users, "Trả nợ"),
+                                    FontAwesomeIcons.users, "Trả nợ", "Chi"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
-                                _buildIconTile(
-                                    FontAwesomeIcons.restroom, "Cho vay"),
+                                _buildIconTile(FontAwesomeIcons.restroom,
+                                    "Cho vay", "Chi"),
                               ],
                             ),
                           ),
@@ -294,31 +296,25 @@ class _IconscreenState extends State<Iconscreen> {
                             child: ListView(
                               children: [
                                 _buildIconTile(
-                                    FontAwesomeIcons.moneyBill, "Lương"),
+                                    FontAwesomeIcons.moneyBill, "Lương", "Thu"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
                                 _buildIconTile(
-                                    FontAwesomeIcons.percent, "Thu lãi"),
+                                    FontAwesomeIcons.percent, "Thu lãi", "Thu"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
-                                _buildIconTile(
-                                    FontAwesomeIcons.dropbox, "Thu nhập khác"),
+                                _buildIconTile(FontAwesomeIcons.dropbox,
+                                    "Thu nhập khác", "Thu"),
                                 Divider(
                                   height: AppSizes.spaceBtwInputFields,
                                   color: AppColors.primary,
                                 ),
-                                _buildIconTile(
-                                    FontAwesomeIcons.wallet, "Tiền chuyển đến"),
-                                Divider(
-                                  height: AppSizes.spaceBtwInputFields,
-                                  color: AppColors.primary,
-                                ),
-                                _buildIconTile(
-                                    FontAwesomeIcons.handshake, "Vay nợ"),
+                                _buildIconTile(FontAwesomeIcons.wallet,
+                                    "Tiền chuyển đến", "Thu"),
                               ],
                             ),
                           ),
