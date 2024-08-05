@@ -9,7 +9,12 @@ import 'features/personalization/models/transaction.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
+  // Register the adapter
   Hive.registerAdapter(TransactionAdapter());
+
+  // Open the box
   await Hive.openBox<Transaction>('transactions');
+
   runApp(const App());
 }

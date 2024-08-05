@@ -15,19 +15,20 @@ import '../../../utils/constants/colors.dart';
 import 'stat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final int ma_nguoi_dung;
+  final String ten_nguoi_dung;
+  const HomeScreen({
+    super.key,
+    required this.ten_nguoi_dung,
+    required this.ma_nguoi_dung,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<Widget> pages = [
-    MainScreen(),
-    StatScreen(),
-    FundScreen(),
-    PersonalScreen(),
-  ];
+  late final List<Widget> pages;
 
   int _currentIndex = 0;
   late PageController _pageController;
@@ -36,6 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _currentIndex);
+
+    // Initialize pages with the username passed to HomeScreen
+    pages = [
+      MainScreen(ten_nguoi_dung: widget.ten_nguoi_dung), // Pass username here
+      StatScreen(),
+      FundScreen(),
+      PersonalScreen(),
+    ];
   }
 
   @override
@@ -63,7 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         elevation: 0,
-        onPressed: () => Get.to(() => const AddScreen()),
+        onPressed: () => Get.to(() => AddScreen(
+              ma_nguoi_dung: widget.ma_nguoi_dung,
+            )),
         shape: CircleBorder(),
         child: Container(
           width: 60,

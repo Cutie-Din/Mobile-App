@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -17,7 +18,12 @@ import 'widgets/Income.dart';
 import 'add_screen.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final String ten_nguoi_dung;
+
+  const MainScreen({
+    super.key,
+    required this.ten_nguoi_dung,
+  });
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -104,7 +110,7 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                         ),
                         Text(
-                          "Din",
+                          '${widget.ten_nguoi_dung}',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -147,7 +153,7 @@ class _MainScreenState extends State<MainScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    AppTexts.homeTotal,
+                    'Số dư hiện tại',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -254,7 +260,14 @@ class _MainScreenState extends State<MainScreen> {
                 valueListenable:
                     Hive.box<Transaction>('transactions').listenable(),
                 builder: (context, box, _) {
-                  final transactions = box.values.toList().cast<Transaction>();
+                  final transactions = box.values
+                      .toList()
+                      .cast<Transaction>()
+                      .where((transaction) =>
+                          transaction.ma_nguoi_dung == widget.ten_nguoi_dung)
+                      .toList();
+
+                  print('Fetched transactions: $transactions'); // Debug print
 
                   final filteredTransactions = _selectedType == 'Tất cả'
                       ? transactions
@@ -273,18 +286,14 @@ class _MainScreenState extends State<MainScreen> {
                     itemBuilder: (context, index) {
                       final transaction = filteredTransactions[index];
 
-                      // Extract the part after the dash for the category display
                       final categoryName = transaction.category.split('-').last;
-                      final type = transaction.category.split('-').first;
+                      final type = transaction.category.split('-').first.trim();
 
                       return Dismissible(
                         key: Key(
                             transaction.category + transaction.date.toString()),
                         onDismissed: (direction) {
-                          // Remove the item from the Hive box
                           transaction.delete();
-
-                          // Since `ValueListenableBuilder` automatically rebuilds, you don't need to manually call `setState` here.
                         },
                         direction: DismissDirection.endToStart,
                         background: Container(
@@ -323,17 +332,18 @@ class _MainScreenState extends State<MainScreen> {
                                           ),
                                           FaIcon(
                                             IconData(
-                                              transaction
-                                                  .iconCode, // Ensure this is a valid FontAwesome icon code
-                                              fontFamily: 'FontAwesomeSolid',
+                                              transaction.iconCode,
+                                              fontFamily: 'FontAwesomeIcons',
+                                              fontPackage:
+                                                  'font_awesome_flutter',
                                             ),
                                             color: AppColors.white,
-                                          )
+                                          ),
                                         ],
                                       ),
                                     ),
                                     Text(
-                                      categoryName, // Display only the category name
+                                      categoryName,
                                       style: TextStyle(
                                         fontSize: 14,
                                         color: AppColors.black,
@@ -373,19 +383,19 @@ class _MainScreenState extends State<MainScreen> {
                                       ),
                                     ),
                                     Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10.0),
-                                        child: Text(
-                                          type, // Display only the type
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                            color: type == 'Chi'
-                                                ? AppColors.error
-                                                : AppColors
-                                                    .primary, // Adjust color based on type
-                                          ),
-                                        )),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
+                                      child: Text(
+                                        type,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: type == "Thu"
+                                              ? AppColors.primary
+                                              : AppColors.error,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],

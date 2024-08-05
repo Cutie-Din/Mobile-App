@@ -2,6 +2,8 @@
 
 import 'dart:convert';
 import 'package:budget_tracker/features/personalization/screens/home_screen.dart';
+import 'package:budget_tracker/features/personalization/screens/main_screen.dart';
+
 import 'package:budget_tracker/utils/validators/validation.dart'; // Ensure this import is correct
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,9 +35,15 @@ class LoginController extends GetxController {
           await http.post(url, body: jsonEncode(body), headers: headers);
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
+        final userID = json['ma_nguoi_dung'] ?? '??';
+        final username = json['ten_nguoi_dung'] ?? '??';
+
         eOrPController.clear();
         passwordController.clear();
-        Get.off(() => HomeScreen());
+        Get.off(() => HomeScreen(
+              ma_nguoi_dung: userID,
+              ten_nguoi_dung: username,
+            ));
       } else {
         throw jsonDecode(response.body)["message"] ?? "Đã có lỗi xảy ra";
       }

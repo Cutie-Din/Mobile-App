@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:intl/intl.dart'; // Import the intl package
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
@@ -14,7 +15,11 @@ import 'widgets/Icons.dart';
 import 'add_screen.dart';
 
 class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+  final int ma_nguoi_dung;
+  const AddScreen({
+    super.key,
+    required this.ma_nguoi_dung,
+  });
 
   @override
   State<AddScreen> createState() => _AddScreenState();
@@ -39,6 +44,16 @@ class _AddScreenState extends State<AddScreen> {
     "Tháng 11",
     "Tháng 12",
   ];
+
+  final NumberFormat currencyFormat = NumberFormat.decimalPattern();
+
+  final TextEditingController _amountController = TextEditingController();
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -106,6 +121,7 @@ class _AddScreenState extends State<AddScreen> {
         note: note,
         category: selectedTitle,
         iconCode: selectedIcon.codePoint,
+        ma_nguoi_dung: widget.ma_nguoi_dung.toString(),
       );
 
       // Prevent duplicate transactions
@@ -114,7 +130,8 @@ class _AddScreenState extends State<AddScreen> {
           t.amount == amount &&
           t.note == note &&
           t.category == selectedTitle &&
-          t.date == selectedDate);
+          t.date == selectedDate &&
+          t.ma_nguoi_dung == widget.ma_nguoi_dung.toString());
 
       if (!isDuplicate) {
         await box.add(transaction);
@@ -124,6 +141,25 @@ class _AddScreenState extends State<AddScreen> {
     } else {
       print("Lỗi: Vui lòng điền đầy đủ thông tin.");
     }
+  }
+
+  void _onAmountChanged(String value) {
+    // Remove any non-digit characters and parse the input
+    String digitsOnly = value.replaceAll(RegExp(r'[^\d]'), '');
+    if (digitsOnly.isNotEmpty) {
+      amount = int.tryParse(digitsOnly);
+    } else {
+      amount = null;
+    }
+
+    // Format the number with commas
+    String formatted = currencyFormat.format(amount ?? 0);
+
+    // Update the text field with the formatted number
+    _amountController.value = TextEditingValue(
+      text: formatted,
+      selection: TextSelection.collapsed(offset: formatted.length),
+    );
   }
 
   @override
@@ -170,6 +206,7 @@ class _AddScreenState extends State<AddScreen> {
                 ),
                 Expanded(
                   child: TextField(
+                    controller: _amountController,
                     decoration: InputDecoration(
                       hintText: "0",
                       filled: true,
@@ -184,11 +221,7 @@ class _AddScreenState extends State<AddScreen> {
                         borderSide: BorderSide(color: AppColors.primary),
                       ),
                     ),
-                    onChanged: (val) {
-                      try {
-                        amount = int.parse(val);
-                      } catch (e) {}
-                    },
+                    onChanged: _onAmountChanged,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
                     ],
@@ -345,7 +378,6 @@ class _AddScreenState extends State<AddScreen> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
-                  print(selectedIcon);
                   await _saveTransaction();
                   Navigator.pop(context); // Close screen after saving
                 },

@@ -1,5 +1,4 @@
 import 'package:hive/hive.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 part 'transaction.g.dart';
 
@@ -20,11 +19,15 @@ class Transaction extends HiveObject {
   @HiveField(4)
   final int iconCode;
 
+  @HiveField(5)
+  final String ma_nguoi_dung; // New field
+
   Transaction({
     required this.amount,
     required this.date,
     required this.note,
     required this.category,
     required this.iconCode,
+    required this.ma_nguoi_dung,
   });
 }
