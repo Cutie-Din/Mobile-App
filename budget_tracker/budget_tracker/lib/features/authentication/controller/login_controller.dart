@@ -1,9 +1,5 @@
-// ignore_for_file: non_constant_identifier_names, unused_field, prefer_const_constructors, unused_local_variable, prefer_typing_uninitialized_variables
-
 import 'dart:convert';
 import 'package:budget_tracker/features/personalization/screens/home_screen.dart';
-import 'package:budget_tracker/features/personalization/screens/main_screen.dart';
-
 import 'package:budget_tracker/utils/validators/validation.dart'; // Ensure this import is correct
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -54,7 +50,7 @@ class LoginController extends GetxController {
         builder: (context) {
           return SimpleDialog(
             title: Text('Thông báo'),
-            contentPadding: EdgeInsets.all(20),
+            contentPadding: const EdgeInsets.all(20),
             children: [Text(e.toString())],
           );
         },

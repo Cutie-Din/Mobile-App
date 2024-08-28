@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'dart:math';
 
 import 'package:budget_tracker/features/personalization/screens/add_screen.dart';
@@ -12,11 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/constants/colors.dart';
+import 'add_fund_screen.dart';
 import 'stat_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final int ma_nguoi_dung;
   final String ten_nguoi_dung;
+
   const HomeScreen({
     super.key,
     required this.ten_nguoi_dung,
@@ -40,9 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Initialize pages with the username passed to HomeScreen
     pages = [
-      MainScreen(ten_nguoi_dung: widget.ten_nguoi_dung), // Pass username here
+      MainScreen(
+        ma_nguoi_dung: widget.ma_nguoi_dung,
+        ten_nguoi_dung: widget.ten_nguoi_dung,
+      ), // Pass username here
       StatScreen(),
-      FundScreen(),
+      FundScreen(
+        ma_nguoi_dung: widget.ma_nguoi_dung,
+      ),
       PersonalScreen(),
     ];
   }
@@ -72,9 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         elevation: 0,
-        onPressed: () => Get.to(() => AddScreen(
-              ma_nguoi_dung: widget.ma_nguoi_dung,
-            )),
+        onPressed: _handleFloatingActionButtonPress,
         shape: CircleBorder(),
         child: Container(
           width: 60,
@@ -82,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: LinearGradient(
-              colors: <Color>[
+              colors: const <Color>[
                 Color(0xFF3BB44A),
                 Color(0xFFFF8D6C),
                 Color(0xFFE064F7),
@@ -118,5 +121,17 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _currentIndex = index;
     });
+  }
+
+  void _handleFloatingActionButtonPress() {
+    if (_currentIndex == 0 || _currentIndex == 1) {
+      // Navigate to AddScreen if on MainScreen or StatScreen
+      Get.to(() => AddScreen(ma_nguoi_dung: widget.ma_nguoi_dung));
+    } else if (_currentIndex == 2) {
+      // Navigate to AddFundScreen if on FundScreen
+      Get.to(() => AddFundScreen(
+            ma_nguoi_dung: widget.ma_nguoi_dung,
+          )); // Make sure to implement AddFundScreen
+    }
   }
 }

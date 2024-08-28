@@ -32,6 +32,7 @@ dependencies:
   flutter_launcher_icons:
   hive:
   hive_flutter:
+  animations:
 
 dev_dependencies:
   flutter_test:

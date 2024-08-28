@@ -43,9 +43,9 @@ class RegisterController extends GetxController {
         if (json['code'] == 0) {
           var token = json['data']['Token'];
           print(token);
-          final SharedPreferences? prefs = await _prefs;
+          final SharedPreferences prefs = await _prefs;
 
-          await prefs?.setString('token', token);
+          await prefs.setString('token', token);
           nameController.clear();
           eOrPController.clear();
           passwordController.clear();

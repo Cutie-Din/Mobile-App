@@ -8,7 +8,7 @@ class AppFormatter {
   }
 
   static String formatCurrency(double amount) {
-    return NumberFormat.currency(locale: 'vn_VN', symbol: '\đ')
+    return NumberFormat.currency(locale: 'vn_VN', symbol: 'đ')
         .format(amount); // Customize the currency locale and symbol as needed
   }
 

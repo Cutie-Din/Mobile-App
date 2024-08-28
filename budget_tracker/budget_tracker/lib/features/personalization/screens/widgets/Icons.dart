@@ -18,7 +18,7 @@ class Iconscreen extends StatefulWidget {
 }
 
 class _IconscreenState extends State<Iconscreen> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   String selectedText = AppTexts.deposit;
   IconData? selectedIcon; // Track the selected icon
   String? selectedTitle; // Track the selected title

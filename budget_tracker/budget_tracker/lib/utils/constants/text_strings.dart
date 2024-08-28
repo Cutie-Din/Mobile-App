@@ -19,11 +19,11 @@ class AppTexts {
   static const String homeAppbarTitle = "Trang chủ";
   static const String homeAppbarSubTitle = "Thống kê";
   static const String homeTotal = "Tổng số dư";
-  static const String homeTotalBalance = "10.000.000 \đ";
+  static const String homeTotalBalance = "10.000.000 đ";
   static const String homeIncome = "Thu nhập";
-  static const String homeTotalIncome = "10.000.000 \đ";
+  static const String homeTotalIncome = "10.000.000 đ";
   static const String homeExpense = "Chi phí";
-  static const String homeTotalExpense = "5.000.000 \đ";
+  static const String homeTotalExpense = "5.000.000 đ";
   static const String total = "Tổng quan";
   static const String totaldeposit = "Tổng chi";
   static const String totalincome = "Tổng thu";
@@ -32,7 +32,7 @@ class AppTexts {
   static const String income = "Khoản thu";
   static const String debt = "Nợ";
   static const String homeSort = "Sắp xếp";
-  static const String homeAppFund = "Ngân sách";
+  static const String homeAppFund = "Ví";
   static const String homeAppPersonal = "Cá nhân";
 
   // Adding

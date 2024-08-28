@@ -16,7 +16,7 @@ class StatScreen extends StatefulWidget {
 }
 
 class _StatScreenState extends State<StatScreen> {
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   String selectedText = AppTexts.totaldeposit;
 
   void _onPageChanged(int index) {

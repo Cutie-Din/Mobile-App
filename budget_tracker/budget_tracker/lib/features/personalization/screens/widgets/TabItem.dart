@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable
-
 import 'package:budget_tracker/utils/constants/sizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +48,7 @@ class _TabitemState extends State<Tabitem> {
           buildTabItem(
             index: 2,
             icon: Icon(CupertinoIcons.gift),
-            label: 'Ngân sách',
+            label: 'Ví',
           ),
           buildTabItem(
             index: 3,

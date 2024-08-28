@@ -1,6 +1,6 @@
 // List of Constants used in APIs
 class ApiConstants {
-  static final String baseUrl = 'http://qltcapi.tasvietnam.vn/api';
+  static const String baseUrl = 'http://qltcapi.tasvietnam.vn/api';
   static _Auth auth = _Auth();
 }
 

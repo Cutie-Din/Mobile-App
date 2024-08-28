@@ -45,7 +45,7 @@ class Expense extends StatelessWidget {
               ),
             ),
             const Text(
-              AppTexts.homeTotalExpense,
+              "0 đ",
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.white,

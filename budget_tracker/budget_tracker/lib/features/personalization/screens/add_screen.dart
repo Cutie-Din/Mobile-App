@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart'; // Import the intl package
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
+import '../controllers/fund_controller.dart';
 import '../models/transaction.dart';
 import 'widgets/Icons.dart';
 
@@ -113,7 +115,7 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   Future<void> _saveTransaction() async {
-    if (amount != null && note.isNotEmpty && selectedTitle != "Chọn nhóm") {
+    if (amount != null && selectedTitle != "Chọn nhóm") {
       final box = Hive.box<Transaction>('transactions');
       final transaction = Transaction(
         amount: amount!,
@@ -121,7 +123,7 @@ class _AddScreenState extends State<AddScreen> {
         note: note,
         category: selectedTitle,
         iconCode: selectedIcon.codePoint,
-        ma_nguoi_dung: widget.ma_nguoi_dung.toString(),
+        ma_nguoi_dung: widget.ma_nguoi_dung,
       );
 
       // Prevent duplicate transactions
@@ -131,10 +133,12 @@ class _AddScreenState extends State<AddScreen> {
           t.note == note &&
           t.category == selectedTitle &&
           t.date == selectedDate &&
-          t.ma_nguoi_dung == widget.ma_nguoi_dung.toString());
+          t.ma_nguoi_dung == widget.ma_nguoi_dung);
 
       if (!isDuplicate) {
         await box.add(transaction);
+        final fundController = Get.find<FundController>();
+        fundController.updateFundAmount(transaction); // Update the fund amount
       } else {
         print("Duplicate transaction detected.");
       }

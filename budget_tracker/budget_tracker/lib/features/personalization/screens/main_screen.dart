@@ -1,10 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
-
 import 'dart:ffi';
 import 'dart:math';
 
+import 'package:budget_tracker/features/personalization/controllers/fund_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart'; // Import intl package
@@ -18,11 +18,13 @@ import 'widgets/Income.dart';
 import 'add_screen.dart';
 
 class MainScreen extends StatefulWidget {
+  final int ma_nguoi_dung;
   final String ten_nguoi_dung;
 
   const MainScreen({
     super.key,
     required this.ten_nguoi_dung,
+    required this.ma_nguoi_dung,
   });
 
   @override
@@ -30,6 +32,16 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  late FundController fundController;
+
+  @override
+  void initState() {
+    super.initState();
+    fundController = Get.put(FundController());
+    fundController.maNguoiDung = widget.ma_nguoi_dung;
+    fundController.loadSelectedFundAmount();
+  }
+
   String _selectedType = 'Tất cả'; // Default to 'Tất cả' to show all records
 
   void _onSelectedSort(String type) {
@@ -110,7 +122,7 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                         ),
                         Text(
-                          '${widget.ten_nguoi_dung}',
+                          widget.ten_nguoi_dung,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -160,13 +172,20 @@ class _MainScreenState extends State<MainScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const Text(
-                    AppTexts.homeTotalBalance,
-                    style: TextStyle(
-                      fontSize: 40,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Obx(
+                    () {
+                      final amount = fundController.selectedFundAmount.value;
+                      return Text(
+                        NumberFormat.currency(locale: 'vi_VN', symbol: '₫')
+                            .format(
+                                amount ?? 0), // Display 0₫ if amount is null
+                        style: TextStyle(
+                          fontSize: 40,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(
                     height: AppSizes.spaceBtwItems,
@@ -264,10 +283,8 @@ class _MainScreenState extends State<MainScreen> {
                       .toList()
                       .cast<Transaction>()
                       .where((transaction) =>
-                          transaction.ma_nguoi_dung == widget.ten_nguoi_dung)
+                          transaction.ma_nguoi_dung == widget.ma_nguoi_dung)
                       .toList();
-
-                  print('Fetched transactions: $transactions'); // Debug print
 
                   final filteredTransactions = _selectedType == 'Tất cả'
                       ? transactions
@@ -289,114 +306,124 @@ class _MainScreenState extends State<MainScreen> {
                       final categoryName = transaction.category.split('-').last;
                       final type = transaction.category.split('-').first.trim();
 
-                      return Dismissible(
-                        key: Key(
-                            transaction.category + transaction.date.toString()),
-                        onDismissed: (direction) {
-                          transaction.delete();
-                        },
-                        direction: DismissDirection.endToStart,
-                        background: Container(
-                          color: Colors.red,
-                          child: Icon(
-                            Icons.delete,
-                            color: Colors.white,
+                      // Assuming transaction.id is unique for each transaction
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 10.0), // Space between items
+                        child: Dismissible(
+                          key: Key(transaction.ma_nguoi_dung
+                              .toString()), // Use a unique key, e.g., transaction.id
+                          onDismissed: (direction) {
+                            transaction.delete();
+                          },
+                          direction: DismissDirection
+                              .endToStart, // Restrict swipe to right-to-left
+                          background: Container(
+                            color: AppColors.error,
+                            alignment: Alignment.centerRight,
+                            padding: EdgeInsets.only(right: 20),
+                            child: Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
                           ),
-                          alignment: Alignment.centerRight,
-                          padding: EdgeInsets.only(right: 20),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
                           child: Container(
                             decoration: BoxDecoration(
                               color: AppColors.light,
                               borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: AppColors.primary,
+                                width: 3,
+                              ),
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Stack(
-                                        alignment: Alignment.center,
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Container(
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: AppColors.primary,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                      FaIcon(
+                                        IconData(
+                                          transaction.iconCode,
+                                          fontFamily: 'FontAwesomeIcons',
+                                          fontPackage: 'font_awesome_flutter',
+                                        ),
+                                        color: AppColors.white,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        categoryName,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: AppColors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
                                         children: [
-                                          Container(
-                                            width: 50,
-                                            height: 50,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primary,
-                                              shape: BoxShape.circle,
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10.0),
+                                            child: Text(
+                                              '${_formatAmount(transaction.amount)}đ',
+                                              style: TextStyle(
+                                                fontSize: 13.89,
+                                                color: AppColors.black,
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
                                           ),
-                                          FaIcon(
-                                            IconData(
-                                              transaction.iconCode,
-                                              fontFamily: 'FontAwesomeIcons',
-                                              fontPackage:
-                                                  'font_awesome_flutter',
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10.0),
+                                            child: Text(
+                                              _formatDate(transaction.date),
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                color: AppColors.darkGrey,
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
-                                            color: AppColors.white,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10.0),
+                                            child: Text(
+                                              type,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400,
+                                                color: type == "Thu"
+                                                    ? AppColors.primary
+                                                    : AppColors.error,
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                    Text(
-                                      categoryName,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: AppSizes.spaceBtwItems,
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10.0),
-                                      child: Text(
-                                        '${_formatAmount(transaction.amount)}đ',
-                                        style: TextStyle(
-                                          fontSize: 13.89,
-                                          color: AppColors.black,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10.0),
-                                      child: Text(
-                                        _formatDate(transaction.date),
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: AppColors.darkGrey,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10.0),
-                                      child: Text(
-                                        type,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                          color: type == "Thu"
-                                              ? AppColors.primary
-                                              : AppColors.error,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                const SizedBox(
+                                  width: AppSizes.spaceBtwItems,
                                 ),
                               ],
                             ),
@@ -407,7 +434,7 @@ class _MainScreenState extends State<MainScreen> {
                   );
                 },
               ),
-            ),
+            )
           ],
         ),
       ),
