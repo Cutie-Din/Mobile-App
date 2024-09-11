@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../../../utils/constants/colors.dart';
 import '../../../utils/constants/sizes.dart';
 import '../models/fund.dart';
+import 'widgets/FundIcons.dart';
 import 'widgets/Icons.dart';
 
 class AddFundScreen extends StatefulWidget {
@@ -32,7 +33,7 @@ class _AddFundScreenState extends State<AddFundScreen> {
   }
 
   IconData selectedIcon = FontAwesomeIcons.magnifyingGlass;
-  String selectedTitle = "Chọn nhóm";
+  String selectedTitle = "Chọn quỹ";
 
   void _onAmountChanged(String value) {
     // Remove any non-digit characters and parse the input
@@ -51,6 +52,26 @@ class _AddFundScreenState extends State<AddFundScreen> {
       text: formatted,
       selection: TextSelection.collapsed(offset: formatted.length),
     );
+  }
+
+  void _selectIcon() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FundIconscreen(
+          initialIcon: selectedIcon,
+          initialTitle: selectedTitle,
+        ),
+      ),
+    );
+
+    if (result != null) {
+      setState(() {
+        selectedIcon = result['icon'];
+        String title = result['title'];
+        selectedTitle = "$title";
+      });
+    }
   }
 
   Future<void> _saveFund() async {
@@ -74,7 +95,7 @@ class _AddFundScreenState extends State<AddFundScreen> {
         Navigator.pop(context); // Close screen after saving
       } else {
         // Show SnackBar for duplicate fund
-        await _showSnackBar("Ví đã tồn tại");
+        await _showSnackBar("Quỹ đã tồn tại");
       }
     } else {
       // Show SnackBar for incomplete information
@@ -105,14 +126,18 @@ class _AddFundScreenState extends State<AddFundScreen> {
   void _onMenuItemSelected(String value) {
     setState(() {
       selectedTitle = value;
-      selectedIcon = value == "Tiền mặt"
-          ? FontAwesomeIcons.wallet
-          : FontAwesomeIcons.university;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Access or open the 'funds' box correctly
+    var fundBox;
+    if (!Hive.isBoxOpen('funds')) {
+      fundBox = Hive.openBox<Fund>('funds');
+    } else {
+      fundBox = Hive.box<Fund>('funds');
+    }
     return Scaffold(
       backgroundColor: AppColors.grey,
       appBar: AppBar(
@@ -184,98 +209,145 @@ class _AddFundScreenState extends State<AddFundScreen> {
             height: AppSizes.spaceBtwInputFields,
           ),
           // Icon and title selector
-          Row(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: AppColors.primary,
-                ),
-                padding: EdgeInsets.all(12.0),
-                child: FaIcon(
-                  selectedIcon,
-                  color: AppColors.white,
-                ),
-              ),
-              const SizedBox(
-                width: AppSizes.spaceBtwInputFields,
-              ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
+          // Row(
+          //   children: [
+          //     Container(
+          //       decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(16),
+          //         color: AppColors.primary,
+          //       ),
+          //       padding: EdgeInsets.all(12.0),
+          //       child: FaIcon(
+          //         selectedIcon,
+          //         color: AppColors.white,
+          //       ),
+          //     ),
+          //     const SizedBox(
+          //       width: AppSizes.spaceBtwInputFields,
+          //     ),
+          //     Expanded(
+          //       child: Container(
+          //         padding: EdgeInsets.symmetric(horizontal: 12.0),
+          //         decoration: BoxDecoration(
+          //           borderRadius: BorderRadius.circular(16),
+          //           color: AppColors.white,
+          //           border: Border.all(
+          //             color: AppColors.primary,
+          //           ),
+          //         ),
+          //         child: Theme(
+          //           data: Theme.of(context).copyWith(
+          //             popupMenuTheme: PopupMenuThemeData(
+          //               color: Colors
+          //                   .white, // Set the popup menu background color to white
+          //             ),
+          //           ),
+          //           child: SizedBox(
+          //             height: 51,
+          //             child: PopupMenuButton<String>(
+          //               shape: RoundedRectangleBorder(
+          //                 borderRadius: BorderRadius.circular(12),
+          //               ),
+          //               onSelected: _onMenuItemSelected,
+          //               child: Row(
+          //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //                 children: [
+          //                   Text(
+          //                     selectedTitle,
+          //                     style: TextStyle(
+          //                       color: selectedTitle == "Tiền mặt"
+          //                           ? AppColors.error
+          //                           : selectedTitle == "Ngân hàng"
+          //                               ? AppColors.primary
+          //                               : AppColors.black,
+          //                     ),
+          //                   ),
+          //                   Icon(Icons.arrow_drop_down),
+          //                 ],
+          //               ),
+          //               itemBuilder: (BuildContext context) {
+          //                 return [
+          //                   PopupMenuItem<String>(
+          //                     value: "Tiền mặt",
+          //                     child: Container(
+          //                       padding: EdgeInsets.symmetric(vertical: 8.0),
+          //                       child: Text(
+          //                         "Tiền mặt",
+          //                         style: TextStyle(
+          //                           color: AppColors.error,
+          //                           fontSize: 14, // Adjust font size here
+          //                         ),
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   PopupMenuItem<String>(
+          //                     value: "Ngân hàng",
+          //                     child: Container(
+          //                       padding: EdgeInsets.symmetric(vertical: 8.0),
+          //                       child: Text(
+          //                         "Ngân hàng",
+          //                         style: TextStyle(
+          //                           color: AppColors.primary,
+          //                           fontSize: 14, // Adjust font size here
+          //                         ),
+          //                       ),
+          //                     ),
+          //                   ),
+          //                 ];
+          //               },
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          GestureDetector(
+            onTap: _selectIcon,
+            child: Row(
+              children: [
+                Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    color: AppColors.white,
-                    border: Border.all(
-                      color: AppColors.primary,
-                    ),
+                    color: AppColors.primary,
                   ),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                      popupMenuTheme: PopupMenuThemeData(
-                        color: Colors
-                            .white, // Set the popup menu background color to white
+                  padding: EdgeInsets.all(12.0),
+                  child: FaIcon(
+                    selectedIcon,
+                    color: AppColors.white,
+                  ),
+                ),
+                const SizedBox(
+                  width: AppSizes.spaceBtwInputFields,
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(12.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: AppColors.white,
+                      border: Border.all(
+                        color: AppColors.primary,
                       ),
                     ),
-                    child: SizedBox(
-                      height: 51,
-                      child: PopupMenuButton<String>(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        onSelected: _onMenuItemSelected,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              selectedTitle,
-                              style: TextStyle(
-                                color: selectedTitle == "Tiền mặt"
-                                    ? AppColors.error
-                                    : selectedTitle == "Ngân hàng"
-                                        ? AppColors.primary
-                                        : AppColors.black,
-                              ),
-                            ),
-                            Icon(Icons.arrow_drop_down),
-                          ],
-                        ),
-                        itemBuilder: (BuildContext context) {
-                          return [
-                            PopupMenuItem<String>(
-                              value: "Tiền mặt",
-                              child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  "Tiền mặt",
-                                  style: TextStyle(
-                                    color: AppColors.error,
-                                    fontSize: 14, // Adjust font size here
-                                  ),
-                                ),
-                              ),
-                            ),
-                            PopupMenuItem<String>(
-                              value: "Ngân hàng",
-                              child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text(
-                                  "Ngân hàng",
-                                  style: TextStyle(
-                                    color: AppColors.primary,
-                                    fontSize: 14, // Adjust font size here
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ];
-                        },
+                    constraints: BoxConstraints(
+                      minHeight: 48, // Minimum height to maintain consistency
+                      maxHeight: 48, // Fixed height to prevent expansion
+                      minWidth:
+                          150, // Set minimum width to keep consistent layout
+                      maxWidth: 200, // Set maximum width if necessary
+                    ),
+                    child: Text(
+                      selectedTitle,
+                      style: TextStyle(
+                        color: AppColors.black,
+                        fontSize: 16,
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(
             height: AppSizes.spaceBtwInputFields,

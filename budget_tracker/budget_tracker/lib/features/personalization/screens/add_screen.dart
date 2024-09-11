@@ -11,6 +11,7 @@ import 'package:intl/intl.dart'; // Import the intl package
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/sizes.dart';
 import '../controllers/fund_controller.dart';
+import '../models/fund.dart';
 import '../models/transaction.dart';
 import 'widgets/Icons.dart';
 
@@ -31,6 +32,9 @@ class _AddScreenState extends State<AddScreen> {
   int? amount;
   String note = "Test";
   DateTime selectedDate = DateTime.now();
+  String selectedWallet = "Chọn ví"; // Default value
+  Fund? selectedFund;
+  FundController fundController = Get.find<FundController>();
 
   List<String> months = [
     "Tháng 1",
@@ -79,6 +83,7 @@ class _AddScreenState extends State<AddScreen> {
 
   bool isKhoanChiSelected = true;
   IconData selectedIcon = FontAwesomeIcons.magnifyingGlass;
+  IconData wallet = FontAwesomeIcons.wallet;
   String selectedTitle = "Chọn nhóm";
 
   void _selectKhoanChi() {
@@ -115,7 +120,10 @@ class _AddScreenState extends State<AddScreen> {
   }
 
   Future<void> _saveTransaction() async {
-    if (amount != null && selectedTitle != "Chọn nhóm") {
+    if (amount != null &&
+        selectedTitle != "Chọn nhóm" &&
+        selectedWallet != "Chọn ví" &&
+        selectedFund != null) {
       final box = Hive.box<Transaction>('transactions');
       final transaction = Transaction(
         amount: amount!,
@@ -137,8 +145,15 @@ class _AddScreenState extends State<AddScreen> {
 
       if (!isDuplicate) {
         await box.add(transaction);
-        final fundController = Get.find<FundController>();
-        fundController.updateFundAmount(transaction); // Update the fund amount
+
+        // Update the fund balance based on transaction type, passing the selected fund
+        fundController.updateFundAmount(transaction, selectedFund!);
+
+        // Clear the selected wallet after saving
+        setState(() {
+          selectedWallet = "Chọn ví";
+          selectedFund = null;
+        });
       } else {
         print("Duplicate transaction detected.");
       }
@@ -164,6 +179,38 @@ class _AddScreenState extends State<AddScreen> {
       text: formatted,
       selection: TextSelection.collapsed(offset: formatted.length),
     );
+  }
+
+  Future<void> _updateWalletMenuItems() async {
+    final fundBox = Hive.box<Fund>('funds');
+    List<Fund> funds = fundBox.values.toList();
+
+    setState(() {
+      _walletMenuItems = funds.map((fund) {
+        return PopupMenuItem<Fund>(
+          value: fund,
+          child: Text(fund.category),
+        );
+      }).toList();
+    });
+  }
+
+  List<PopupMenuEntry<Fund>> _walletMenuItems = [];
+
+  void _onMenuItemSelected(Fund selectedFund) {
+    setState(() {
+      this.selectedFund = selectedFund;
+      selectedWallet = selectedFund.category;
+    });
+
+    // Set the selected fund in FundController
+    fundController.selectFund(selectedFund);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _updateWalletMenuItems(); // Load wallet menu items on initialization
   }
 
   @override
@@ -267,11 +314,10 @@ class _AddScreenState extends State<AddScreen> {
                         ),
                       ),
                       constraints: BoxConstraints(
-                        minHeight: 48, // Minimum height to maintain consistency
-                        maxHeight: 48, // Fixed height to prevent expansion
-                        minWidth:
-                            150, // Set minimum width to keep consistent layout
-                        maxWidth: 200, // Set maximum width if necessary
+                        minHeight: 48,
+                        maxHeight: 48,
+                        minWidth: 150,
+                        maxWidth: 200,
                       ),
                       child: Text(
                         selectedTitle,
@@ -335,6 +381,74 @@ class _AddScreenState extends State<AddScreen> {
               height: AppSizes.spaceBtwInputFields,
             ),
             // Date selector
+            Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: AppColors.primary,
+                  ),
+                  padding: EdgeInsets.all(12.0),
+                  child: FaIcon(
+                    wallet,
+                    color: AppColors.white,
+                  ),
+                ),
+                const SizedBox(
+                  width: AppSizes.spaceBtwInputFields,
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: AppColors.white,
+                      border: Border.all(
+                        color: AppColors.primary,
+                      ),
+                    ),
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        popupMenuTheme: PopupMenuThemeData(
+                          color: Colors.white,
+                        ),
+                      ),
+                      child: SizedBox(
+                        height: 51,
+                        child: PopupMenuButton<Fund>(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          onSelected: _onMenuItemSelected,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                selectedWallet != null
+                                    ? selectedWallet
+                                    : "Chọn ví",
+                                style: TextStyle(
+                                  color: AppColors.black,
+                                ),
+                              ),
+                              Icon(Icons.arrow_drop_down),
+                            ],
+                          ),
+                          itemBuilder: (BuildContext context) {
+                            return _walletMenuItems;
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(
+              height: AppSizes.spaceBtwInputFields,
+            ),
+            // Select Date
             GestureDetector(
               onTap: () {
                 _selectDate(context);

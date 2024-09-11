@@ -8,8 +8,10 @@ import 'package:budget_tracker/features/personalization/screens/widgets/TabItem.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 import '../../../utils/constants/colors.dart';
+import '../models/fund.dart';
 import 'add_fund_screen.dart';
 import 'stat_screen.dart';
 
@@ -123,15 +125,45 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  void _handleFloatingActionButtonPress() {
-    if (_currentIndex == 0 || _currentIndex == 1) {
-      // Navigate to AddScreen if on MainScreen or StatScreen
-      Get.to(() => AddScreen(ma_nguoi_dung: widget.ma_nguoi_dung));
-    } else if (_currentIndex == 2) {
-      // Navigate to AddFundScreen if on FundScreen
-      Get.to(() => AddFundScreen(
-            ma_nguoi_dung: widget.ma_nguoi_dung,
-          )); // Make sure to implement AddFundScreen
+  void _handleFloatingActionButtonPress() async {
+    // Check if the 'funds' box is already open to avoid opening it multiple times
+    var fundBox;
+    if (!Hive.isBoxOpen('funds')) {
+      fundBox = await Hive.openBox<Fund>('funds');
+    } else {
+      fundBox = Hive.box<Fund>('funds');
     }
+
+    if (_currentIndex == 2) {
+      // Directly navigate to AddFundScreen if on FundScreen
+      Get.to(() => AddFundScreen(ma_nguoi_dung: widget.ma_nguoi_dung));
+    } else {
+      // For MainScreen or StatScreen, check if there are any funds
+      if (fundBox.isEmpty) {
+        // Show a dialog if no funds are available
+        _showNoFundsDialog();
+      } else {
+        // Navigate to AddScreen if funds are present
+        Get.to(() => AddScreen(ma_nguoi_dung: widget.ma_nguoi_dung));
+      }
+    }
+  }
+
+  void _showNoFundsDialog() {
+    // Show an alert dialog to inform the user
+    Get.dialog(
+      AlertDialog(
+        title: Text('Thông báo'),
+        content: Text('Vui lòng thêm quỹ/ví để có thể thêm giao dịch'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back(); // Close the dialog
+            },
+            child: Text('Xác nhận'),
+          ),
+        ],
+      ),
+    );
   }
 }

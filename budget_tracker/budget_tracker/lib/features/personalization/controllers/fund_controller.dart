@@ -5,12 +5,23 @@ import '../models/transaction.dart';
 
 class FundController extends GetxController {
   var selectedFundAmount = RxnInt(); // Nullable using RxnInt
+  var totalBalance = 0.obs; // Observable for total balance
   late int maNguoiDung;
+  late String category;
 
   @override
   void onInit() {
     super.onInit();
     loadSelectedFundAmount();
+    calculateTotalBalance(); // Calculate total balance on init
+  }
+
+  // Method to calculate the total balance of all funds
+  void calculateTotalBalance() async {
+    var box = await Hive.openBox<Fund>('funds');
+    totalBalance.value = box.values
+        .where((fund) => fund.ma_nguoi_dung == maNguoiDung)
+        .fold(0, (sum, fund) => sum + fund.amount);
   }
 
   void selectFund(Fund fund) {
@@ -29,19 +40,27 @@ class FundController extends GetxController {
         box.get('fundAmount_$maNguoiDung', defaultValue: 0);
   }
 
-  // New method to update fund amount based on transaction type
-  void updateFundAmount(Transaction transaction) {
+  // Method to update the fund amount based on transaction type
+  void updateFundAmount(Transaction transaction, Fund selectedFund) async {
     if (selectedFundAmount.value != null) {
+      var box = await Hive.openBox<Fund>('funds');
+      var fundToUpdate = box.values.firstWhere(
+        (fund) =>
+            fund.ma_nguoi_dung == maNguoiDung &&
+            fund.category == selectedFund.category,
+      );
+
       if (transaction.category.startsWith("Thu")) {
-        // If the transaction is an income, add the amount
-        selectedFundAmount.value =
-            selectedFundAmount.value! + transaction.amount;
+        // Add amount for income
+        fundToUpdate.amount += transaction.amount;
       } else if (transaction.category.startsWith("Chi")) {
-        // If the transaction is an expense, subtract the amount
-        selectedFundAmount.value =
-            selectedFundAmount.value! - transaction.amount;
+        // Subtract amount for expense
+        fundToUpdate.amount -= transaction.amount;
       }
-      saveSelectedFundAmount(); // Save the updated amount
+
+      await fundToUpdate.save(); // Save updated fund
+      calculateTotalBalance(); // Recalculate total balance after update
+      saveSelectedFundAmount(); // Save selected fund amount
     }
   }
 }

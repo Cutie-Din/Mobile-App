@@ -15,10 +15,7 @@ import 'main_screen.dart'; // Import MainScreen
 class FundScreen extends StatefulWidget {
   final int ma_nguoi_dung;
 
-  const FundScreen({
-    super.key,
-    required this.ma_nguoi_dung,
-  });
+  const FundScreen({super.key, required this.ma_nguoi_dung});
 
   @override
   State<FundScreen> createState() => _FundScreenState();
@@ -92,6 +89,8 @@ class _FundScreenState extends State<FundScreen> {
                       itemBuilder: (context, index) {
                         final fund = userFunds[index];
                         final typef = fund.category;
+                        final isInactive =
+                            fund.amount == 0; // Check if the fund is inactive
 
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 16.0),
@@ -113,58 +112,34 @@ class _FundScreenState extends State<FundScreen> {
                                 color: Colors.white,
                               ),
                             ),
-                            child: GestureDetector(
-                              onTap: () {
-                                // Update the fund in the FundController
-                                fundController.selectFund(fund);
-
-                                // Show confirmation dialog
-                                Get.dialog(
-                                  AlertDialog(
-                                    title: Text('Thông báo'),
-                                    content: Text('Cập nhật ví thành công'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Get.back(); // Close the dialog
-                                        },
-                                        child: Text('OK'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: AppColors.primary,
-                                    width: 3,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: AppColors.primary,
+                                  width: 3,
+                                ),
+                              ),
+                              child: ListTile(
+                                leading: FaIcon(
+                                  IconData(fund.iconCode,
+                                      fontFamily: 'FontAwesomeSolid'),
+                                  color: AppColors.black,
+                                ),
+                                title: Text(
+                                  NumberFormat.currency(
+                                          locale: 'vi_VN', symbol: '₫')
+                                      .format(fund.amount),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                child: ListTile(
-                                  leading: FaIcon(
-                                    IconData(fund.iconCode,
-                                        fontFamily: 'FontAwesomeSolid'),
-                                    color: AppColors.primary,
-                                  ),
-                                  title: Text(
-                                    NumberFormat.currency(
-                                            locale: 'vi_VN', symbol: '₫')
-                                        .format(fund.amount),
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  subtitle: Text(
-                                    fund.category,
-                                    style: TextStyle(
-                                      color: fund.category == "Tiền mặt"
-                                          ? AppColors.error
-                                          : AppColors.primary,
-                                    ),
-                                  ),
+                                subtitle: Text(
+                                  fund.category,
+                                  style: TextStyle(color: AppColors.primary),
                                 ),
                               ),
                             ),

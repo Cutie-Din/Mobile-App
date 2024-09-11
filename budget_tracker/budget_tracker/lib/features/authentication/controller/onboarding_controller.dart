@@ -31,7 +31,6 @@ class OnboardingController extends GetxController {
 
   /// Cập nhật index hiện tại và chuyển trang cuối
   void skipPage() {
-    currentPageIndex.value = 1;
-    pageController.jumpToPage(1);
+    Get.offAll(() => LoginScreen());
   }
 }

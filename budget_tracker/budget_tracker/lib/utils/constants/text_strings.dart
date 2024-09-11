@@ -32,7 +32,8 @@ class AppTexts {
   static const String income = "Khoản thu";
   static const String debt = "Nợ";
   static const String homeSort = "Sắp xếp";
-  static const String homeAppFund = "Ví";
+  static const String homeAppFund = "Quỹ";
+  static const String groupAppFund = "Nhóm quỹ";
   static const String homeAppPersonal = "Cá nhân";
 
   // Adding

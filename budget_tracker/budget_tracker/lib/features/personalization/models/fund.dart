@@ -11,7 +11,7 @@ class Fund extends HiveObject {
   final String category;
 
   @HiveField(2)
-  final int amount;
+  int amount;
 
   @HiveField(3)
   final int iconCode;

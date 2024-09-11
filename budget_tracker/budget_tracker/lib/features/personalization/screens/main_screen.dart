@@ -40,6 +40,7 @@ class _MainScreenState extends State<MainScreen> {
     fundController = Get.put(FundController());
     fundController.maNguoiDung = widget.ma_nguoi_dung;
     fundController.loadSelectedFundAmount();
+    fundController.calculateTotalBalance();
   }
 
   String _selectedType = 'Tất cả'; // Default to 'Tất cả' to show all records
@@ -165,7 +166,7 @@ class _MainScreenState extends State<MainScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    'Số dư hiện tại',
+                    'Tổng số dư hiện tại',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -174,11 +175,11 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   Obx(
                     () {
-                      final amount = fundController.selectedFundAmount.value;
+                      final totalAmount = fundController.totalBalance.value;
                       return Text(
                         NumberFormat.currency(locale: 'vi_VN', symbol: '₫')
-                            .format(
-                                amount ?? 0), // Display 0₫ if amount is null
+                            .format(totalAmount ??
+                                0), // Display 0₫ if amount is null
                         style: TextStyle(
                           fontSize: 40,
                           color: Colors.white,
