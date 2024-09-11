@@ -54,7 +54,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icons/brands/
     - assets/images/on_boarding_images/Saving.gif
     - assets/images/on_boarding_images/Spending.gif
     - assets/logos/facebook.png

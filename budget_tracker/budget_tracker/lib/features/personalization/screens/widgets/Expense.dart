@@ -2,14 +2,24 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../utils/constants/colors.dart';
 import '../../../../utils/constants/text_strings.dart';
+import '../../controllers/fund_controller.dart';
 
-class Expense extends StatelessWidget {
+class Expense extends StatefulWidget {
   const Expense({
     super.key,
   });
+
+  @override
+  State<Expense> createState() => _ExpenseState();
+}
+
+class _ExpenseState extends State<Expense> {
+  final FundController fundController = Get.find(); // Get the FundController
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +54,18 @@ class Expense extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            const Text(
-              "0 đ",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            Obx(() {
+              return Text(
+                NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(
+                    fundController.totalChiAmount.value ??
+                        0), // Display formatted total Chi
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              );
+            }),
           ],
         ),
       ],

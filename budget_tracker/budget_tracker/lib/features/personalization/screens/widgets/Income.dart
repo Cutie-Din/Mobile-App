@@ -1,16 +1,20 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import '../../../../utils/constants/colors.dart';
-
 import '../../../../utils/constants/text_strings.dart';
+import '../../../personalization/controllers/fund_controller.dart'; // Add import
 
-class Income extends StatelessWidget {
-  const Income({
-    super.key,
-  });
+class Income extends StatefulWidget {
+  const Income({super.key});
+
+  @override
+  State<Income> createState() => _IncomeState();
+}
+
+class _IncomeState extends State<Income> {
+  final FundController fundController = Get.find(); // Get the FundController
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +35,7 @@ class Income extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
-          width: 8,
-        ),
+        const SizedBox(width: 8),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -45,14 +47,18 @@ class Income extends StatelessWidget {
                 fontWeight: FontWeight.w400,
               ),
             ),
-            const Text(
-              "0 đ",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            Obx(() {
+              return Text(
+                NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(
+                    fundController.totalThuAmount.value ??
+                        0), // Display formatted total
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              );
+            }),
           ],
         ),
       ],

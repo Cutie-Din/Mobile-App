@@ -312,11 +312,8 @@ class _MainScreenState extends State<MainScreen> {
                         padding: const EdgeInsets.only(
                             bottom: 10.0), // Space between items
                         child: Dismissible(
-                          key: Key(transaction.ma_nguoi_dung
-                              .toString()), // Use a unique key, e.g., transaction.id
-                          onDismissed: (direction) {
-                            transaction.delete();
-                          },
+                          key:
+                              UniqueKey(), // Use UniqueKey to avoid issues with item identity
                           direction: DismissDirection
                               .endToStart, // Restrict swipe to right-to-left
                           background: Container(
@@ -328,6 +325,20 @@ class _MainScreenState extends State<MainScreen> {
                               color: Colors.white,
                             ),
                           ),
+                          onDismissed: (direction) async {
+                            // Safely update the UI by removing the item from the list
+                            setState(() {
+                              filteredTransactions.removeAt(index);
+                            });
+
+                            // After removing the item from the list, delete from Hive
+                            try {
+                              await transaction.delete();
+                            } catch (error) {
+                              // Handle error in deletion without showing a SnackBar
+                              print('Failed to delete the transaction: $error');
+                            }
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                               color: AppColors.light,

@@ -6,6 +6,8 @@ import '../models/transaction.dart';
 class FundController extends GetxController {
   var selectedFundAmount = RxnInt(); // Nullable using RxnInt
   var totalBalance = 0.obs; // Observable for total balance
+  var totalThuAmount = 0.obs; // Observable for total "Thu"
+  var totalChiAmount = 0.obs; // Observable for total "Chi"
   late int maNguoiDung;
   late String category;
 
@@ -14,6 +16,8 @@ class FundController extends GetxController {
     super.onInit();
     loadSelectedFundAmount();
     calculateTotalBalance(); // Calculate total balance on init
+    calculateTotalThuAmount(); // Calculate total "Thu" on init
+    calculateTotalChiAmount(); // Calculate total "Chi" on init
   }
 
   // Method to calculate the total balance of all funds
@@ -40,6 +44,28 @@ class FundController extends GetxController {
         box.get('fundAmount_$maNguoiDung', defaultValue: 0);
   }
 
+  // Method to calculate the total "Thu" (Income)
+  void calculateTotalThuAmount() async {
+    var box = await Hive.openBox<Transaction>('transactions');
+    totalThuAmount.value = box.values
+        .where((transaction) =>
+            transaction.ma_nguoi_dung == maNguoiDung &&
+            transaction.category.startsWith("Thu")) // Corrected to "Thu"
+        .fold(0, (sum, transaction) => sum + transaction.amount);
+  }
+
+  // Method to calculate the total "Chi" (Expense)
+  void calculateTotalChiAmount() async {
+    var box = await Hive.openBox<Transaction>('transactions');
+    totalChiAmount.value = box.values
+        .where((transaction) =>
+            transaction.ma_nguoi_dung == maNguoiDung &&
+            transaction.category.startsWith("Chi")) // Corrected to "Chi"
+        .fold(0, (sum, transaction) => sum + transaction.amount);
+  }
+
+  // Existing methods (e.g., calculateTotalBalance, updateFundAmount)
+
   // Method to update the fund amount based on transaction type
   void updateFundAmount(Transaction transaction, Fund selectedFund) async {
     if (selectedFundAmount.value != null) {
@@ -60,6 +86,8 @@ class FundController extends GetxController {
 
       await fundToUpdate.save(); // Save updated fund
       calculateTotalBalance(); // Recalculate total balance after update
+      calculateTotalThuAmount(); // Recalculate total Thu
+      calculateTotalChiAmount(); // Recalculate total Chi
       saveSelectedFundAmount(); // Save selected fund amount
     }
   }
