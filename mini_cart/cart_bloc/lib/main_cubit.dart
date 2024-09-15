@@ -1,15 +1,47 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
+import 'package:cart_bloc/blocs.dart';
+import 'package:cart_bloc/cubits.dart';
+import 'package:flutter/material.dart';
+import 'dart:ui';
 
-class CounterCubit extends Cubit<int> {
-  CounterCubit() : super(0);
+import 'app.dart';
 
-  void increment() => emit(state + 1);
-  void decrement() => emit(state - 1);
+Future<void> main(List<String> args) async {
+  Bloc.observer = SimpleCubit(); //Observer BloC
+  /*-Sử dụng RoleCubit-*/
+  final cubitRole = RoleCubit(); //Cubit Role
+  final subscription_cubitRole = cubitRole.stream.listen(print);
 
-  @override
-  void onChange(Change<int> change) {
-    // TODO: implement onChange
-    super.onChange(change);
-    print(change);
-  }
+  cubitRole.fetchJunior();
+  await Future.delayed(Duration(seconds: 2));
+
+  cubitRole.fetchSenior();
+  await Future.delayed(Duration(seconds: 2));
+
+  await subscription_cubitRole.cancel();
+  await cubitRole.close();
+  /*-Sử dụng CounterCubit-*/
+  final cubitCounter = CounterCubit(); //Cubit Counter
+  final subscription_cubitCounter = cubitCounter.stream.listen(
+      print); //Sử dụng Stream để có thể ghi nhận cập nhật trạng thái theo thời gian thực
+  cubitCounter.increment();
+  await Future.delayed(Duration(seconds: 2));
+  cubitCounter.increment();
+  await Future.delayed(Duration(seconds: 2));
+  cubitCounter.increment();
+  await Future.delayed(Duration(seconds: 2));
+
+  cubitCounter.decrement();
+  await Future.delayed(Duration(seconds: 2));
+  cubitCounter.decrement();
+  await Future.delayed(Duration(seconds: 2));
+  cubitCounter.decrement();
+  await Future.delayed(Duration(seconds: 2));
+
+  await subscription_cubitCounter.cancel();
+  await cubitCounter.close();
 }
+
+//
