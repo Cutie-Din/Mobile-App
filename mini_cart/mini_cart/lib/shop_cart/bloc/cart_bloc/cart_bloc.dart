@@ -2,15 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:mini_cart/shop_cart/models/shop_item.dart';
 
-part 'event.dart';
-part 'state.dart';
+part 'cart_event.dart';
+part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartInitial()) {
     on<AddCart>(_onAddCart);
     on<RemoveCart>(_onRemoveCart);
-    on<IncrementCart>(_onIncrementCart);
-    on<DecrementCart>(_onDecrementCart);
   }
 
   void _onAddCart(AddCart event, Emitter<CartState> emit) {
@@ -65,58 +63,5 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _onRemoveCart(RemoveCart event, Emitter<CartState> emit) {
     emit(CartLoaded([])); // Clears the cart
-  }
-
-  void _onIncrementCart(IncrementCart event, Emitter<CartState> emit) {
-    final currentState = state;
-
-    if (currentState is CartLoaded) {
-      final updatedCartProducts = List<Product>.from(currentState.cartProducts);
-
-      // Find and update the quantity of the product
-      for (var i = 0; i < updatedCartProducts.length; i++) {
-        if (updatedCartProducts[i].title == event.title) {
-          updatedCartProducts[i] = Product(
-            id: updatedCartProducts[i].id,
-            title: updatedCartProducts[i].title,
-            price: updatedCartProducts[i].price,
-            category: updatedCartProducts[i].category,
-            description: updatedCartProducts[i].description,
-            image: updatedCartProducts[i].image,
-            quantity: updatedCartProducts[i].quantity + 1,
-          );
-          break;
-        }
-      }
-
-      emit(CartLoaded(updatedCartProducts));
-    }
-  }
-
-  void _onDecrementCart(DecrementCart event, Emitter<CartState> emit) {
-    final currentState = state;
-
-    if (currentState is CartLoaded) {
-      final updatedCartProducts = List<Product>.from(currentState.cartProducts);
-
-      // Find and update the quantity of the product
-      for (var i = 0; i < updatedCartProducts.length; i++) {
-        if (updatedCartProducts[i].title == event.title &&
-            updatedCartProducts[i].quantity > 1) {
-          updatedCartProducts[i] = Product(
-            id: updatedCartProducts[i].id,
-            title: updatedCartProducts[i].title,
-            price: updatedCartProducts[i].price,
-            category: updatedCartProducts[i].category,
-            description: updatedCartProducts[i].description,
-            image: updatedCartProducts[i].image,
-            quantity: updatedCartProducts[i].quantity - 1,
-          );
-          break;
-        }
-      }
-
-      emit(CartLoaded(updatedCartProducts));
-    }
   }
 }

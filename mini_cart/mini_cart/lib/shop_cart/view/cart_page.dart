@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/bloc.dart'; // Import the bloc files
+import '../bloc/cart_bloc/cart_bloc.dart'; // Import the bloc files
 import '../models/shop_item.dart'; // Import the CartItem model
 
 class CartPage extends StatelessWidget {
@@ -16,13 +16,23 @@ class CartPage extends StatelessWidget {
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           if (state is CartLoaded) {
-            final cartItems = state.cartProducts;
+            final cartProducts = state.cartProducts;
+
+            // Calculate total cart value
+            final totalCartValue = cartProducts.fold(
+              0.0,
+              (previousValue, item) =>
+                  previousValue + (item.price * item.quantity),
+            );
+
             return Stack(
               children: [
                 ListView.builder(
-                  itemCount: cartItems.length,
+                  itemCount: cartProducts.length,
                   itemBuilder: (context, index) {
-                    final item = cartItems[index];
+                    final product = cartProducts[index];
+                    final totalPriceForProducts =
+                        product.price * product.quantity;
                     return Card(
                       margin: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 15),
@@ -32,7 +42,7 @@ class CartPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Image.network(
-                              item.image,
+                              product.image,
                               width: 100,
                               height: 100,
                               fit: BoxFit.cover,
@@ -46,7 +56,7 @@ class CartPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item.title,
+                                    product.title,
                                     style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
@@ -54,7 +64,7 @@ class CartPage extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    'Category: ${item.category}',
+                                    'Category: ${product.category}',
                                     style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey,
@@ -62,27 +72,34 @@ class CartPage extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    item.description,
+                                    product.description,
                                     style: const TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey,
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
+                                  const SizedBox(height: 8),
                                   Text(
-                                    '${item.quantity}',
+                                    'Quantity: ${product.quantity}',
                                     style: const TextStyle(
                                       fontSize: 16,
                                     ),
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    '\$${item.price.toStringAsFixed(2)}', // Display quantity
+                                    'Price: \$${product.price.toStringAsFixed(2)}',
                                     style: const TextStyle(
                                       fontSize: 16,
                                       color: Colors.green,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Total: \$${totalPriceForProducts.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ],
@@ -97,16 +114,26 @@ class CartPage extends StatelessWidget {
                 Positioned(
                   bottom: 20.0, // Distance from the bottom of the screen
                   left: MediaQuery.of(context).size.width / 2 -
-                      28, // Center horizontally
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      // Add your action here
-                      context
-                          .read<CartBloc>()
-                          .add(RemoveCart()); // Clear the cart when pressed
-                    },
-                    child: const Icon(Icons.remove_shopping_cart),
-                    tooltip: 'Clear Cart',
+                      100, // Center horizontally
+                  child: Column(
+                    children: [
+                      Text(
+                        'Total Cart Value: \$${totalCartValue.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      FloatingActionButton(
+                        onPressed: () {
+                          context.read<CartBloc>().add(RemoveCart());
+                        },
+                        child: const Icon(Icons.remove_shopping_cart),
+                        tooltip: 'Clear Cart',
+                      ),
+                    ],
                   ),
                 ),
               ],

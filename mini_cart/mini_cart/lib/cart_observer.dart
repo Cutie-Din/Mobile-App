@@ -2,42 +2,36 @@ import 'package:bloc/bloc.dart';
 
 class CartObserver extends BlocObserver {
   const CartObserver();
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    super.onChange(bloc, change);
+    print(
+      'Bloc: ${bloc.runtimeType}\n'
+      'Thay đổi trạng thái: $change\n',
+    );
+  }
 
-  // @override
-  // void onChange(BlocBase bloc, Change change) {
-  //   super.onChange(bloc, change);
-  //   print(
-  //     'Bloc: ${bloc.runtimeType}\n'
-  //     'Thay đổi trạng thái: ${change}\n'
-  //     '--------------------------------------------------',
-  //   );
-  // }
-
-  // @override
-  // void onEvent(Bloc bloc, Object? event) {
-  //   super.onEvent(bloc, event);
-  //   print(
-  //     'Bloc hiện tại: ${bloc.runtimeType}\n'
-  //     'Sự kiện: ${event}\n'
-  //     '--------------------------------------------------',
-  //   );
-  // }
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    super.onEvent(bloc, event);
+    print(
+      'Bloc: ${bloc.runtimeType}\n'
+      'Sự kiện: ${event}\n',
+    );
+  }
 
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
-    print('Bloc được tạo: ${bloc.runtimeType}\n'
-        '--------------------------------------------------');
+    print('Bloc được tạo: ${bloc.runtimeType}');
   }
 
   @override
   void onTransition(Bloc bloc, Transition transition) {
     super.onTransition(bloc, transition);
     print(
-      'Bloc: ${bloc.runtimeType}\n'
       'State hiện tại: ${transition.currentState}\n'
       'State kế tiếp: ${transition.nextState}\n'
-      'Event: ${transition.event}\n'
       '--------------------------------------------------',
     );
   }
@@ -56,7 +50,6 @@ class CartObserver extends BlocObserver {
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    print('Bloc đã đóng: ${bloc.runtimeType}\n'
-        '--------------------------------------------------');
+    print('Bloc đã đóng: ${bloc.runtimeType}\n');
   }
 }
