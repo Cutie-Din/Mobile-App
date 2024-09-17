@@ -25,7 +25,7 @@ class Product {
       category: json['category'],
       description: json['description'],
       image: json['image'],
-      quantity: 1,
+      quantity: 1, // Default initial quantity
     );
   }
 }

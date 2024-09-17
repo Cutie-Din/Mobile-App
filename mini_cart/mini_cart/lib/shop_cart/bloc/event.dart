@@ -1,13 +1,14 @@
 part of 'bloc.dart';
 
-sealed class CartEvent extends Equatable {
+abstract class CartEvent extends Equatable {
   const CartEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-final class AddCart extends CartEvent {
+class AddCart extends CartEvent {
+  final int id;
   final String title;
   final double price;
   final String category;
@@ -15,17 +16,46 @@ final class AddCart extends CartEvent {
   final String image;
   final int quantity;
 
-  const AddCart(this.title, this.price, this.category, this.description,
-      this.image, this.quantity);
+  const AddCart({
+    required this.id,
+    required this.title,
+    required this.price,
+    required this.category,
+    required this.description,
+    required this.image,
+    required this.quantity,
+  });
 
   @override
   List<Object?> get props =>
-      [title, price, category, description, image, quantity];
-} // Event thêm giỏ hàng
+      [id, title, price, category, description, image, quantity];
+}
 
-final class RemoveCart extends CartEvent {
+class RemoveCart extends CartEvent {
   const RemoveCart();
 
   @override
   List<Object?> get props => [];
-} // Event xoá giỏ hàng
+}
+
+class IncrementCart extends CartEvent {
+  final int id;
+  final String title;
+  final int quantity;
+
+  const IncrementCart(this.id, this.title, this.quantity);
+
+  @override
+  List<Object?> get props => [id, title, quantity];
+}
+
+class DecrementCart extends CartEvent {
+  final int id;
+  final String title;
+  final int quantity;
+
+  const DecrementCart(this.id, this.title, this.quantity);
+
+  @override
+  List<Object?> get props => [id, title, quantity];
+}

@@ -29,7 +29,7 @@ class ShopPage extends StatelessWidget {
                 },
                 child: Center(
                   child: Text(
-                    'Cart: ${state is CartLoaded ? state.cartItems.length : 0}',
+                    'Cart: ${state is CartLoaded ? state.cartProducts.length : 0}',
                     style: const TextStyle(fontSize: 18),
                   ),
                 ),
@@ -75,8 +75,6 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  int _quantity = 1;
-
   @override
   Widget build(BuildContext context) {
     final product = widget.product;
@@ -125,15 +123,17 @@ class _ProductCardState extends State<ProductCard> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.remove),
-                  onPressed: () {},
+                  onPressed: () => context.read<CartBloc>().add(DecrementCart(
+                      product.id, product.title, product.quantity)),
                 ),
                 Text(
-                  'Quantity: $_quantity',
+                  'Quantity: ${product.quantity}',
                   style: const TextStyle(fontSize: 16),
                 ),
                 IconButton(
                   icon: const Icon(Icons.add),
-                  onPressed: () {},
+                  onPressed: () => context.read<CartBloc>().add(IncrementCart(
+                      product.id, product.title, product.quantity)),
                 ),
               ],
             ),
@@ -141,12 +141,13 @@ class _ProductCardState extends State<ProductCard> {
             ElevatedButton(
               onPressed: () {
                 context.read<CartBloc>().add(AddCart(
-                      product.title,
-                      product.price,
-                      product.category,
-                      product.description,
-                      product.image,
-                      product.quantity,
+                      id: product.id,
+                      title: product.title,
+                      price: product.price,
+                      category: product.category,
+                      description: product.description,
+                      image: product.image,
+                      quantity: 1, // Initial quantity
                     ));
               },
               child: const Text('Add Cart'),

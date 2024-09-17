@@ -1,19 +1,19 @@
 part of 'bloc.dart';
 
-sealed class CartState extends Equatable {
+abstract class CartState extends Equatable {
   const CartState();
 
   @override
   List<Object?> get props => [];
 }
 
-final class CartInitial extends CartState {} // Đây là State khởi tạo
+class CartInitial extends CartState {}
 
-final class CartLoaded extends CartState {
-  final List<CartItem> cartItems;
+class CartLoaded extends CartState {
+  final List<Product> cartProducts;
 
-  const CartLoaded(this.cartItems);
+  const CartLoaded(this.cartProducts);
 
   @override
-  List<Object?> get props => [cartItems];
-}// State khi đã được load bao gồm cả item
+  List<Object?> get props => [cartProducts];
+}

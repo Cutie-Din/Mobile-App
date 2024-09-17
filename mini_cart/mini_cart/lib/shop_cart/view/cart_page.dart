@@ -16,7 +16,7 @@ class CartPage extends StatelessWidget {
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {
           if (state is CartLoaded) {
-            final cartItems = state.cartItems;
+            final cartItems = state.cartProducts;
             return Stack(
               children: [
                 ListView.builder(
