@@ -33,6 +33,7 @@ dependencies:
   hive:
   hive_flutter:
   animations:
+  percent_indicator:
 
 dev_dependencies:
   flutter_test:

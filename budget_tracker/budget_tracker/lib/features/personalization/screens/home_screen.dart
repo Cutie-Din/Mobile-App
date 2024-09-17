@@ -46,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ma_nguoi_dung: widget.ma_nguoi_dung,
         ten_nguoi_dung: widget.ten_nguoi_dung,
       ), // Pass username here
-      StatScreen(),
+      StatScreen(
+        ma_nguoi_dung: widget.ma_nguoi_dung,
+      ),
       FundScreen(
         ma_nguoi_dung: widget.ma_nguoi_dung,
       ),

@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:budget_tracker/features/personalization/screens/widgets/stat_expense.dart';
+import 'package:budget_tracker/features/personalization/screens/widgets/stat_income.dart';
 import 'package:budget_tracker/utils/helpers/helper_functions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,8 @@ import '../../../utils/constants/sizes.dart';
 import '../../../utils/constants/text_strings.dart';
 
 class StatScreen extends StatefulWidget {
-  const StatScreen({super.key});
+  final int ma_nguoi_dung;
+  const StatScreen({super.key, required this.ma_nguoi_dung});
 
   @override
   _StatScreenState createState() => _StatScreenState();
@@ -128,25 +131,29 @@ class _StatScreenState extends State<StatScreen> {
                       return Container(
                           decoration: BoxDecoration(
                             color: AppColors.white,
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(5),
                             border: Border.all(
                               color: AppColors.primary,
                               width: 3,
                             ),
                           ),
-                          child: Center(child: Text("Chi tiêu")));
+                          child: Center(
+                              child: StatExpense(
+                                  maNguoiDung: widget.ma_nguoi_dung)));
 
                     case 1:
                       return Container(
                           decoration: BoxDecoration(
                             color: AppColors.white,
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(5),
                             border: Border.all(
                               color: AppColors.primary,
                               width: 3,
                             ),
                           ),
-                          child: Center(child: Text("Thu nhập")));
+                          child: Center(
+                              child: StatIncome(
+                                  maNguoiDung: widget.ma_nguoi_dung)));
                     default:
                       return Container();
                   }

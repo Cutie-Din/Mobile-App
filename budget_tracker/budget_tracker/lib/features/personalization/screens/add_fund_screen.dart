@@ -75,7 +75,7 @@ class _AddFundScreenState extends State<AddFundScreen> {
   }
 
   Future<void> _saveFund() async {
-    if (amount != null && selectedTitle != "Chọn nhóm") {
+    if (amount != null && selectedTitle != "Chọn quỹ") {
       final box = Hive.box<Fund>('funds');
       final fund = Fund(
         amount: amount!,
@@ -99,7 +99,7 @@ class _AddFundScreenState extends State<AddFundScreen> {
       }
     } else {
       // Show SnackBar for incomplete information
-      await _showSnackBar("Vui lòng điền đầy đủ thông tin.");
+      await _showSnackBar("Vui lòng chọn quỹ và nhập đủ thông tin.");
     }
   }
 
