@@ -30,7 +30,7 @@ class ShopPage extends StatelessWidget {
                 },
                 child: Center(
                   child: Text(
-                    'Cart: ${state is CartLoaded ? state.cartProducts.length : 0}',
+                    'Cart: ${state is CartLoaded ? state.products.length : 0}',
                     style: const TextStyle(fontSize: 18),
                   ),
                 ),
@@ -45,10 +45,6 @@ class ShopPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No products available'));
           }
 
           final products = snapshot.data!;

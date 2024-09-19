@@ -15,25 +15,25 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final currentState = state;
 
     if (currentState is CartLoaded) {
-      final updatedCartProducts = List<Product>.from(currentState.cartProducts);
+      final updatedproducts = List<Product>.from(currentState.products);
 
-      // Check if the item already exists in the cart
+      // Kiểm tra xem đã có sản phẩm tồn tại trong giỏ chưa
       final index =
-          updatedCartProducts.indexWhere((item) => item.title == event.title);
+          updatedproducts.indexWhere((item) => item.title == event.title);
       if (index != -1) {
-        // If the item exists, increment the quantity directly
-        updatedCartProducts[index] = Product(
-          id: updatedCartProducts[index].id,
-          title: updatedCartProducts[index].title,
-          price: updatedCartProducts[index].price,
-          category: updatedCartProducts[index].category,
-          description: updatedCartProducts[index].description,
-          image: updatedCartProducts[index].image,
-          quantity: updatedCartProducts[index].quantity + event.quantity,
+        // Nếu đã có chỉ thay đổi số lượng
+        updatedproducts[index] = Product(
+          id: updatedproducts[index].id,
+          title: updatedproducts[index].title,
+          price: updatedproducts[index].price,
+          category: updatedproducts[index].category,
+          description: updatedproducts[index].description,
+          image: updatedproducts[index].image,
+          quantity: updatedproducts[index].quantity + event.quantity,
         );
       } else {
-        // Otherwise, add the new item to the cart
-        updatedCartProducts.add(Product(
+        // Thêm sản phẩm mới
+        updatedproducts.add(Product(
           id: event.id,
           title: event.title,
           price: event.price,
@@ -44,9 +44,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         ));
       }
 
-      emit(CartLoaded(updatedCartProducts));
+      emit(CartLoaded(updatedproducts));
     } else {
-      // Initialize with the first item
+      // Khởi tạo sản phẩm mới
       emit(CartLoaded([
         Product(
           id: event.id,
@@ -62,6 +62,6 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _onRemoveCart(RemoveCart event, Emitter<CartState> emit) {
-    emit(CartLoaded([])); // Clears the cart
+    emit(CartLoaded([])); // Xoá giỏ hàng
   }
 }

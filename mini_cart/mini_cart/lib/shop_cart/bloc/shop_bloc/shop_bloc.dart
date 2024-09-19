@@ -1,52 +1,23 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:mini_cart/shop_cart/models/shop_item.dart';
 
 part 'shop_event.dart';
 part 'shop_state.dart';
 
 class ShopBloc extends Bloc<ShopEvent, ShopState> {
-  List<Product> products = []; // List of products
-
   ShopBloc() : super(ShopInitial()) {
-    on<IncreQuantity>((event, emit) {
-      final updatedProducts = products.map((product) {
-        if (product.id == event.product.id) {
-          // Increment quantity directly
-          return Product(
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            category: product.category,
-            description: product.description,
-            image: product.image,
-            quantity: product.quantity + 1,
-          );
-        }
-        return product;
-      }).toList();
+    on<UpdateQuantity>(_onUpdateQuantity);
+  }
 
-      emit(ShopUpdated(products: updatedProducts));
-    });
-
-    on<DecreQuantity>((event, emit) {
-      final updatedProducts = products.map((product) {
-        if (product.id == event.product.id && product.quantity > 1) {
-          // Decrement quantity directly
-          return Product(
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            category: product.category,
-            description: product.description,
-            image: product.image,
-            quantity: product.quantity - 1,
-          );
-        }
-        return product;
-      }).toList();
-
-      emit(ShopUpdated(products: updatedProducts));
-    });
+  void _onUpdateQuantity(UpdateQuantity event, Emitter<ShopState> emit) {
+    if (state is ShopLoaded) {
+      final currentState = state as ShopLoaded;
+      final updatedQuantities =
+          Map<int, int>.from(currentState.productQuantities);
+      updatedQuantities[event.productId] = event.quantity;
+      emit(ShopLoaded(productQuantities: updatedQuantities));
+    } else {
+      emit(ShopLoaded(productQuantities: {event.productId: event.quantity}));
+    }
   }
 }

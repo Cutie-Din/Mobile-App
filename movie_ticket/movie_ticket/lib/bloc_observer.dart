@@ -8,7 +8,8 @@ class MovieObserver extends BlocObserver {
     super.onChange(bloc, change);
     print(
       'Bloc: ${bloc.runtimeType}\n'
-      'Thay đổi trạng thái: ${change}\n',
+      'Thay đổi trạng thái: ${change}\n'
+      '--------------------------------------------------',
     );
   }
 
@@ -17,7 +18,8 @@ class MovieObserver extends BlocObserver {
     super.onEvent(bloc, event);
     print(
       'Bloc: ${bloc.runtimeType}\n'
-      'Sự kiện: ${bloc.runtimeType}\n',
+      'Sự kiện: ${event}\n'
+      '--------------------------------------------------',
     );
   }
 
@@ -52,6 +54,9 @@ class MovieObserver extends BlocObserver {
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    print('Bloc đã đóng: ${bloc.runtimeType}\n');
+    print(
+      'Bloc đã đóng: ${bloc.runtimeType}\n'
+      '--------------------------------------------------',
+    );
   }
 }

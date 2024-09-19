@@ -7,7 +7,8 @@ class CartObserver extends BlocObserver {
     super.onChange(bloc, change);
     print(
       'Bloc: ${bloc.runtimeType}\n'
-      'Thay đổi trạng thái: $change\n',
+      'Thay đổi trạng thái: $change\n'
+      '--------------------------------------------------',
     );
   }
 
@@ -16,14 +17,18 @@ class CartObserver extends BlocObserver {
     super.onEvent(bloc, event);
     print(
       'Bloc: ${bloc.runtimeType}\n'
-      'Sự kiện: ${event}\n',
+      'Sự kiện: $event\n'
+      '--------------------------------------------------',
     );
   }
 
   @override
   void onCreate(BlocBase bloc) {
     super.onCreate(bloc);
-    print('Bloc được tạo: ${bloc.runtimeType}');
+    print(
+      'Bloc được tạo: ${bloc.runtimeType}\n'
+      '--------------------------------------------------',
+    );
   }
 
   @override
@@ -31,6 +36,7 @@ class CartObserver extends BlocObserver {
     super.onTransition(bloc, transition);
     print(
       'State hiện tại: ${transition.currentState}\n'
+      'Event thực hiện: ${transition.event}\n'
       'State kế tiếp: ${transition.nextState}\n'
       '--------------------------------------------------',
     );
@@ -50,6 +56,9 @@ class CartObserver extends BlocObserver {
   @override
   void onClose(BlocBase bloc) {
     super.onClose(bloc);
-    print('Bloc đã đóng: ${bloc.runtimeType}\n');
+    print(
+      'Bloc đã đóng: ${bloc.runtimeType}\n'
+      '--------------------------------------------------',
+    );
   }
 }

@@ -28,4 +28,15 @@ class Product {
       quantity: 1, // Default initial quantity
     );
   }
+  Product copyWith({int? quantity}) {
+    return Product(
+      id: id,
+      title: title,
+      price: price,
+      image: image,
+      category: category,
+      description: description,
+      quantity: quantity ?? this.quantity,
+    );
+  }
 }

@@ -4,25 +4,15 @@ abstract class ShopEvent extends Equatable {
   const ShopEvent();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
-// Event for increasing the quantity of a product
-class IncreQuantity extends ShopEvent {
-  final Product product;
+class UpdateQuantity extends ShopEvent {
+  final int productId;
+  final int quantity;
 
-  const IncreQuantity(this.product);
-
-  @override
-  List<Object?> get props => [product];
-}
-
-// Event for decreasing the quantity of a product
-class DecreQuantity extends ShopEvent {
-  final Product product;
-
-  const DecreQuantity(this.product);
+  const UpdateQuantity({required this.productId, required this.quantity});
 
   @override
-  List<Object?> get props => [product];
+  List<Object> get props => [productId, quantity];
 }

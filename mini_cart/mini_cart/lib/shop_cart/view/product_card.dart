@@ -7,19 +7,15 @@ import '../models/shop_item.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
+
   const ProductCard({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ShopBloc, ShopState>(
       builder: (context, state) {
-        // Get the current product from the state or fallback to the initial product
-        final currentProduct = state is ShopUpdated
-            ? state.products.firstWhere(
-                (p) => p.id == product.id,
-                orElse: () => product,
-              )
-            : product;
+        final quantity =
+            state is ShopLoaded ? state.productQuantities[product.id] ?? 1 : 1;
 
         return Card(
           margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
@@ -29,14 +25,14 @@ class ProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.network(
-                  currentProduct.image,
+                  product.image,
                   height: 150,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  currentProduct.title,
+                  product.title,
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -44,7 +40,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '\$${currentProduct.price.toStringAsFixed(2)}',
+                  '\$${product.price.toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.green,
@@ -52,12 +48,12 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Category: ${currentProduct.category}',
+                  'Category: ${product.category}',
                   style: const TextStyle(fontSize: 14),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  currentProduct.description,
+                  product.description,
                   style: const TextStyle(fontSize: 14, color: Colors.grey),
                 ),
                 const SizedBox(height: 8),
@@ -66,21 +62,25 @@ class ProductCard extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.remove),
                       onPressed: () {
-                        context.read<ShopBloc>().add(
-                              DecreQuantity(currentProduct),
-                            );
+                        if (quantity > 1) {
+                          context.read<ShopBloc>().add(UpdateQuantity(
+                                productId: product.id,
+                                quantity: quantity - 1,
+                              ));
+                        }
                       },
                     ),
                     Text(
-                      'Quantity: ${currentProduct.quantity}',
+                      'Quantity: $quantity',
                       style: const TextStyle(fontSize: 16),
                     ),
                     IconButton(
                       icon: const Icon(Icons.add),
                       onPressed: () {
-                        context.read<ShopBloc>().add(
-                              IncreQuantity(currentProduct),
-                            );
+                        context.read<ShopBloc>().add(UpdateQuantity(
+                              productId: product.id,
+                              quantity: quantity + 1,
+                            ));
                       },
                     ),
                   ],
@@ -89,13 +89,13 @@ class ProductCard extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     context.read<CartBloc>().add(AddCart(
-                          id: currentProduct.id,
-                          title: currentProduct.title,
-                          price: currentProduct.price,
-                          category: currentProduct.category,
-                          description: currentProduct.description,
-                          image: currentProduct.image,
-                          quantity: currentProduct.quantity,
+                          id: product.id,
+                          title: product.title,
+                          price: product.price,
+                          category: product.category,
+                          description: product.description,
+                          image: product.image,
+                          quantity: quantity,
                         ));
                   },
                   child: const Text('Add Cart'),
