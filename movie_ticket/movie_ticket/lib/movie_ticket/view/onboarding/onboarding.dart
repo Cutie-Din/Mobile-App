@@ -17,7 +17,9 @@ class OnboardingScreen extends StatelessWidget {
           const OnboardingPage(
             image: AppIll.ill_Logo,
             title: AppText.onBoarding_Title,
-            subtitle: AppText.onBoarding_Subtitle,
+            subtitle: AppText.onBoarding_Subtitle_1 +
+                "\n" +
+                AppText.onBoarding_Subtitle_2,
           ),
           const OnboardingButton(),
         ],

@@ -15,37 +15,39 @@ class OnboardingButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 400),
-          Material(
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: () {
+          Container(
+            height: 61,
+            width: 255,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: <Color>[
+                  Color(0xFF449EFF),
+                  Color(0xFF1DC7F7),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: ElevatedButton(
+              onPressed: () {
                 Navigator.pushNamed(context, '/signIn');
               },
-              borderRadius: BorderRadius.circular(30),
-              child: Container(
-                height: 61,
-                width: 255,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: <Color>[
-                      Color(0xFF449EFF),
-                      Color(0xFF1DC7F7),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Center(
-                  child: Text(
-                    AppText.onBoarding_Button,
-                    style: TextStyle(
-                      color: AppColors.whiteBgr,
-                      fontFamily: "Montserrat",
-                      fontSize: AppSizes.fontSizeSm,
-                      fontWeight: AppFonts.regular,
-                    ),
-                  ),
+              ),
+              child: Text(
+                AppText.onBoarding_Button,
+                style: TextStyle(
+                  color: AppColors.whiteBgr,
+                  fontFamily: "Montserrat",
+                  fontSize: AppSizes.fontSizeSm,
+                  fontWeight: AppFonts.regular,
                 ),
               ),
             ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_ticket/movie_ticket/view/authentication/sign_in/sign_in.dart';
 import 'package:movie_ticket/movie_ticket/view/onboarding/onboarding.dart';
+import 'package:movie_ticket/splash.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
         '/signIn': (context) => SignInScreen(),
       },
       debugShowCheckedModeBanner: false,
-      home: const OnboardingScreen(),
+      home: const SplashScreen(),
     );
   }
 }
