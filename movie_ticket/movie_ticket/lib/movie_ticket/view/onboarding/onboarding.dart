@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movie_ticket/movie_ticket/view/onboarding/widgets/onboarding_button.dart';
 import 'package:movie_ticket/movie_ticket/view/onboarding/widgets/onboarding_page.dart';
 import 'package:movie_ticket/util/constants/colors.dart';
 import 'package:movie_ticket/util/constants/icon&ill_strings.dart';
@@ -21,7 +20,7 @@ class OnboardingScreen extends StatelessWidget {
                 "\n" +
                 AppText.onBoarding_Subtitle_2,
           ),
-          const OnboardingButton(),
+          // const OnboardingButton(),
         ],
       ),
     );

@@ -15,6 +15,7 @@ dependencies:
   get:
   intl:
   animated_splash_screen:
+  flutter_svg:
 
 dev_dependencies:
   flutter_test:
@@ -25,56 +26,56 @@ flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "lib/assets/Illustrations/logo.png"
-  adaptive_icon_foreground: "lib/assets/Illustrations/logo.png"
+  image_path: "lib/assets/Illustrations/logo.svg"
+  adaptive_icon_foreground: "lib/assets/Illustrations/logo.svg"
 
 flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/Banners/Movie_banner_1.png
-    - lib/assets/Banners/Movie_banner_2.png
-    - lib/assets/Banners/Movie_banner_1.png
-    - lib/assets/Icons/Add.png
-    - lib/assets/Icons/back.png
-    - lib/assets/Icons/Cancel.png
-    - lib/assets/Icons/Control.png
-    - lib/assets/Icons/Home_active.png
-    - lib/assets/Icons/Home_unactive.png
-    - lib/assets/Icons/location.png
-    - lib/assets/Icons/next.png
-    - lib/assets/Icons/Play.png
-    - lib/assets/Icons/Pocket_active.png
-    - lib/assets/Icons/Pocket_unactive.png
-    - lib/assets/Icons/Search.png
-    - lib/assets/Icons/Ticket_active.png
-    - lib/assets/Icons/Ticket_unactive.png
-    - lib/assets/Icons/top_up.png
-    - lib/assets/Illustrations/Change_Language.png
-    - lib/assets/Illustrations/Edit_Profile.png
-    - lib/assets/Illustrations/Help_Centre.png
-    - lib/assets/Illustrations/illustration_1.png
-    - lib/assets/Illustrations/illustration_2.png
-    - lib/assets/Illustrations/logo.png
-    - lib/assets/Illustrations/My_Wallet.png
-    - lib/assets/Illustrations/photo_profile.png
-    - lib/assets/Illustrations/Rate_Flutix_App.png
-    - lib/assets/Illustrations/Rating.png
-    - lib/assets/Images/Cast/Gal.png
-    - lib/assets/Images/Cast/John.png
-    - lib/assets/Images/Cast/Jack.png
-    - lib/assets/Images/Cast/Sarah.png
-    - lib/assets/Images/Cast/Taraji.png
-    - lib/assets/Images/Image/Barcode.png
-    - lib/assets/Images/Movie_poster/Dragon.png
-    - lib/assets/Images/Movie_poster/Frozen.png
-    - lib/assets/Images/Movie_poster/Onward.png
-    - lib/assets/Images/Movie_poster/Ralph.png
-    - lib/assets/Images/Movie_poster/Scoob.png
-    - lib/assets/Images/Movie_poster/Spongebob.png
-    - lib/assets/Images/photo/profile.png
-    - lib/assets/Images/Trailer/trailer_1.png
-    - lib/assets/Images/Trailer/trailer_2.png
+    - lib/assets/Banners/Movie_banner_1.svg
+    - lib/assets/Banners/Movie_banner_2.svg
+    - lib/assets/Banners/Movie_banner_1.svg
+    - lib/assets/Icons/Add.svg
+    - lib/assets/Icons/back.svg
+    - lib/assets/Icons/Cancel.svg
+    - lib/assets/Icons/Control.svg
+    # - lib/assets/Icons/Home_active.svg
+    # - lib/assets/Icons/Home_unactive.svg
+    - lib/assets/Icons/location.svg
+    - lib/assets/Icons/next.svg
+    - lib/assets/Icons/Play.svg
+    # - lib/assets/Icons/Pocket_active.svg
+    # - lib/assets/Icons/Pocket_unactive.svg
+    - lib/assets/Icons/Search.svg
+    # - lib/assets/Icons/Ticket_active.svg
+    # - lib/assets/Icons/Ticket_unactive.svg
+    # - lib/assets/Icons/top_up.svg
+    - lib/assets/Illustrations/Change_Language.svg
+    - lib/assets/Illustrations/Edit_Profile.svg
+    - lib/assets/Illustrations/Help_Centre.svg
+    - lib/assets/Illustrations/illustration_1.svg
+    - lib/assets/Illustrations/illustration_2.svg
+    - lib/assets/Illustrations/logo.svg
+    - lib/assets/Illustrations/My_Wallet.svg
+    - lib/assets/Illustrations/photo_profile.svg
+    - lib/assets/Illustrations/Rate_Flutix_App.svg
+    - lib/assets/Illustrations/Rating.svg
+    - lib/assets/Images/Cast/Gal.svg
+    - lib/assets/Images/Cast/John.svg
+    - lib/assets/Images/Cast/Jack.svg
+    - lib/assets/Images/Cast/Sarah.svg
+    - lib/assets/Images/Cast/Taraji.svg
+    - lib/assets/Images/Image/Barcode.svg
+    - lib/assets/Images/Movie_poster/Dragon.svg
+    - lib/assets/Images/Movie_poster/Frozen.svg
+    - lib/assets/Images/Movie_poster/Onward.svg
+    - lib/assets/Images/Movie_poster/Ralph.svg
+    - lib/assets/Images/Movie_poster/Scoob.svg
+    - lib/assets/Images/Movie_poster/Spongebob.svg
+    - lib/assets/Images/photo/profile.svg
+    - lib/assets/Images/Trailer/trailer_1.svg
+    - lib/assets/Images/Trailer/trailer_2.svg
 
   fonts:
     - family: Montserrat

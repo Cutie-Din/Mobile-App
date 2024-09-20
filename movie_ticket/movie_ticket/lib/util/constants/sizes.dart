@@ -52,5 +52,6 @@ class AppSizes {
   static const double spaceBtwInputFields = 16.0;
 
   // OnBoarding
-  static const double onBoarding = 110.0;
+  static const double onBoarding_1 = 50.0;
+  static const double onBoarding_2 = 100.0;
 }

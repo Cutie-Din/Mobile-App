@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_ticket/movie_ticket/view/onboarding/onboarding.dart';
 import 'package:movie_ticket/util/constants/icon&ill_strings.dart';
 
@@ -10,14 +11,16 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSplashScreen(
-      splash: Center(
-        child: Image.asset(AppIll.ill_Logo),
+    return SafeArea(
+      child: AnimatedSplashScreen(
+        splash: Center(
+          child: SvgPicture.asset(AppIll.ill_Logo),
+        ),
+        duration: 1500,
+        nextScreen: const OnboardingScreen(),
+        backgroundColor: AppColors.darkBgr_1,
+        splashIconSize: 150,
       ),
-      duration: 1500,
-      nextScreen: const OnboardingScreen(),
-      backgroundColor: AppColors.darkBgr_1,
-      splashIconSize: 150,
     );
   }
 }
