@@ -8,7 +8,7 @@ class AppColors {
 
   // Gradient Color
   static const Gradient non_active = LinearGradient(
-    colors: [Color(0xFF48CAE71A)],
+    colors: [Color(0xFF48CAE7)],
   );
 
   static const Gradient main_gradient = LinearGradient(

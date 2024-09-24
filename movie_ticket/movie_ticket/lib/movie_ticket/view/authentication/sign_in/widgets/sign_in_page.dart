@@ -7,8 +7,9 @@ import '../../../../../util/constants/icon&ill_strings.dart';
 import '../../../../../util/constants/sizes.dart';
 import '../../../../../util/constants/text_strings.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   final String image, subtitle;
+
   const SignInPage({
     super.key,
     required this.image,
@@ -16,13 +17,51 @@ class SignInPage extends StatelessWidget {
   });
 
   @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  bool isEmailFocused = false;
+  bool isPasswordFocused = false;
+
+  // Controllers to track text input
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  // Function to check if both fields have text
+  bool get _hasTextInFields {
+    return emailController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Add listeners to detect changes in text fields
+    emailController.addListener(_updateButtonState);
+    passwordController.addListener(_updateButtonState);
+  }
+
+  void _updateButtonState() {
+    // Calls setState when text is updated to refresh the button color
+    setState(() {});
+  }
+
+  @override
+  void dispose() {
+    // Dispose controllers when not needed
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(AppSizes.defaultSpace),
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Align all children to the left
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: AppSizes.onBoarding_1,
@@ -39,12 +78,166 @@ class SignInPage extends StatelessWidget {
             ),
             Text(
               AppText.signIn_Title_1 + "\n" + AppText.signIn_Title_2,
-              textAlign: TextAlign.left, // Align text to the left
               style: TextStyle(
                 color: AppColors.whiteBgr,
                 fontFamily: "Montserrat",
                 fontSize: AppSizes.fontSizeLg,
                 fontWeight: AppFonts.semiBold,
+              ),
+            ),
+            const SizedBox(
+              height: AppSizes.spaceBtwSections,
+            ),
+            // Email TextFormField with dynamic floating label color
+            Focus(
+              onFocusChange: (hasFocus) {
+                setState(() {
+                  isEmailFocused = hasFocus;
+                });
+              },
+              child: TextFormField(
+                controller: emailController, // Attach controller
+                decoration: InputDecoration(
+                  labelText: AppText.signIn_Email,
+                  labelStyle: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Montserrat",
+                  ),
+                  hintStyle: const TextStyle(color: Colors.white70),
+                  floatingLabelStyle: TextStyle(
+                    color: isEmailFocused ? AppColors.mainColor : Colors.white,
+                    fontSize: AppSizes.fontSizeMd,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.mainColor,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  filled: false, // Remove background fill from TextFormField
+                ),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Montserrat",
+                ),
+                keyboardType: TextInputType.emailAddress,
+              ),
+            ),
+            const SizedBox(
+              height: AppSizes.spaceBtwInputFields,
+            ),
+            // Password TextFormField with dynamic floating label color
+            Focus(
+              onFocusChange: (hasFocus) {
+                setState(() {
+                  isPasswordFocused = hasFocus;
+                });
+              },
+              child: TextFormField(
+                controller: passwordController, // Attach controller
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: AppText.signIn_Pass,
+                  labelStyle: const TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Montserrat",
+                  ),
+                  hintStyle: const TextStyle(color: Colors.white70),
+                  floatingLabelStyle: TextStyle(
+                    color:
+                        isPasswordFocused ? AppColors.mainColor : Colors.white,
+                    fontSize: AppSizes.fontSizeMd,
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(
+                      color: Colors.white,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: AppColors.mainColor,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  filled: false, // Remove background fill from TextFormField
+                ),
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+            const SizedBox(
+              height: AppSizes.spaceBtwInputFields,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // Handle forget password action here
+                  },
+                  child: Text(
+                    AppText.signIn_Forgot,
+                    style: TextStyle(
+                      color: AppColors.whiteBgr,
+                      fontFamily: "Montserrat",
+                      fontSize: AppSizes.fontSizeSm,
+                      fontWeight: AppFonts.semiBold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: AppSizes.spaceBtwInputFields * 2,
+            ),
+            Center(
+              child: SizedBox(
+                width: 255,
+                height: 61,
+                child: ElevatedButton(
+                  onPressed: _hasTextInFields
+                      ? () {
+                          // Handle button press
+                        }
+                      : null, // Disable button if fields are empty
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.resolveWith<Color>(
+                      (Set<WidgetState> states) {
+                        if (!states.contains(WidgetState.disabled)) {
+                          return const Color(0xFF449EFF);
+                        }
+                        return AppColors.darkBgr_2;
+                      },
+                    ),
+                    padding: WidgetStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
+                    ),
+                    shape: WidgetStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    AppText.signIn_Login,
+                    style: TextStyle(
+                      color: AppColors.whiteBgr,
+                      fontFamily: "Montserrat",
+                      fontSize: AppSizes.fontSizeSm,
+                      fontWeight: AppFonts.regular,
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
