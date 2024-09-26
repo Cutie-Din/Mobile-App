@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movie_ticket/util/constants/images_strings.dart';
+import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 import '../../../../../util/constants/colors.dart';
 import '../../../../../util/constants/fonts.dart';
@@ -64,7 +66,7 @@ class _SignInPageState extends State<SignInPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
-              height: AppSizes.onBoarding_1,
+              height: AppSizes.onBoarding_1 * 1.4,
             ),
             SizedBox(
               height: 140,
@@ -214,7 +216,7 @@ class _SignInPageState extends State<SignInPage> {
                     backgroundColor: WidgetStateProperty.resolveWith<Color>(
                       (Set<WidgetState> states) {
                         if (!states.contains(WidgetState.disabled)) {
-                          return const Color(0xFF449EFF);
+                          return AppColors.mainColor;
                         }
                         return AppColors.darkBgr_2;
                       },
@@ -239,6 +241,65 @@ class _SignInPageState extends State<SignInPage> {
                   ),
                 ),
               ),
+            ),
+            const SizedBox(
+              height: AppSizes.spaceBtwSections,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  AppText.signIn_Create + " ",
+                  style: TextStyle(
+                    color: AppColors.greyBgr_1,
+                    fontFamily: "Montserrat",
+                    fontSize: AppSizes.fontSizeSm,
+                    fontWeight: AppFonts.regular,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/signUp');
+                  },
+                  child: GradientText(
+                    AppText.signIn_SignUp_nav,
+                    style: TextStyle(
+                      fontFamily: "Montserrat",
+                      fontSize: AppSizes.fontSizeSm,
+                      fontWeight: AppFonts.regular,
+                    ),
+                    colors: [
+                      Color(0xFF449EFF),
+                      Color(0xFF1DC7F7),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: AppSizes.spaceBtwSections,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 64,
+                  width: 64,
+                  child: SvgPicture.asset(
+                    AppImages.google,
+                  ),
+                ),
+                const SizedBox(
+                  width: AppSizes.spaceBtwItems * 2.5,
+                ),
+                SizedBox(
+                  height: 64,
+                  width: 64,
+                  child: SvgPicture.asset(
+                    AppImages.fb,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

@@ -41,6 +41,10 @@ class AppImages {
 
   // Image Barcode
   static const String barcode = "lib/assets/Images/Image/Barcode.svg";
+
+  // Image Button
+  static const String google = "lib/assets/Images/Button/Google.svg";
+  static const String fb = "lib/assets/Images/Button/Facebook.svg";
 }
 
 // --------------------------------------------------------------------------//

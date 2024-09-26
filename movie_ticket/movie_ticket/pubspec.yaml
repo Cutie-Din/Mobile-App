@@ -16,6 +16,8 @@ dependencies:
   intl:
   animated_splash_screen:
   flutter_svg:
+  simple_gradient_text:
+  image_picker:
 
 dev_dependencies:
   flutter_test:
@@ -76,6 +78,8 @@ flutter:
     - lib/assets/Images/photo/profile.svg
     - lib/assets/Images/Trailer/trailer_1.svg
     - lib/assets/Images/Trailer/trailer_2.svg
+    - lib/assets/Images/Button/Facebook.svg
+    - lib/assets/Images/Button/Google.svg
 
   fonts:
     - family: Montserrat

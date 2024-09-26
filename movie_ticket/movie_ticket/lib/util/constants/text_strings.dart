@@ -14,4 +14,13 @@ class AppText {
   static const String signIn_Login = "Login";
   static const String signIn_Create = "Create new account?";
   static const String signIn_SignUp_nav = "Sign Up";
+
+  // Text SignUp
+  static const String signUp_create = "Create New";
+  static const String signUp_urAcc = "Your Account";
+  static const String signUp_fullname = "Full Name";
+  static const String signUp_email = "Email Address";
+  static const String signUp_pass = "Password";
+  static const String signUp_confirm = "Confirm Password";
+  static const String signUp_signIn = "Sign In";
 }
