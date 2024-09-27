@@ -68,11 +68,14 @@ class _SignInPageState extends State<SignInPage> {
             const SizedBox(
               height: AppSizes.onBoarding_1 * 1.4,
             ),
-            SizedBox(
-              height: 140,
-              width: 140,
-              child: SvgPicture.asset(
-                AppIll.ill_Logo,
+            Transform.translate(
+              offset: const Offset(-25, 0),
+              child: SizedBox(
+                height: 140,
+                width: 140,
+                child: SvgPicture.asset(
+                  AppIll.ill_Logo,
+                ),
               ),
             ),
             const SizedBox(

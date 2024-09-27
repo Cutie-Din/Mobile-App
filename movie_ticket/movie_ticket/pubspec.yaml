@@ -18,6 +18,7 @@ dependencies:
   flutter_svg:
   simple_gradient_text:
   image_picker:
+  equatable:
 
 dev_dependencies:
   flutter_test:

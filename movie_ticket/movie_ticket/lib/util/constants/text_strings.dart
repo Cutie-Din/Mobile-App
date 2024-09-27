@@ -23,4 +23,19 @@ class AppText {
   static const String signUp_pass = "Password";
   static const String signUp_confirm = "Confirm Password";
   static const String signUp_signIn = "Sign In";
+
+  // Text User Profilling
+  static const String up_selectUr = "Select Your";
+  static const String up_Genre = "Favorite Genre";
+  static const String up_Lang = "Favorite Language";
+  static const String up_Horror = "Horror";
+  static const String up_Action = "Action";
+  static const String up_Drama = "Drama";
+  static const String up_War = "War";
+  static const String up_Comedy = "Comedy";
+  static const String up_Crime = "Crime";
+  static const String up_VN = "VietNam";
+  static const String up_EN = "English";
+  static const String up_JP = "Japanese";
+  static const String up_KR = "Korean";
 }

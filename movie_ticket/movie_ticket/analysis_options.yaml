@@ -10,6 +10,9 @@ analyzer:
     file_names: ignore
     prefer_const_literals_to_create_immutables: ignore
     prefer_interpolation_to_compose_strings: ignore
+    override_on_non_overriding_member: ignore
+    use_super_parameters: ignore
+    unused_local_variable: ignore
 include: package:flutter_lints/flutter.yaml
 
 linter:

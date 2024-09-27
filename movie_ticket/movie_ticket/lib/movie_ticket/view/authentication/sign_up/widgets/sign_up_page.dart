@@ -127,19 +127,22 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
 
-                  GestureDetector(
-                    onTap: _selectedImage == null ? _pickImage : _removeImage,
-                    child: SizedBox(
-                      height: 28,
-                      width: 28,
-                      child: CircleAvatar(
-                        backgroundColor: _selectedImage == null
-                            ? AppColors.mainColor
-                            : AppColors.error,
-                        child: SvgPicture.asset(
-                          _selectedImage == null
-                              ? AppIcon.icon_add
-                              : AppIcon.icon_cancel,
+                  Transform.translate(
+                    offset: Offset(33, 75),
+                    child: GestureDetector(
+                      onTap: _selectedImage == null ? _pickImage : _removeImage,
+                      child: SizedBox(
+                        height: 28,
+                        width: 28,
+                        child: CircleAvatar(
+                          backgroundColor: _selectedImage == null
+                              ? AppColors.mainColor
+                              : AppColors.error,
+                          child: SvgPicture.asset(
+                            _selectedImage == null
+                                ? AppIcon.icon_add
+                                : AppIcon.icon_cancel,
+                          ),
                         ),
                       ),
                     ),
@@ -336,7 +339,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: ElevatedButton(
                   onPressed: _hasTextInFields
                       ? () {
-                          // Handle button press
+                          Navigator.pushNamed(context, '/userProfilling');
                         }
                       : null, // Disable button if fields are empty
                   style: ButtonStyle(
