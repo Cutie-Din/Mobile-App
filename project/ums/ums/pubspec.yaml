@@ -1,0 +1,35 @@
+name: ums
+description: "University Management System"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  animated_splash_screen:
+  flutter_svg:
+  flutter_bloc:
+  bloc:
+  equatable:
+  page_transition:
+    
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+
+  uses-material-design: true
+  assets:
+  - assets/images/logo.svg
+  - assets/images/onboarding_1.gif
+  - assets/images/onboarding_2.gif
+  - assets/images/onboarding_3.gif
