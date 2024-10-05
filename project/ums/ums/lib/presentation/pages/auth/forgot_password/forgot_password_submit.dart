@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ums/presentation/pages/auth/forgot_password/widgets/forgot_password_otp_form.dart';
+import 'package:ums/presentation/pages/auth/forgot_password/widgets/forgot_password_form.dart';
+import 'package:ums/presentation/pages/auth/forgot_password/widgets/forgot_password_submit.dart';
 
-import '../../../bloc/auth/sign_in/sign_in_bloc.dart';
-import 'widgets/sign_in_logo_container.dart';
-import 'widgets/sign_in_logo.dart';
-import 'widgets/sign_in_form.dart';
+import 'widgets/forgot_password_logo_container.dart';
 
-class SignInScreen extends StatelessWidget {
+class ForgotPasswordSubmitScreen extends StatelessWidget {
+  const ForgotPasswordSubmitScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +21,7 @@ class SignInScreen extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-              child: SignInForm(),
+              child: ForgotPasswordFormSubmit(),
             ),
           ),
         ],

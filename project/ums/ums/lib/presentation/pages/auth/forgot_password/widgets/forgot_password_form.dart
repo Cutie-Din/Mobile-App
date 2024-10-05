@@ -5,33 +5,30 @@ import '../../../../../core/constants/fonts.dart';
 import '../../../../../core/constants/sizes.dart';
 import '../../../../../core/constants/text_strings.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({Key? key}) : super(key: key);
+class ForgotPasswordForm extends StatefulWidget {
+  const ForgotPasswordForm({Key? key}) : super(key: key);
 
   @override
-  _SignInFormState createState() => _SignInFormState();
+  _ForgotPasswordFormState createState() => _ForgotPasswordFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
   final TextEditingController _studentIdController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
     _studentIdController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
-  void _signIn() {
+  void _submitForgotPassword() {
     String studentId = _studentIdController.text;
-    String password = _passwordController.text;
+    // Logic xử lý khi người dùng bấm gửi yêu cầu quên mật khẩu
   }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      // Bọc trong SingleChildScrollView
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -46,17 +43,6 @@ class _SignInFormState extends State<SignInForm> {
               ),
             ),
           ),
-          const SizedBox(height: AppSizes.sm * 2),
-          TextField(
-            controller: _passwordController,
-            obscureText: true,
-            decoration: InputDecoration(
-              labelText: AppText.sign_In_pass,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
           const SizedBox(height: AppSizes.sm * 3),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -66,9 +52,11 @@ class _SignInFormState extends State<SignInForm> {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
             ),
-            onPressed: _signIn,
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, '/forgot-otp');
+            },
             child: const Text(
-              AppText.sign_In,
+              AppText.forgot_btn_1,
               style: TextStyle(
                 fontFamily: "Montserrat",
                 fontSize: AppFonts.fontSizeMd,
@@ -79,10 +67,10 @@ class _SignInFormState extends State<SignInForm> {
           const SizedBox(height: AppSizes.sm * 3),
           TextButton(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/forgot');
+              Navigator.pushReplacementNamed(context, '/sign-in');
             },
             child: const Text(
-              AppText.sign_In_forgot,
+              AppText.cancel,
               style: TextStyle(fontFamily: "Montserrat", color: AppColors.main),
             ),
           ),
