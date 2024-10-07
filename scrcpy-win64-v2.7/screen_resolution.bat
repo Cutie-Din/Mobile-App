@@ -1,0 +1,1 @@
+scrcpy --turn-screen-off --disable-screensaver --stay-awake --video-codec=h265 --video-bit-rate=8M --max-fps=60 --window-height=715 --window-y=15
