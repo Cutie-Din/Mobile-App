@@ -30,6 +30,7 @@ flutter:
   uses-material-design: true
   assets:
   - assets/images/logo.svg
+  - assets/images/avatar.svg
   - assets/images/onboarding_1.gif
   - assets/images/onboarding_2.gif
   - assets/images/onboarding_3.gif

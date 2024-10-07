@@ -7,4 +7,7 @@ class AppImg {
   static const String onboarding_1 = "assets/images/onboarding_1.gif";
   static const String onboarding_2 = "assets/images/onboarding_2.gif";
   static const String onboarding_3 = "assets/images/onboarding_3.gif";
+
+  // String avatar
+  static const String avatar = "assets/images/avatar.svg";
 }

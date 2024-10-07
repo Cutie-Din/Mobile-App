@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ums/presentation/pages/auth/forgot_password/forgot_password.dart';
 import 'package:ums/presentation/pages/auth/forgot_password/forgot_password_otp.dart';
 import 'package:ums/presentation/pages/auth/forgot_password/forgot_password_submit.dart';
+import 'package:ums/presentation/pages/menu/mainmenu.dart';
 
 import 'presentation/pages/auth/sign_in/sign_in.dart';
 import 'presentation/pages/onboarding/onboarding.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
             ForgotPasswordOTPScreen(), // Màn hình quên mật khẩu xác thực mã OTP
         '/forgot-submit': (context) =>
             ForgotPasswordSubmitScreen(), // Màn hình quên mật khẩu xác nhận
+        '/main-menu': (context) => MainmenuScreen(), // Màn hình menu chính
       },
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),

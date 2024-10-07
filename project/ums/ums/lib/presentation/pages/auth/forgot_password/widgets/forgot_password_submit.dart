@@ -90,7 +90,7 @@ class _ForgotPasswordFormSubmitState extends State<ForgotPasswordFormSubmit> {
               ),
             ),
           ),
-          const SizedBox(height: AppSizes.sm * 3),
+          const SizedBox(height: AppSizes.sm * 1.5),
           TextButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/sign-in');

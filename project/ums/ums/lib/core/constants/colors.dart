@@ -5,4 +5,5 @@ class AppColors {
   AppColors._();
   static const Color bg = Color(0xFFFFFFFF);
   static const Color main = Color(0xFF2F6BFF);
+  static const Color err = Color(0xFFFF5353);
 }

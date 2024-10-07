@@ -17,9 +17,14 @@ class AppText {
   static const String forgot = "Quên mật khẩu";
   static const String forgot_msv = "Mã sinh viên";
   static const String forgot_mxn = "Mã xác nhận";
+  static const String forgot_mxt = "Nhập mã xác thực";
+  static const String forgot_update = "Cập nhật mật khẩu";
   static const String forgot_btn_1 = "Lấy mã xác nhận";
   static const String forgot_btn_2 = "Xác thực";
   static const String forgot_btn_3 = "Xác nhận";
   static const String forgot_new_pass_1 = "Nhập mật khẩu mới";
   static const String forgot_new_pass_2 = "Nhập lại mật khẩu mới";
+
+  // Text menu
+  static const String menu_logOut = "Đăng xuất";
 }

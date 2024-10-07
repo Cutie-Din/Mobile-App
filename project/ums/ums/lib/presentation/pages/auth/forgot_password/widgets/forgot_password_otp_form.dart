@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../core/constants/colors.dart';
-import '../../../../../core/constants/fonts.dart';
-import '../../../../../core/constants/sizes.dart';
-import '../../../../../core/constants/text_strings.dart';
+import 'package:ums/core/constants/validators.dart';
+import 'package:ums/core/constants/colors.dart';
+import 'package:ums/core/constants/fonts.dart';
+import 'package:ums/core/constants/sizes.dart';
+import 'package:ums/core/constants/text_strings.dart';
 
 class ForgotPasswordFormOTP extends StatefulWidget {
   const ForgotPasswordFormOTP({Key? key}) : super(key: key);
@@ -15,6 +15,7 @@ class ForgotPasswordFormOTP extends StatefulWidget {
 class _ForgotPasswordFormOTPState extends State<ForgotPasswordFormOTP> {
   final List<TextEditingController> _otpControllers =
       List.generate(6, (_) => TextEditingController());
+  bool _hasError = false;
 
   @override
   void dispose() {
@@ -25,16 +26,15 @@ class _ForgotPasswordFormOTPState extends State<ForgotPasswordFormOTP> {
   }
 
   void _submitOTP() {
-    String otp = _otpControllers
-        .map((controller) => controller.text)
-        .join(); // Kết hợp tất cả các giá trị OTP lại
-
-    if (otp.length == 6) {
-      // Xử lý logic khi OTP hợp lệ (đúng 6 chữ số)
+    if (AppValidator.validateOTP(_otpControllers)) {
+      // Logic xử lý khi OTP hợp lệ
+      Navigator.pushReplacementNamed(context, '/forgot-submit');
     } else {
-      // Hiển thị cảnh báo hoặc thông báo lỗi
+      setState(() {
+        _hasError = true; // Đánh dấu rằng có lỗi để thay đổi giao diện
+      });
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please enter a valid 6-digit OTP")),
+        const SnackBar(content: Text("Vui lòng nhập mã xác thực")),
       );
     }
   }
@@ -51,12 +51,21 @@ class _ForgotPasswordFormOTPState extends State<ForgotPasswordFormOTP> {
           counterText: '', // Ẩn bộ đếm ký tự
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(
+              color: _hasError ? Colors.red : AppColors.main, // Đổi màu viền khi có lỗi
+            ),
           ),
         ),
         onChanged: (value) {
+          setState(() {
+            _hasError = false; // Reset lỗi khi người dùng nhập lại
+          });
+
           if (value.length == 1 && index < 5) {
             FocusScope.of(context)
                 .nextFocus(); // Tự động chuyển sang ô tiếp theo khi nhập xong 1 chữ số
+          } else if (value.isEmpty && index > 0) {
+            FocusScope.of(context).previousFocus(); // Quay lại ô trước nếu ô hiện tại trống
           }
         },
       ),
@@ -70,6 +79,16 @@ class _ForgotPasswordFormOTPState extends State<ForgotPasswordFormOTP> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: AppSizes.sm * 0.5),
+          const Text(
+            AppText.forgot_mxt,
+            style: TextStyle(
+              fontFamily: "Montserrat",
+              fontSize: AppFonts.fontSizeSm * 2,
+              fontWeight: AppFonts.bold,
+              color: AppColors.main,
+            ),
+          ),
+          const SizedBox(height: AppSizes.sm * 3),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Cách đều các ô
             children: List.generate(6, (index) => _buildOTPField(index)), // Tạo 6 ô OTP
@@ -83,9 +102,7 @@ class _ForgotPasswordFormOTPState extends State<ForgotPasswordFormOTP> {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
             ),
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/forgot-submit');
-            },
+            onPressed: _submitOTP,
             child: const Text(
               AppText.forgot_btn_2,
               style: TextStyle(
@@ -95,7 +112,7 @@ class _ForgotPasswordFormOTPState extends State<ForgotPasswordFormOTP> {
               ),
             ),
           ),
-          const SizedBox(height: AppSizes.sm * 3),
+          const SizedBox(height: AppSizes.sm * 1.5),
           TextButton(
             onPressed: () {
               Navigator.pushReplacementNamed(context, '/sign-in');

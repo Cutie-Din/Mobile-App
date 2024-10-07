@@ -19,7 +19,7 @@ class SignInScreen extends StatelessWidget {
           // Phần form đăng nhập ở dưới
           Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
               child: SignInForm(),
             ),
           ),
