@@ -43,9 +43,7 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
       animType: AnimType.scale,
       title: 'Đăng xuất',
       desc: 'Bạn có chắc chắn muốn đăng xuất?',
-      btnCancelOnPress: () {
-        Navigator.pop(context);
-      },
+      btnCancelOnPress: () {},
       btnOkOnPress: () {
         Navigator.pushReplacementNamed(context, '/sign-in');
       },
