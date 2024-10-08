@@ -3,6 +3,11 @@ class AppText {
   // Text demo
   static const String demo = "lorem ipsum";
 
+  // Text OnBoarding
+  static const String ob_1 = "Thuận tiện, nhanh chóng";
+  static const String ob_2 = "Quản lý tối ưu";
+  static const String ob_3 = "Luôn đồng hành cùng sinh viên";
+
   // Text Cancel & Back
   static const String cancel = "Huỷ";
   static const String back = "Quay lại";

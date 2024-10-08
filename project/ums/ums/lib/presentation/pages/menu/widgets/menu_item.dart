@@ -11,21 +11,35 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: AppSizes.sm * 3),
-        CircleAvatar(
-          backgroundColor: AppColors.bg,
-          radius: 35,
-          child: Icon(icon, color: AppColors.main, size: 50),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20), // Set the border radius to round the corners
+      child: Container(
+        color: AppColors.bg, // Set the background color to white
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Space the items evenly
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                height: AppSizes.sm,
+              ),
+              CircleAvatar(
+                backgroundColor: AppColors.main, // Set the CircleAvatar's background color
+                radius: 35,
+                child: Icon(icon, color: AppColors.bg, size: 50),
+              ),
+              const SizedBox(
+                height: AppSizes.sm,
+              ),
+              Text(
+                label,
+                style: TextStyle(
+                    color: AppColors.main, fontSize: 12), // Adjust text color to match the theme
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: AppSizes.sm),
-        Text(
-          label,
-          style: TextStyle(color: AppColors.bg, fontSize: 12),
-        ),
-      ],
+      ),
     );
   }
 }

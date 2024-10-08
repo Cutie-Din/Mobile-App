@@ -14,7 +14,7 @@ class OnboardingScreen extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(), // Disable swipe navigation
         children: [
           OnboardingPage(
-            description: AppText.demo,
+            description: AppText.ob_1,
             gifFile: AppImg.onboarding_1, // Update to use gifFile
             onNext: () {
               _pageController.nextPage(
@@ -25,7 +25,7 @@ class OnboardingScreen extends StatelessWidget {
             isLastPage: false,
           ),
           OnboardingPage(
-            description: AppText.demo,
+            description: AppText.ob_2,
             gifFile: AppImg.onboarding_2, // Update to use gifFile
             onNext: () {
               _pageController.nextPage(
@@ -36,7 +36,7 @@ class OnboardingScreen extends StatelessWidget {
             isLastPage: false,
           ),
           OnboardingPage(
-            description: AppText.demo,
+            description: AppText.ob_3,
             gifFile: AppImg.onboarding_3, // Update to use gifFile
             onNext: () {
               // Navigate to SignInScreen when onboarding is complete

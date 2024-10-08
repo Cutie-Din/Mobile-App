@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ums/core/constants/colors.dart';
+import '../../../../core/constants/fonts.dart';
 import '../../../../core/constants/sizes.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -26,10 +27,15 @@ class OnboardingPage extends StatelessWidget {
         children: [
           Text(
             description,
-            style: TextStyle(fontSize: 18, color: Colors.black87),
+            style: TextStyle(
+              fontFamily: "Montserrat",
+              fontSize: AppFonts.fontSizeLg,
+              fontWeight: AppFonts.bold,
+              color: AppColors.main,
+            ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSizes.lg),
+          const SizedBox(height: AppSizes.sm * 4),
           Image.asset(
             gifFile, // Use gifFile for loading GIFs
           ),
