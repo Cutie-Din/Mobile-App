@@ -37,70 +37,75 @@ class _SignInFormState extends State<SignInForm> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: AppSizes.sm * 0.5),
-            TextFormField(
-              controller: _studentIdController,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: AppText.sign_In_msv,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+      child: Padding(
+        padding: EdgeInsets.only(
+            bottom:
+                MediaQuery.of(context).viewInsets.bottom), // Thêm padding bottom dựa vào viewInsets
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: AppSizes.sm * 0.5),
+              TextFormField(
+                controller: _studentIdController,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: AppText.sign_In_msv,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                validator: AppValidator.validateStudentId,
+              ),
+              const SizedBox(height: AppSizes.sm * 1.5),
+              TextFormField(
+                controller: _passwordController,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: AppText.sign_In_pass,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                validator: AppValidator.validatePassword,
+              ),
+              const SizedBox(height: AppSizes.sm * 2),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.main,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
+                ),
+                onPressed: _signIn,
+                child: const Text(
+                  AppText.sign_In,
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                    fontSize: AppFonts.fontSizeMd,
+                    color: AppColors.bg,
+                  ),
                 ),
               ),
-              validator: AppValidator.validateStudentId,
-            ),
-            const SizedBox(height: AppSizes.sm * 1.5),
-            TextFormField(
-              controller: _passwordController,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: AppText.sign_In_pass,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+              const SizedBox(height: AppSizes.sm * 1.5),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/forgot');
+                },
+                child: const Text(
+                  AppText.sign_In_forgot,
+                  style: TextStyle(
+                    fontFamily: "Montserrat",
+                    color: AppColors.main,
+                  ),
                 ),
               ),
-              validator: AppValidator.validatePassword,
-            ),
-            const SizedBox(height: AppSizes.sm * 2),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.main,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-              ),
-              onPressed: _signIn,
-              child: const Text(
-                AppText.sign_In,
-                style: TextStyle(
-                  fontFamily: "Montserrat",
-                  fontSize: AppFonts.fontSizeMd,
-                  color: AppColors.bg,
-                ),
-              ),
-            ),
-            const SizedBox(height: AppSizes.sm * 1.5),
-            TextButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/forgot');
-              },
-              child: const Text(
-                AppText.sign_In_forgot,
-                style: TextStyle(
-                  fontFamily: "Montserrat",
-                  color: AppColors.main,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

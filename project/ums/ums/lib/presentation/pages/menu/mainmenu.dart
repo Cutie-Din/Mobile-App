@@ -3,9 +3,9 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ums/core/constants/colors.dart';
 
 import '../../../core/constants/fonts.dart';
+import '../../../core/constants/image_strings.dart';
 import '../../../core/constants/sizes.dart';
 import '../../../core/constants/text_strings.dart';
-import 'widgets/logout_btn.dart';
 import 'widgets/menu_item.dart';
 import 'widgets/profile_header.dart';
 
@@ -56,15 +56,15 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> menuItems = [
-      {'icon': Icons.person, 'label': 'Thông tin cá nhân'},
-      {'icon': Icons.developer_mode, 'label': 'In-Dev'},
-      {'icon': Icons.developer_mode, 'label': 'In-Dev'},
-      {'icon': Icons.developer_mode, 'label': 'In-Dev'},
-      {'icon': Icons.developer_mode, 'label': 'In-Dev'},
-      {'icon': Icons.developer_mode, 'label': 'In-Dev'},
-      {'icon': Icons.developer_mode, 'label': 'In-Dev'},
-      {'icon': Icons.developer_mode, 'label': 'In-Dev'},
-      {'icon': Icons.settings, 'label': 'Cài đặt'},
+      {'icon': AppImg.profile, 'label': 'Thông tin cá nhân'},
+      {'icon': AppImg.lock, 'label': 'In-Dev'},
+      {'icon': AppImg.lock, 'label': 'In-Dev'},
+      {'icon': AppImg.lock, 'label': 'In-Dev'},
+      {'icon': AppImg.lock, 'label': 'In-Dev'},
+      {'icon': AppImg.lock, 'label': 'In-Dev'},
+      {'icon': AppImg.lock, 'label': 'In-Dev'},
+      {'icon': AppImg.lock, 'label': 'In-Dev'},
+      {'icon': AppImg.settings, 'label': 'Cài đặt'},
     ];
 
     return Scaffold(
@@ -114,9 +114,39 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
                         offset: Offset(0, startOffset * (1 - slideAnimationValue)),
                         child: Opacity(
                           opacity: _animationController.value,
-                          child: MenuItem(
-                            icon: item['icon'],
-                            label: item['label'],
+                          child: GestureDetector(
+                            onTap: () {
+                              // Check the label to determine the action
+                              if (item['label'] == 'In-Dev') {
+                                // Show a dialog for "In-Dev" items
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.error, // Không sử dụng header mặc định
+                                  animType: AnimType.scale,
+                                  // customHeader: ClipOval(
+                                  //   child: Image.asset(
+                                  //     AppImg.err,
+                                  //     height: 200, // Phóng to kích thước GIF
+                                  //     width: 200, // Đảm bảo kích thước đều để giữ hình tròn
+                                  //     fit: BoxFit
+                                  //         .cover, // Đảm bảo GIF lấp đầy không gian trong ClipOval
+                                  //   ),
+                                  // ),
+                                  title: 'Ôi không!',
+                                  desc: 'Hiện tại chức năng này đang được phát triển',
+                                  btnOkOnPress: () {},
+                                  btnOkText: 'Đồng ý',
+                                  btnOkColor: AppColors.main,
+                                ).show();
+                              } else {
+                                // Navigate to the new screen for other items
+                                Navigator.pushNamed(context, '/${item['label']}');
+                              }
+                            },
+                            child: MenuItem(
+                              iconPath: item['icon'],
+                              label: item['label'],
+                            ),
                           ),
                         ),
                       );
@@ -125,6 +155,7 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
                 },
               ),
             ),
+
             // GestureDetector wrapping the bottom Container for logout functionality
             AnimatedBuilder(
               animation: _animationController,
