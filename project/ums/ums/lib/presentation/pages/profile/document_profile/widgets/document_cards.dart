@@ -42,7 +42,7 @@ class _DocumentCardGridState extends State<DocumentCardGrid> {
         shrinkWrap: true, // Allow the GridView to take up only the required space
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2, // 2 columns
-          childAspectRatio: 1.0, // Aspect ratio for the grid items
+          childAspectRatio: 0.8, // Aspect ratio for the grid items
         ),
         itemCount: 6, // Total number of items
         itemBuilder: (context, index) {
