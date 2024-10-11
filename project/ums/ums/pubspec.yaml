@@ -18,6 +18,9 @@ dependencies:
   bloc:
   equatable:
   awesome_dialog:
+  shared_preferences:
+  intl:
+  image_picker:  
     
 
 dev_dependencies:
@@ -34,6 +37,10 @@ flutter:
   - assets/images/profile.svg
   - assets/images/settings.svg
   - assets/images/lock.svg
+  - assets/images/treatment.svg
+  - assets/images/document.svg
+  - assets/images/book.svg
+
 
   # Gif
   - assets/images/onboarding_1.gif

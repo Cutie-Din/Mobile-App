@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../../../core/constants/colors.dart';
+import '../../../../../core/constants/device.dart';
 import '../../../../../core/constants/fonts.dart';
 import '../../../../../core/constants/image_strings.dart';
 import '../../../../../core/constants/sizes.dart';
@@ -12,19 +12,21 @@ class LogoHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = AppDeviceUtils.screenWidth(context); // Get screen width
+
     return Column(
       children: [
-        const SizedBox(
-          height: AppSizes.sm * 16.5,
+        SizedBox(
+          height: AppSizes.sm * 8,
         ),
         SvgPicture.asset(
           AppImg.logo,
-          width: 150,
-          height: 150,
+          width: screenWidth * 0.3, // Responsive width
+          height: screenWidth * 0.3, // Responsive height
           color: AppColors.bg,
         ),
-        const SizedBox(
-          height: AppSizes.sm * 5,
+        SizedBox(
+          height: AppSizes.sm * 1.5,
         ),
         Text(
           AppText.sign_In,

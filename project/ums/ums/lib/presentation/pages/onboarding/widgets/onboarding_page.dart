@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:ums/core/constants/colors.dart';
+import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/device.dart';
 import '../../../../core/constants/fonts.dart';
 import '../../../../core/constants/sizes.dart';
 
 class OnboardingPage extends StatelessWidget {
   final String description;
-  final String gifFile; // Updated to gifFile
+  final String gifFile;
   final VoidCallback onNext;
-  final bool isLastPage; // Variable to determine if this is the last page
+  final bool isLastPage;
 
   const OnboardingPage({
     required this.description,
-    required this.gifFile, // Changed from svgFile to gifFile
+    required this.gifFile,
     required this.onNext,
     required this.isLastPage,
     Key? key,
@@ -19,9 +20,13 @@ class OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Sử dụng AppDeviceUtils để lấy kích thước màn hình
+    double screenWidth = AppDeviceUtils.screenWidth(context);
+    double screenHeight = AppDeviceUtils.screenHeight(context);
+
     return Container(
-      color: Colors.white, // Set the background color to white
-      padding: const EdgeInsets.all(16.0),
+      color: Colors.white,
+      padding: EdgeInsets.all(screenWidth * 0.04), // Responsive padding
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -29,31 +34,34 @@ class OnboardingPage extends StatelessWidget {
             description,
             style: TextStyle(
               fontFamily: "Montserrat",
-              fontSize: AppFonts.fontSizeLg,
+              fontSize: screenWidth * 0.1, // Responsive font size
               fontWeight: AppFonts.bold,
               color: AppColors.main,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSizes.sm * 4),
+          SizedBox(height: screenHeight * 0.05), // Responsive spacing
           Image.asset(
-            gifFile, // Use gifFile for loading GIFs
+            gifFile,
+            width: screenWidth * 0.9, // Responsive image width
+            height: screenHeight * 0.5, // Responsive image height
+            fit: BoxFit.contain,
           ),
-          const SizedBox(height: AppSizes.xl),
+          SizedBox(height: screenHeight * 0.05), // Responsive spacing
           SizedBox(
-            width: 60,
-            height: 60,
+            width: screenWidth * 0.2,
+            height: screenWidth * 0.2,
             child: ElevatedButton(
-              onPressed: onNext, // Call onNext function when button is pressed
+              onPressed: onNext,
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),
                 backgroundColor: AppColors.main,
                 padding: EdgeInsets.zero,
               ),
               child: Icon(
-                isLastPage ? Icons.check : Icons.arrow_forward, // Check mark if it's the last page
+                isLastPage ? Icons.check : Icons.arrow_forward,
                 color: Colors.white,
-                size: 30,
+                size: screenWidth * 0.1, // Responsive icon size
               ),
             ),
           ),

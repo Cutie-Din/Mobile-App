@@ -32,4 +32,13 @@ class AppText {
 
   // Text menu
   static const String menu_logOut = "Đăng xuất";
+
+  // Text Thông tin sinh viên
+  static const String ttsv = "Thông tin sinh viên";
+
+  // Text Quá trình học tập
+  static const String qtht = "Quá trình học tập";
+
+  // Text Hồ sơ sinh viên
+  static const String hssv = "Hồ sơ sinh viên";
 }

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ums/presentation/pages/auth/forgot_password/forgot_password.dart';
 import 'package:ums/presentation/pages/auth/forgot_password/forgot_password_otp.dart';
 import 'package:ums/presentation/pages/auth/forgot_password/forgot_password_submit.dart';
-import 'package:ums/presentation/pages/menu/mainmenu.dart';
+import 'package:ums/presentation/pages/menu/main_menu.dart';
+import 'package:ums/presentation/pages/profile/user_profile/user_profile.dart';
 
 import 'presentation/pages/auth/sign_in/sign_in.dart';
 import 'presentation/pages/onboarding/onboarding.dart';
+import 'presentation/pages/profile/document_profile/document_profile.dart';
+import 'presentation/pages/profile/study_profile/study_profile.dart';
 import 'presentation/pages/splash/splash.dart';
 
 class MyApp extends StatelessWidget {
@@ -25,6 +28,9 @@ class MyApp extends StatelessWidget {
         '/forgot-submit': (context) =>
             ForgotPasswordSubmitScreen(), // Màn hình quên mật khẩu xác nhận
         '/main-menu': (context) => MainmenuScreen(), // Màn hình menu chính
+        '/Thông tin cá nhân': (context) => UserProfileScreen(), // Màn hình thông tin cá nhân
+        '/Hồ sơ sinh viên': (context) => DocumentProfileScreen(), // Màn hình hồ sơ sinh viên
+        '/Quá trình học tập': (context) => StudyProfileScreen(), //Màn hình quá trình học tập
       },
       debugShowCheckedModeBanner: false,
       home: const SplashScreen(),

@@ -1,48 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../../core/constants/colors.dart';
-import '../../../../core/constants/sizes.dart';
+import '../../../../core/constants/device.dart';
 
 class MenuItem extends StatelessWidget {
-  final String iconPath; // Path to the SVG asset
+  final String iconPath;
   final String label;
 
   const MenuItem({required this.iconPath, required this.label, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = AppDeviceUtils.screenWidth(context);
+
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20), // Set the border radius to round the corners
+      borderRadius: BorderRadius.circular(screenWidth * 0.05),
       child: Container(
-        color: AppColors.bg, // Set the background color
+        color: AppColors.bg,
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Space the items evenly
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(
-                height: AppSizes.sm,
-              ),
+              SizedBox(height: screenWidth * 0.02),
               CircleAvatar(
-                backgroundColor: AppColors.main, // Set the CircleAvatar's background color
-                radius: 35,
+                backgroundColor: AppColors.main,
+                radius: screenWidth * 0.09,
                 child: SvgPicture.asset(
                   iconPath,
-                  height: 40, // Adjust SVG height as needed
-                  width: 40, // Adjust SVG width as needed
-                  color: AppColors.bg, // Optionally set color if the SVG is monochrome
+                  height: screenWidth * 0.1,
+                  width: screenWidth * 0.1,
+                  color: AppColors.bg,
                 ),
               ),
-              const SizedBox(
-                height: AppSizes.sm,
-              ),
+              SizedBox(height: screenWidth * 0.01),
               Text(
                 label,
                 style: TextStyle(
                   color: AppColors.main,
-                  fontSize: 12,
-                ), // Adjust text color to match the theme
+                  fontSize: screenWidth * 0.03,
+                ),
               ),
             ],
           ),

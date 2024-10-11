@@ -18,5 +18,7 @@ class AppImg {
   static const String profile = "assets/images/profile.svg";
   static const String settings = "assets/images/settings.svg";
   static const String lock = "assets/images/lock.svg";
-
+  static const String qtht = "assets/images/book.svg";
+  static const String hssv = "assets/images/document.svg";
+  static const String hssk = "assets/images/treatment.svg";
 }

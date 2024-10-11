@@ -15,12 +15,33 @@ class AppValidator {
     if (value == null || value.isEmpty) {
       return 'Vui lòng nhập mật khẩu';
     }
+
+    // Kiểm tra độ dài tối thiểu
     if (value.length < 8) {
       return 'Mật khẩu bao gồm tối thiểu 8 ký tự';
     }
-    if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$').hasMatch(value)) {
-      return 'Mật khẩu gồm chữ cái hoa, chữ cái thường, số và ký tự đặc biệt';
+
+    // Kiểm tra từng điều kiện
+    bool hasUppercase = value.contains(RegExp(r'[A-Z]'));
+    bool hasLowercase = value.contains(RegExp(r'[a-z]'));
+    bool hasDigit = value.contains(RegExp(r'\d'));
+    bool hasSpecialChar = value.contains(RegExp(r'[\W_]'));
+
+    // Xác định điều kiện nào bị thiếu và trả về thông báo lỗi cụ thể
+    if (!hasUppercase) {
+      return 'Mật khẩu phải bao gồm ít nhất một chữ cái hoa';
     }
+    if (!hasLowercase) {
+      return 'Mật khẩu phải bao gồm ít nhất một chữ cái thường';
+    }
+    if (!hasDigit) {
+      return 'Mật khẩu phải bao gồm ít nhất một số';
+    }
+    if (!hasSpecialChar) {
+      return 'Mật khẩu phải bao gồm ít nhất một ký tự đặc biệt';
+    }
+
+    // Nếu tất cả điều kiện đều đạt
     return null;
   }
 

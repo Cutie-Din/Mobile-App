@@ -10,16 +10,14 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: AnimatedSplashScreen(
-        splash: Center(
-          child: SvgPicture.asset(AppImg.logo),
-        ),
-        duration: 1500,
-        nextScreen: OnboardingScreen(), // Điều hướng tới OnboardingScreen
-        backgroundColor: AppColors.bg,
-        splashIconSize: 200,
+    return AnimatedSplashScreen(
+      splash: Center(
+        child: SvgPicture.asset(AppImg.logo),
       ),
+      duration: 1000,
+      nextScreen: OnboardingScreen(), // Điều hướng tới OnboardingScreen
+      backgroundColor: AppColors.bg,
+      splashIconSize: 200,
     );
   }
 }

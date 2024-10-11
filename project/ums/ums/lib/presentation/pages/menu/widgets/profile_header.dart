@@ -1,44 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../../core/constants/colors.dart';
+import '../../../../core/constants/device.dart';
 import '../../../../core/constants/fonts.dart';
-import '../../../../core/constants/image_strings.dart';
 import '../../../../core/constants/sizes.dart';
 
 class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = AppDeviceUtils.screenWidth(context);
+
     return Container(
       decoration: BoxDecoration(
         color: AppColors.bg,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(20), // Set the bottom left corner radius
-          bottomRight: Radius.circular(20), // Set the bottom right corner radius
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(screenWidth * 0.05),
+          bottomRight: Radius.circular(screenWidth * 0.05),
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(screenWidth * 0.04),
         child: Row(
           children: [
             CircleAvatar(
-              radius: 30,
+              radius: screenWidth * 0.08,
               backgroundColor: AppColors.main,
               child: Icon(
                 Icons.person,
                 color: AppColors.bg,
-                size: 50,
+                size: screenWidth * 0.1,
               ),
             ),
-            const SizedBox(width: AppSizes.sm * 1.5),
+            SizedBox(width: screenWidth * 0.05),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  'Xin chào, Nguyễn Quang H',
+                  'Xin chào, Nguyễn Văn A',
                   style: TextStyle(
                     fontFamily: "Montserrat",
-                    fontSize: AppFonts.fontSizeSm * 1.2,
+                    fontSize: screenWidth * 0.04,
                     fontWeight: AppFonts.bold,
                     color: AppColors.main,
                   ),
@@ -47,15 +47,14 @@ class ProfileHeader extends StatelessWidget {
                   'CNTT D2020B',
                   style: TextStyle(
                     fontFamily: "Montserrat",
-                    fontSize: AppFonts.fontSizeSm,
+                    fontSize: screenWidth * 0.03,
                     fontWeight: AppFonts.bold,
                     color: Colors.blueAccent,
                   ),
                 ),
               ],
             ),
-            const Spacer(),
-            // Updated IconButton with notification bell and badge
+            Spacer(),
             Stack(
               alignment: Alignment.topRight,
               children: [
@@ -67,23 +66,23 @@ class ProfileHeader extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  right: 5,
-                  top: 6,
+                  right: screenWidth * 0.015,
+                  top: screenWidth * 0.02,
                   child: Container(
-                    padding: const EdgeInsets.all(1),
+                    padding: EdgeInsets.all(screenWidth * 0.01),
                     decoration: BoxDecoration(
                       color: AppColors.err,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(screenWidth * 0.025),
                     ),
-                    constraints: const BoxConstraints(
-                      minWidth: 16.5,
-                      minHeight: 16.5,
+                    constraints: BoxConstraints(
+                      minWidth: screenWidth * 0.045,
+                      minHeight: screenWidth * 0.045,
                     ),
-                    child: const Text(
+                    child: Text(
                       '1',
                       style: TextStyle(
                         fontFamily: "Montserrat",
-                        fontSize: 10,
+                        fontSize: screenWidth * 0.025,
                         fontWeight: AppFonts.bold,
                         color: AppColors.bg,
                       ),

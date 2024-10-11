@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:ums/core/constants/colors.dart';
 
+import '../../../core/constants/device.dart';
 import '../../../core/constants/fonts.dart';
 import '../../../core/constants/image_strings.dart';
 import '../../../core/constants/sizes.dart';
@@ -19,11 +20,23 @@ class MainmenuScreen extends StatefulWidget {
 class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStateMixin {
   late AnimationController _animationController;
 
+  // Định nghĩa menuItems như một biến instance
+  final List<Map<String, dynamic>> menuItems = [
+    {'icon': AppImg.profile, 'label': 'Thông tin cá nhân'},
+    {'icon': AppImg.hssv, 'label': 'Hồ sơ sinh viên'},
+    {'icon': AppImg.qtht, 'label': 'Quá trình học tập'},
+    {'icon': AppImg.lock, 'label': 'In-Dev'},
+    {'icon': AppImg.lock, 'label': 'In-Dev'},
+    {'icon': AppImg.lock, 'label': 'In-Dev'},
+    {'icon': AppImg.lock, 'label': 'In-Dev'},
+    {'icon': AppImg.lock, 'label': 'In-Dev'},
+    {'icon': AppImg.lock, 'label': 'In-Dev'},
+  ];
+
   @override
   void initState() {
     super.initState();
 
-    // Single AnimationController for both ProfileHeader and bottom Container
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 600),
       vsync: this,
@@ -39,7 +52,7 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
   void _handleLogout() {
     AwesomeDialog(
       context: context,
-      dialogType: DialogType.question, // No predefined header icon
+      dialogType: DialogType.question,
       animType: AnimType.scale,
       title: 'Đăng xuất',
       desc: 'Bạn có chắc chắn muốn đăng xuất?',
@@ -55,28 +68,18 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> menuItems = [
-      {'icon': AppImg.profile, 'label': 'Thông tin cá nhân'},
-      {'icon': AppImg.lock, 'label': 'In-Dev'},
-      {'icon': AppImg.lock, 'label': 'In-Dev'},
-      {'icon': AppImg.lock, 'label': 'In-Dev'},
-      {'icon': AppImg.lock, 'label': 'In-Dev'},
-      {'icon': AppImg.lock, 'label': 'In-Dev'},
-      {'icon': AppImg.lock, 'label': 'In-Dev'},
-      {'icon': AppImg.lock, 'label': 'In-Dev'},
-      {'icon': AppImg.settings, 'label': 'Cài đặt'},
-    ];
+    final double screenHeight = AppDeviceUtils.screenHeight(context);
+    final double screenWidth = AppDeviceUtils.screenWidth(context);
 
-    return Scaffold(
-      backgroundColor: AppColors.main,
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.main,
+        body: Column(
           children: [
-            // Profile Header with slide down effect
             AnimatedBuilder(
               animation: _animationController,
               builder: (context, child) {
-                const double startOffset = 100.0;
+                final double startOffset = screenHeight * 0.1;
                 final double slideAnimationValue =
                     Curves.easeOut.transform(_animationController.value);
 
@@ -89,16 +92,16 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
                 );
               },
             ),
-            const SizedBox(
-              height: AppSizes.sm * 13,
+            SizedBox(
+              height: screenHeight * 0.135,
             ),
             Expanded(
               child: GridView.builder(
-                padding: const EdgeInsets.all(20),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                padding: EdgeInsets.all(screenWidth * 0.05),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  crossAxisSpacing: 20, // Space between columns
-                  mainAxisSpacing: 20, // Space between rows
+                  crossAxisSpacing: screenWidth * 0.03,
+                  mainAxisSpacing: screenWidth * 0.03,
                 ),
                 itemCount: menuItems.length,
                 itemBuilder: (context, index) {
@@ -106,7 +109,7 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
                   return AnimatedBuilder(
                     animation: _animationController,
                     builder: (context, child) {
-                      const double startOffset = 100.0;
+                      final double startOffset = screenHeight * 0.1;
                       final double slideAnimationValue =
                           Curves.easeOut.transform(_animationController.value);
 
@@ -116,22 +119,11 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
                           opacity: _animationController.value,
                           child: GestureDetector(
                             onTap: () {
-                              // Check the label to determine the action
                               if (item['label'] == 'In-Dev') {
-                                // Show a dialog for "In-Dev" items
                                 AwesomeDialog(
                                   context: context,
-                                  dialogType: DialogType.error, // Không sử dụng header mặc định
+                                  dialogType: DialogType.error,
                                   animType: AnimType.scale,
-                                  // customHeader: ClipOval(
-                                  //   child: Image.asset(
-                                  //     AppImg.err,
-                                  //     height: 200, // Phóng to kích thước GIF
-                                  //     width: 200, // Đảm bảo kích thước đều để giữ hình tròn
-                                  //     fit: BoxFit
-                                  //         .cover, // Đảm bảo GIF lấp đầy không gian trong ClipOval
-                                  //   ),
-                                  // ),
                                   title: 'Ôi không!',
                                   desc: 'Hiện tại chức năng này đang được phát triển',
                                   btnOkOnPress: () {},
@@ -139,7 +131,6 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
                                   btnOkColor: AppColors.main,
                                 ).show();
                               } else {
-                                // Navigate to the new screen for other items
                                 Navigator.pushNamed(context, '/${item['label']}');
                               }
                             },
@@ -155,12 +146,10 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
                 },
               ),
             ),
-
-            // GestureDetector wrapping the bottom Container for logout functionality
             AnimatedBuilder(
               animation: _animationController,
               builder: (context, child) {
-                const double startOffset = 100.0;
+                final double startOffset = screenHeight * 0.1;
                 final double slideAnimationValue =
                     Curves.easeOut.transform(_animationController.value);
 
@@ -178,15 +167,15 @@ class _MainmenuScreenState extends State<MainmenuScreen> with TickerProviderStat
                             topRight: Radius.circular(20),
                           ),
                         ),
-                        height: 50, // Adjust height as needed
+                        height: screenHeight * 0.07,
                         child: Center(
                           child: Text(
-                            AppText.menu_logOut, // Display "Logout" text
+                            AppText.menu_logOut,
                             style: TextStyle(
                               fontFamily: "Montserrat",
-                              fontSize: AppFonts.fontSizeMd,
+                              fontSize: screenWidth * 0.04,
                               fontWeight: AppFonts.bold,
-                              color: AppColors.main, // Use your desired text color
+                              color: AppColors.main,
                             ),
                           ),
                         ),
