@@ -70,7 +70,7 @@ class _DocumentCardGridState extends State<DocumentCardGrid> {
                       titles[index], // Display the corresponding title
                       style: TextStyle(
                         fontFamily: "Montserrat",
-                        fontSize: screenWidth * 0.035, // Responsive font size
+                        fontSize: screenWidth * 0.03, // Responsive font size
                         fontWeight: AppFonts.bold,
                       ),
                       textAlign: TextAlign.center, // Center align text

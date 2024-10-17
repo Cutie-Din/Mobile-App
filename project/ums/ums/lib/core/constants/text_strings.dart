@@ -41,4 +41,8 @@ class AppText {
 
   // Text Hồ sơ sinh viên
   static const String hssv = "Hồ sơ sinh viên";
+
+  // Text confirm
+  static const String confirm =
+      "Tôi xin cam đoan những lời khai trên là sự thật. Nếu có gì sai tôi xin chịu trách nhiệm xử lý theo Quy chế hiện hành của Bộ giáo dục và đào tạo";
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../../core/constants/device.dart';
 import '../../../../../core/constants/fonts.dart';
 
 class CustomDropdown extends StatelessWidget {
@@ -20,7 +21,7 @@ class CustomDropdown extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween, // Aligns items to the ends
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
@@ -31,17 +32,17 @@ class CustomDropdown extends StatelessWidget {
               color: Colors.black54,
             ),
           ),
-          SizedBox(width: 8), // Adds a small space between the text and dropdown
+          SizedBox(width: AppDeviceUtils.screenWidth(context) * 0.02),
           Expanded(
             child: DropdownButton<String>(
               value: value,
               hint: Text('Chọn $label'),
               isExpanded: true,
               onChanged: onChanged,
-              items: items.map<DropdownMenuItem<String>>((String value) {
+              items: items.map<DropdownMenuItem<String>>((String item) {
                 return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
+                  value: item,
+                  child: Text(item),
                 );
               }).toList(),
             ),

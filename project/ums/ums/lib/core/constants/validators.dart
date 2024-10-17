@@ -29,16 +29,16 @@ class AppValidator {
 
     // Xác định điều kiện nào bị thiếu và trả về thông báo lỗi cụ thể
     if (!hasUppercase) {
-      return 'Mật khẩu phải bao gồm ít nhất một chữ cái hoa';
+      return 'Thiếu chữ cái hoa';
     }
     if (!hasLowercase) {
-      return 'Mật khẩu phải bao gồm ít nhất một chữ cái thường';
+      return 'Thiếu chữ cái thường';
     }
     if (!hasDigit) {
       return 'Mật khẩu phải bao gồm ít nhất một số';
     }
     if (!hasSpecialChar) {
-      return 'Mật khẩu phải bao gồm ít nhất một ký tự đặc biệt';
+      return 'Thiếu ký tự đặc biệt';
     }
 
     // Nếu tất cả điều kiện đều đạt
