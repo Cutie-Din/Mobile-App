@@ -1,0 +1,87 @@
+name: finance
+description: "A new Flutter project."
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.8
+  animated_splash_screen:
+  flutter_svg:
+  flutter_bloc:
+  bloc:
+  equatable:
+  awesome_dialog:
+  shared_preferences:
+  intl:
+  dio:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+     - assets/images/splash.json
+
+  fonts:
+    - family: PublicSans
+      fonts:
+        - asset: assets/fonts/PublicSans/PublicSans-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/PublicSans/PublicSans-ThinItalic.ttf
+          weight: 100
+        - asset: assets/fonts/PublicSans/PublicSans-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/PublicSans/PublicSans-ExtraLightItalic.ttf
+          weight: 200
+        - asset: assets/fonts/PublicSans/PublicSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/PublicSans/PublicSans-LightItalic.ttf
+          weight: 300
+        - asset: assets/fonts/PublicSans/PublicSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/PublicSans/PublicSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/PublicSans/PublicSans-MediumItalic.ttf
+          weight: 500
+        - asset: assets/fonts/PublicSans/PublicSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/PublicSans/PublicSans-SemiBoldItalic.ttf
+          weight: 600
+        - asset: assets/fonts/PublicSans/PublicSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/PublicSans/PublicSans-BoldItalic.ttf
+          weight: 700
+
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto/Roboto-Italic.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto/Roboto-BoldItalic.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto/Roboto-LightItalic.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto/Roboto-MediumItalic.ttf
+          weight: 500
