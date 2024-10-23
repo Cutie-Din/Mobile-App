@@ -12,6 +12,7 @@ class SignInContent extends StatelessWidget {
           Text(
             'Đăng nhập',
             style: TextStyle(
+              fontFamily: "PublicSans",
               fontSize: getResponsiveFontSize(context, small: 22.0, medium: 28.0, large: 32.0),
               fontWeight: FontWeight.bold,
             ),
