@@ -23,6 +23,9 @@ dependencies:
   shared_preferences:
   intl:
   dio:
+  persistent_bottom_nav_bar:
+  font_awesome_flutter: 
+  flutter_otp_text_field: 
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +39,9 @@ flutter:
 
   assets:
      - assets/images/splash.json
+     - assets/images/payment.svg
+     - assets/images/towers.svg
+     - assets/images/signIn.svg
 
   fonts:
     - family: PublicSans

@@ -1,11 +1,11 @@
 import 'package:finance/import.dart';
 
-import 'widgets/forgot_pass/button.dart';
-import 'widgets/forgot_pass/form.dart';
-import 'widgets/forgot_pass/title.dart';
+import 'widgets/change_pass/button.dart';
+import 'widgets/change_pass/form.dart';
+import 'widgets/change_pass/title.dart';
 
-class ForgotPassScreen extends StatelessWidget {
-  const ForgotPassScreen({super.key});
+class ChangePassScreen extends StatelessWidget {
+  const ChangePassScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,12 @@ class ForgotPassScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Spacer(), // Pushes the content upwards
-                ForgotContent(),
+                ChangePassContent(),
                 const SizedBox(height: 20),
-                ForgotForm(),
+                ChangePassForm(),
                 const SizedBox(height: 20),
-                ForgotButton(),
-                const Spacer(flex: 9), // Ensures spacing at the bottom
+                ChangePassButton(),
+                const Spacer(flex: 7), // Ensures spacing at the bottom
               ],
             ),
           ),

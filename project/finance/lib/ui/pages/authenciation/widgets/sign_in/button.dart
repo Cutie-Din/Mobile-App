@@ -4,24 +4,25 @@ class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: getResponsiveScale(context, 1.0), // Responsive width for button
+      width: getResponsiveScale(context, 1.09), // Responsive width for button
       height: 50.0,
       child: ElevatedButton(
         onPressed: () {
-          // Handle sign in
+          Navigator.pushNamed(context, '/dashboard');
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.buttonSign_in, // Button background color
+          backgroundColor: AppColors.main, // Button background color
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(25),
           ),
         ),
         child: Text(
           'Đăng nhập',
           style: TextStyle(
-            fontSize: getResponsiveFontSize(context, small: 16.0, medium: 18.0, large: 20.0),
-            color: AppColors.bg,
-          ),
+              fontFamily: "Roboto",
+              fontSize: AppFonts.fontSizeSm,
+              fontWeight: AppFonts.medium,
+              color: AppColors.bg),
         ),
       ),
     );

@@ -1,6 +1,6 @@
 import 'package:finance/import.dart';
 
-class SignInContent extends StatelessWidget {
+class ChangePassContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -12,7 +12,7 @@ class SignInContent extends StatelessWidget {
           children: <Widget>[
             // Tiêu đề
             Text(
-              'Đăng nhập',
+              'Đổi mật khẩu',
               style: TextStyle(
                 fontFamily: "PublicSans",
                 fontSize: getResponsiveFontSize(context, small: 24.0, medium: 28.0, large: 32.0),
@@ -21,7 +21,15 @@ class SignInContent extends StatelessWidget {
               ),
               textAlign: TextAlign.left, // Căn lề trái cho text
             ),
-            const SizedBox(height: 30), // Khoảng cách giữa các thành phần
+            const SizedBox(height: 10), // Khoảng cách giữa các thành phần
+            Text(
+              'Nhập mật khẩu mới để sử dụng',
+              style: TextStyle(
+                fontFamily: "PublicSans",
+                fontSize: getResponsiveFontSize(context, small: 16.0, medium: 18.0, large: 20.0),
+                fontWeight: AppFonts.medium,
+              ),
+            ),
           ],
         ),
       ),
