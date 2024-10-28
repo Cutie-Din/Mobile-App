@@ -9,25 +9,23 @@ class ForgotPassScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.bg,
-        body: Padding(
-          padding: getResponsivePadding(context),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Spacer(), // Pushes the content upwards
-                ForgotContent(),
-                const SizedBox(height: 20),
-                ForgotForm(),
-                const SizedBox(height: 20),
-                ForgotButton(),
-                const Spacer(flex: 9), // Ensures spacing at the bottom
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: AppColors.bg,
+      body: Padding(
+        padding: getResponsivePadding(context),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Spacer(), // Pushes the content upwards
+              ForgotContent(),
+              const SizedBox(height: 20),
+              ForgotForm(),
+              const SizedBox(height: 20),
+              ForgotButton(),
+              const Spacer(flex: 9), // Ensures spacing at the bottom
+            ],
           ),
         ),
       ),

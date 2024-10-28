@@ -22,7 +22,7 @@ class AddButton extends StatelessWidget {
           'Gửi yêu cầu',
           style: TextStyle(
             fontFamily: "PublicSans",
-            fontSize: AppFonts.fontSizeMd,
+            fontSize: AppFonts.fontSize16,
             fontWeight: AppFonts.medium,
             color: Colors.white, // Update with your AppColors.bg
           ),

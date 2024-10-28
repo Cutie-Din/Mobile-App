@@ -9,25 +9,23 @@ class OTPScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.bg,
-        body: Padding(
-          padding: getResponsivePadding(context),
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Spacer(), // Pushes the content upwards
-                OTPContent(),
-                const SizedBox(height: 20),
-                OTPForm(),
-                const SizedBox(height: 20),
-                OTPButton(),
-                const Spacer(flex: 7), // Ensures spacing at the bottom
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: AppColors.bg,
+      body: Padding(
+        padding: getResponsivePadding(context),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Spacer(), // Pushes the content upwards
+              OTPContent(),
+              const SizedBox(height: 20),
+              OTPForm(),
+              const SizedBox(height: 20),
+              OTPButton(),
+              const Spacer(flex: 7), // Ensures spacing at the bottom
+            ],
           ),
         ),
       ),

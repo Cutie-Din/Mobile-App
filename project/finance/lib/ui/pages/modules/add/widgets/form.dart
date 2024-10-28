@@ -40,7 +40,7 @@ class _AddFormState extends State<AddForm> {
               text: 'Số lô ',
               style: TextStyle(
                   fontFamily: "SFProDisplay",
-                  fontSize: AppFonts.fontSizeSmest,
+                  fontSize: AppFonts.fontSize14,
                   fontWeight: AppFonts.medium,
                   color: Colors.black),
               children: const [
@@ -78,7 +78,7 @@ class _AddFormState extends State<AddForm> {
               text: 'Số tiền ',
               style: TextStyle(
                   fontFamily: "SFProDisplay",
-                  fontSize: AppFonts.fontSizeSmest,
+                  fontSize: AppFonts.fontSize14,
                   fontWeight: AppFonts.medium,
                   color: Colors.black),
               children: const [
@@ -87,7 +87,7 @@ class _AddFormState extends State<AddForm> {
                   style: TextStyle(
                     color: Colors.red,
                     fontFamily: "SFProDisplay",
-                    fontSize: AppFonts.fontSizeSmest,
+                    fontSize: AppFonts.fontSize14,
                     fontWeight: AppFonts.medium,
                   ),
                 ),
@@ -121,7 +121,7 @@ class _AddFormState extends State<AddForm> {
               text: 'Tải hình ảnh hoá đơn ',
               style: TextStyle(
                   fontFamily: "SFProDisplay",
-                  fontSize: AppFonts.fontSizeSmest,
+                  fontSize: AppFonts.fontSize14,
                   fontWeight: AppFonts.medium,
                   color: Colors.black),
               children: const [
@@ -129,7 +129,7 @@ class _AddFormState extends State<AddForm> {
                   text: '*',
                   style: TextStyle(
                       fontFamily: "SFProDisplay",
-                      fontSize: AppFonts.fontSizeSmest,
+                      fontSize: AppFonts.fontSize14,
                       fontWeight: AppFonts.medium,
                       color: Colors.red),
                 ),

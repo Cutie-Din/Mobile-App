@@ -57,7 +57,7 @@ class _ChangePassFormState extends State<ChangePassForm> {
                   labelStyle: TextStyle(
                     fontFamily: "PublicSans",
                     fontWeight: AppFonts.regular,
-                    fontSize: AppFonts.fontSizeMd,
+                    fontSize: AppFonts.fontSize16,
                     color: AppColors.main_text,
                   ),
                   suffixIcon: IconButton(
@@ -105,7 +105,7 @@ class _ChangePassFormState extends State<ChangePassForm> {
                   labelStyle: TextStyle(
                     fontFamily: "PublicSans",
                     fontWeight: AppFonts.regular,
-                    fontSize: AppFonts.fontSizeMd,
+                    fontSize: AppFonts.fontSize16,
                     color: AppColors.main_text,
                   ),
                   suffixIcon: IconButton(

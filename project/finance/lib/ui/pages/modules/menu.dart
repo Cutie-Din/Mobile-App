@@ -1,6 +1,5 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:finance/import.dart';
-import 'package:flutter/cupertino.dart';
 
 // class BottomMenu extends StatefulWidget {
 //   const BottomMenu({super.key});
@@ -135,6 +134,9 @@ import 'package:flutter/cupertino.dart';
 //   }
 // }
 
+import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
+import 'package:finance/import.dart';
+
 class BottomMenu extends StatefulWidget {
   const BottomMenu({super.key});
 
@@ -146,11 +148,11 @@ class _BottomMenuState extends State<BottomMenu> {
   int _bottomNavIndex = 0; // Current selected index
 
   // Define the icons for the bottom navigation bar
-  final List<IconData> iconList = [
-    Icons.home, // Icon for Dashboard
-    Icons.history, // Icon for History
-    Icons.notifications, // Icon for Notifications
-    Icons.person, // Icon for Account
+  final List<Map<String, dynamic>> iconList = [
+    {'icon': Icons.home, 'label': 'Trang chủ'}, // Icon for Dashboard
+    {'icon': Icons.history, 'label': 'Lịch sử'}, // Icon for History
+    {'icon': Icons.notifications, 'label': 'Thông báo'}, // Icon for Notifications
+    {'icon': Icons.person, 'label': 'Tài khoản'}, // Icon for Account
   ];
 
   // List of screens corresponding to each icon
@@ -167,26 +169,64 @@ class _BottomMenuState extends State<BottomMenu> {
       body: _screens[_bottomNavIndex], // Display the current screen based on the selected index
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Action for floating button
+          // Navigate to the AddScreen when the button is pressed
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddScreen()), // Replace with your AddScreen widget
+          );
         },
-        child: const Icon(Icons.add), // Example icon
+        backgroundColor: AppColors.main, // Set the background color
+        child: const Icon(
+          Icons.add,
+          color: AppColors.bg,
+          size: AppFonts.fontSize24, // Increase icon size to match the larger button
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30), // Rounded corners to match the button's shape
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: AnimatedBottomNavigationBar(
-        icons: iconList,
+      bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+        itemCount: iconList.length,
+        tabBuilder: (int index, bool isActive) {
+          final iconData = iconList[index]['icon'];
+          final label = iconList[index]['label'];
+
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                iconData,
+                size: AppFonts.fontSize24,
+                color: isActive ? AppColors.main : Colors.grey, // Handle active/inactive color
+              ),
+              const SizedBox(height: 4), // Space between icon and text
+              Text(
+                label,
+                style: TextStyle(
+                  color:
+                      isActive ? AppColors.main : Colors.grey, // Handle active/inactive text color
+                  fontSize: AppFonts.fontSize12,
+                  fontFamily: "Inter",
+                  fontWeight: AppFonts.semiBold,
+                ),
+              ),
+            ],
+          );
+        },
         activeIndex: _bottomNavIndex, // Set the active index
         gapLocation: GapLocation.center,
-        notchSmoothness: NotchSmoothness.verySmoothEdge,
-        leftCornerRadius: 32,
-        rightCornerRadius: 32,
+        notchSmoothness: NotchSmoothness.defaultEdge,
+        leftCornerRadius: 25,
+        rightCornerRadius: 25,
         onTap: (index) {
           setState(() {
             _bottomNavIndex = index; // Update current index on tap
           });
         },
         backgroundColor: Colors.white, // Background color of the bottom navigation bar
-        activeColor: Colors.blue, // Active icon color
-        inactiveColor: Colors.grey, // Inactive icon color
       ),
     );
   }

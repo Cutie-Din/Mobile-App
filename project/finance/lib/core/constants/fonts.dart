@@ -2,12 +2,14 @@ import 'package:finance/import.dart';
 
 class AppFonts {
   // Font Sizes
-  static const double fontSizeSmest = 14.0;
-  static const double fontSizeSm = 15.0;
-  static const double fontSizeMd = 16.0;
-  static const double fontSizeMdd = 18.0;
-  static const double fontSizeLg = 24.0;
-  static const double fontSizeBg = 36.0;
+  static const double fontSize12 = 12.0;
+  static const double fontSize14 = 14.0;
+  static const double fontSize15 = 15.0;
+  static const double fontSize16 = 16.0;
+  static const double fontSize18 = 18.0;
+  static const double fontSize20 = 20.0;
+  static const double fontSize24 = 24.0;
+  static const double fontSize36 = 36.0;
 
   // Font Weight
   static const FontWeight thin = FontWeight.w100;

@@ -76,7 +76,7 @@ class _OTPFormState extends State<OTPForm> {
                     ? Text(
                         "Gửi lại mã sau ${_formatCountdown()} phút",
                         style: TextStyle(
-                          fontSize: AppFonts.fontSizeMd,
+                          fontSize: AppFonts.fontSize16,
                           fontFamily: "PublicSans",
                           color: AppColors.main,
                         ),
@@ -90,7 +90,7 @@ class _OTPFormState extends State<OTPForm> {
                           'Gửi lại mã',
                           style: TextStyle(
                               fontFamily: "PublicSans",
-                              fontSize: AppFonts.fontSizeMd,
+                              fontSize: AppFonts.fontSize16,
                               color: AppColors.main),
                         )),
               ),

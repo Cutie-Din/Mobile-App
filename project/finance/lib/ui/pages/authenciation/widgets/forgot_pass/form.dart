@@ -42,7 +42,7 @@ class _ForgotFormState extends State<ForgotForm> {
                   labelStyle: TextStyle(
                     fontFamily: "PublicSans",
                     fontWeight: AppFonts.regular,
-                    fontSize: AppFonts.fontSizeMd,
+                    fontSize: AppFonts.fontSize16,
                     color: AppColors.main_text,
                   ),
                 ),

@@ -1,5 +1,4 @@
 import 'package:finance/import.dart';
-import 'package:flutter/material.dart';
 
 class BannerDashBoard extends StatelessWidget {
   const BannerDashBoard({super.key});
@@ -18,8 +17,8 @@ class BannerDashBoard extends StatelessWidget {
         children: [
           // Background SVG image
           SizedBox(
-            width: 400,
-            height: 230,
+            width: double.infinity, // Make it full width
+            height: bannerHeight,
             child: Image.asset(
               AppImg.banner_db, // Path to your SVG image
               fit: BoxFit.cover, // Ensure the image covers the entire area
@@ -27,37 +26,37 @@ class BannerDashBoard extends StatelessWidget {
           ),
           // Overlay content
           Positioned(
-            left: 0, // Align to the left
-            right: 0, // Align to the right
-            top: bannerHeight / 2 - 50, // Center vertically (adjust based on text height)
+            left: 0,
+            right: 0,
+            top: bannerHeight / 2 - 50,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between text and image
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Column for text
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start, // Align text to the left
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
                     Padding(
-                      padding: EdgeInsets.only(left: 30.0), // Add left padding
+                      padding: EdgeInsets.only(left: 30.0),
                       child: Text(
                         'Welcome to',
                         style: TextStyle(
                           fontFamily: 'PublicSans',
-                          color: Colors.white, // Text color
-                          fontSize: AppFonts.fontSizeSmest, // Adjusted font size
-                          fontWeight: AppFonts.bold, // Font weight
+                          color: Colors.white,
+                          fontSize: AppFonts.fontSize14,
+                          fontWeight: AppFonts.bold,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 30.0), // Add left padding
+                      padding: EdgeInsets.only(left: 30.0),
                       child: Text(
                         'CreditHub',
                         style: TextStyle(
                           fontFamily: 'PublicSans',
-                          color: Colors.white, // Text color
-                          fontSize: AppFonts.fontSizeBg, // Adjusted font size
-                          fontWeight: AppFonts.bold, // Font weight
+                          color: Colors.white,
+                          fontSize: AppFonts.fontSize36,
+                          fontWeight: AppFonts.bold,
                         ),
                       ),
                     ),
@@ -65,12 +64,12 @@ class BannerDashBoard extends StatelessWidget {
                 ),
                 // POS image on the right
                 Padding(
-                  padding: const EdgeInsets.only(right: 16.0), // Add right padding
+                  padding: const EdgeInsets.only(right: 16.0),
                   child: Image.asset(
                     AppImg.pos_db, // Path to your POS image
-                    width: 142, // Adjusted width
-                    height: 107, // Adjusted height
-                    fit: BoxFit.contain, // Maintain aspect ratio
+                    width: 142,
+                    height: 107,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ],

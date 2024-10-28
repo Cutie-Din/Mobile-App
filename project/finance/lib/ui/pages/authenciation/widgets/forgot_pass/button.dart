@@ -24,7 +24,7 @@ class ForgotButton extends StatelessWidget {
               'Gửi',
               style: TextStyle(
                   fontFamily: "Roboto",
-                  fontSize: AppFonts.fontSizeSm,
+                  fontSize: AppFonts.fontSize15,
                   fontWeight: AppFonts.medium,
                   color: AppColors.bg),
             ),
@@ -52,7 +52,7 @@ class ForgotButton extends StatelessWidget {
                   text: TextSpan(
                     style: TextStyle(
                       fontFamily: "PublicSans",
-                      fontSize: AppFonts.fontSizeMd,
+                      fontSize: AppFonts.fontSize16,
                       color: AppColors.main,
                     ),
                     children: const [
@@ -60,7 +60,7 @@ class ForgotButton extends StatelessWidget {
                         text: 'Quay lại trang đăng nhập',
                         style: TextStyle(
                           fontFamily: 'Roboto',
-                          fontSize: AppFonts.fontSizeMd,
+                          fontSize: AppFonts.fontSize16,
                           fontWeight: AppFonts.regular,
                         ),
                       ),

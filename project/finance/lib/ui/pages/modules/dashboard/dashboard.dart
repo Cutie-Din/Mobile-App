@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:finance/import.dart';
 import 'widgets/banner.dart';
+import 'widgets/rec.dart';
+import 'widgets/chart.dart';
+import 'widgets/recent.dart'; // Ensure this points to your RecentDashBoard widget file
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -11,25 +15,19 @@ class DashboardScreen extends StatelessWidget {
         backgroundColor: AppColors.bg,
         body: Column(
           children: [
-            // Add the BannerDashBoard widget
-            SizedBox(
-              child: BannerDashBoard(),
-            ),
+            const BannerDashBoard(), // Keep the banner at the top
 
-            // Spacer for other dashboard content
+            const RecDashBoard(), // RecDashBoard below the banner
+
             Expanded(
-              child: Padding(
-                padding: getResponsivePadding(context),
-                child: Center(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        // Other content for the dashboard
-                      ],
-                    ),
-                  ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: const [
+                    SizedBox(height: 20), // Space between RecDashBoard and ChartDashBoard
+                    ChartDashBoard(), // Adding ChartDashBoard here
+                    SizedBox(height: 20), // Space between ChartDashBoard and RecentDashBoard
+                    RecentDashBoard(), // Adding RecentDashBoard here
+                  ],
                 ),
               ),
             ),

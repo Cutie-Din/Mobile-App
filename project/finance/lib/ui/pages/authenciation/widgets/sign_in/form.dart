@@ -43,7 +43,7 @@ class _SignInFormState extends State<SignInForm> {
                 labelStyle: TextStyle(
                   fontFamily: "PublicSans",
                   fontWeight: AppFonts.regular,
-                  fontSize: AppFonts.fontSizeMd,
+                  fontSize: AppFonts.fontSize16,
                   color: AppColors.main_text,
                 ),
               ),
@@ -81,7 +81,7 @@ class _SignInFormState extends State<SignInForm> {
                 labelStyle: TextStyle(
                   fontFamily: "PublicSans",
                   fontWeight: AppFonts.regular,
-                  fontSize: AppFonts.fontSizeMd,
+                  fontSize: AppFonts.fontSize16,
                   color: AppColors.main_text,
                 ),
                 suffixIcon: IconButton(
@@ -111,7 +111,7 @@ class _SignInFormState extends State<SignInForm> {
                   style: TextStyle(
                     fontFamily: "PublicSans",
                     fontWeight: AppFonts.regular,
-                    fontSize: AppFonts.fontSizeSmest,
+                    fontSize: AppFonts.fontSize14,
                     color: AppColors.main,
                   ),
                 ),

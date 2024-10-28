@@ -3,7 +3,6 @@ export 'package:animated_splash_screen/animated_splash_screen.dart';
 export 'package:flutter/material.dart';
 export 'package:dio/dio.dart';
 export 'package:flutter_svg/flutter_svg.dart';
-export 'package:curved_navigation_bar/curved_navigation_bar.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:awesome_dialog/awesome_dialog.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +10,7 @@ export 'package:equatable/equatable.dart';
 export 'package:dotted_border/dotted_border.dart';
 export 'package:image_picker/image_picker.dart';
 export 'dart:io';
+export 'package:fl_chart/fl_chart.dart';
 
 // Export work packages
 export 'app.dart';

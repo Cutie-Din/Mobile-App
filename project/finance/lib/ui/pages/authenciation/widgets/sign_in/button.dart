@@ -20,7 +20,7 @@ class SignInButton extends StatelessWidget {
           'Đăng nhập',
           style: TextStyle(
               fontFamily: "Roboto",
-              fontSize: AppFonts.fontSizeSm,
+              fontSize: AppFonts.fontSize15,
               fontWeight: AppFonts.medium,
               color: AppColors.bg),
         ),

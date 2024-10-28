@@ -24,7 +24,7 @@ class OTPButton extends StatelessWidget {
               'Xác nhận',
               style: TextStyle(
                   fontFamily: "Roboto",
-                  fontSize: AppFonts.fontSizeSm,
+                  fontSize: AppFonts.fontSize15,
                   fontWeight: AppFonts.medium,
                   color: AppColors.bg),
             ),
@@ -51,7 +51,7 @@ class OTPButton extends StatelessWidget {
                   text: TextSpan(
                     style: TextStyle(
                       fontFamily: "PublicSans",
-                      fontSize: AppFonts.fontSizeMd,
+                      fontSize: AppFonts.fontSize16,
                       color: AppColors.main,
                     ),
                     children: const [
@@ -59,7 +59,7 @@ class OTPButton extends StatelessWidget {
                         text: 'Quay lại trang đăng nhập',
                         style: TextStyle(
                           fontFamily: 'Roboto',
-                          fontSize: AppFonts.fontSizeMd,
+                          fontSize: AppFonts.fontSize16,
                           fontWeight: AppFonts.regular,
                         ),
                       ),

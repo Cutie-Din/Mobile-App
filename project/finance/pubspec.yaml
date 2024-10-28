@@ -23,12 +23,12 @@ dependencies:
   shared_preferences:
   intl:
   dio:
-  curved_navigation_bar: 
   font_awesome_flutter: 
   flutter_otp_text_field:
   dotted_border:  
   image_picker:
   animated_bottom_navigation_bar:
+  fl_chart:
 
 dev_dependencies:
   flutter_test:
