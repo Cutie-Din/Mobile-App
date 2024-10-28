@@ -1,6 +1,3 @@
-import 'package:finance/ui/pages/authenciation/change_pass.dart';
-import 'package:finance/ui/pages/authenciation/otp.dart';
-
 import 'import.dart';
 
 class MyApp extends StatelessWidget {
@@ -16,7 +13,9 @@ class MyApp extends StatelessWidget {
         '/': (context) => const SignInScreen(),
         '/forgotPass': (context) => const ForgotPassScreen(),
         '/changePass': (context) => const ChangePassScreen(),
-        '/otp': (context) => OTPScreen(),
+        '/otp': (context) => const OTPScreen(),
+        '/display': (context) => const DisplayScreen(),
+        // '/menu': (context) => const BottomMenu(),
         '/dashboard': (context) => const DashboardScreen(),
         '/history': (context) => const HistoryScreen(),
         '/notification': (context) => const NotificationScreen(),

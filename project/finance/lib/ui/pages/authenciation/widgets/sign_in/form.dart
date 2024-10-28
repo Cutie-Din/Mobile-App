@@ -21,19 +21,19 @@ class _SignInFormState extends State<SignInForm> {
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(22.0),
+                  borderRadius: BorderRadius.circular(18.0),
                   borderSide: BorderSide(
                     color: AppColors.main_bg, // Màu viền mặc định
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(22.0),
+                  borderRadius: BorderRadius.circular(18.0),
                   borderSide: BorderSide(
                     color: AppColors.main_bg, // Màu viền khi trường được kích hoạt
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(22.0),
+                  borderRadius: BorderRadius.circular(18.0),
                   borderSide: BorderSide(
                     color: AppColors.main_bg, // Màu viền khi trường được focus
                   ),
@@ -59,19 +59,19 @@ class _SignInFormState extends State<SignInForm> {
               decoration: InputDecoration(
                 labelText: 'Mật khẩu',
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(22.0),
+                  borderRadius: BorderRadius.circular(18.0),
                   borderSide: BorderSide(
                     color: AppColors.main_bg, // Màu viền mặc định
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(22.0),
+                  borderRadius: BorderRadius.circular(18.0),
                   borderSide: BorderSide(
                     color: AppColors.main_bg, // Màu viền khi trường được kích hoạt
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(22.0),
+                  borderRadius: BorderRadius.circular(18.0),
                   borderSide: BorderSide(
                     color: AppColors.main_bg, // Màu viền khi trường được focus
                   ),

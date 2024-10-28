@@ -15,24 +15,24 @@ class SignInScreen extends StatelessWidget {
         body: Padding(
           padding: getResponsivePadding(context),
           child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Spacer(flex: 4), // Pushes the content upwards
-                SignInContent(),
-
-                SignInForm(),
-                const SizedBox(height: 20),
-                SignInButton(),
-                const SizedBox(height: 20),
-                const Spacer(flex: 1),
-                SvgPicture.asset(
-                  AppImg.signIn, // Path to your SVG asset
-                  fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height * 0.4,
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const SizedBox(height: 110),
+                  SignInContent(),
+                  SignInForm(),
+                  const SizedBox(height: 15),
+                  SignInButton(),
+                  const SizedBox(height: 26),
+                  Image.asset(
+                    AppImg.signIn,
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height * 0.38,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

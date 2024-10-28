@@ -11,7 +11,6 @@ class _ChangePassFormState extends State<ChangePassForm> {
 
   final _newPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -24,7 +23,6 @@ class _ChangePassFormState extends State<ChangePassForm> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Form(
-        key: _formKey,
         child: Padding(
           padding: getResponsivePadding(context),
           child: Column(
@@ -74,12 +72,6 @@ class _ChangePassFormState extends State<ChangePassForm> {
                     },
                   ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Vui lòng nhập mật khẩu mới';
-                  }
-                  return null;
-                },
               ),
 
               SizedBox(height: getResponsiveScale(context, 15.0)),
@@ -128,15 +120,6 @@ class _ChangePassFormState extends State<ChangePassForm> {
                     },
                   ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Vui lòng nhập lại mật khẩu';
-                  }
-                  if (value != _newPasswordController.text) {
-                    return 'Mật khẩu không trùng khớp';
-                  }
-                  return null;
-                },
               ),
 
               SizedBox(height: getResponsiveScale(context, 20.0)),

@@ -23,9 +23,12 @@ dependencies:
   shared_preferences:
   intl:
   dio:
-  persistent_bottom_nav_bar:
+  curved_navigation_bar: 
   font_awesome_flutter: 
-  flutter_otp_text_field: 
+  flutter_otp_text_field:
+  dotted_border:  
+  image_picker:
+  animated_bottom_navigation_bar:
 
 dev_dependencies:
   flutter_test:
@@ -39,9 +42,10 @@ flutter:
 
   assets:
      - assets/images/splash.json
-     - assets/images/payment.svg
-     - assets/images/towers.svg
-     - assets/images/signIn.svg
+     - assets/images/signIn.png
+     - assets/images/dashboard/pos.png
+     - assets/images/dashboard/banner.png
+     
 
   fonts:
     - family: PublicSans
@@ -91,3 +95,47 @@ flutter:
           weight: 500
         - asset: assets/fonts/Roboto/Roboto-MediumItalic.ttf
           weight: 500
+
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter_18pt-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/Inter/Inter_18pt-ThinItalic.ttf
+          weight: 100
+        - asset: assets/fonts/Inter/Inter_18pt-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/Inter/Inter_18pt-ExtraLightItalic.ttf
+          weight: 200
+        - asset: assets/fonts/Inter/Inter_18pt-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Inter/Inter_18pt-LightItalic.ttf
+          weight: 300
+        - asset: assets/fonts/Inter/Inter_18pt-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter/Inter_18pt-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter/Inter_18pt-MediumItalic.ttf
+          weight: 500
+        - asset: assets/fonts/Inter/Inter_18pt-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter/Inter_18pt-SemiBoldItalic.ttf
+          weight: 600
+        - asset: assets/fonts/Inter/Inter_18pt-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Inter/Inter_18pt-BoldItalic.ttf
+          weight: 700
+
+    - family: SFProDisplay
+      fonts:
+        - asset: assets/fonts/SF/SFPRODISPLAYTHINITALIC.otf
+          weight: 100
+        - asset: assets/fonts/SF/SFPRODISPLAYREGULAR.otf
+          weight: 400
+        - asset: assets/fonts/SF/SFPRODISPLAYMEDIUM.otf
+          weight: 500
+        - asset: assets/fonts/SF/SFPRODISPLAYSEMIBOLDITALIC.otf
+          weight: 600
+        - asset: assets/fonts/SF/SFPRODISPLAYBOLD.otf
+          weight: 700
+        - asset: assets/fonts/SF/SFPRODISPLAYBLACKITALIC.otf
+          weight: 700

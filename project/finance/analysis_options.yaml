@@ -11,7 +11,11 @@ analyzer:
   errors:
     constant_identifier_names: ignore
     library_private_types_in_public_api: ignore
+    override_on_non_overriding_member: ignore
     prefer_const_constructors: ignore
+    prefer_const_constructors_in_immutables: ignore
+    prefer_final_fields: ignore
+    unused_field: ignore
     unused_import: ignore
     use_key_in_widget_constructors: ignore
 include: package:flutter_lints/flutter.yaml

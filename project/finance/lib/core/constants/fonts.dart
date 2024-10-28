@@ -5,7 +5,9 @@ class AppFonts {
   static const double fontSizeSmest = 14.0;
   static const double fontSizeSm = 15.0;
   static const double fontSizeMd = 16.0;
+  static const double fontSizeMdd = 18.0;
   static const double fontSizeLg = 24.0;
+  static const double fontSizeBg = 36.0;
 
   // Font Weight
   static const FontWeight thin = FontWeight.w100;

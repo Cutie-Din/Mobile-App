@@ -55,7 +55,7 @@ class _OTPFormState extends State<OTPForm> {
               // Using OtpTextField from the package
               OtpTextField(
                 numberOfFields: 4,
-                borderColor: AppColors.bgSign_in,
+                borderColor: AppColors.bg,
                 fillColor: AppColors.bg,
                 filled: true,
                 showFieldAsBox: true, // Display the fields as boxes
@@ -91,7 +91,7 @@ class _OTPFormState extends State<OTPForm> {
                           style: TextStyle(
                               fontFamily: "PublicSans",
                               fontSize: AppFonts.fontSizeMd,
-                              color: AppColors.buttonSign_in),
+                              color: AppColors.main),
                         )),
               ),
             ],
