@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:finance/import.dart';
 import 'widgets/banner.dart';
 import 'widgets/rec.dart';
@@ -10,29 +9,42 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.bg,
-        body: Column(
-          children: [
-            const BannerDashBoard(), // Keep the banner at the top
-
-            const RecDashBoard(), // RecDashBoard below the banner
-
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: const [
-                    SizedBox(height: 20), // Space between RecDashBoard and ChartDashBoard
-                    ChartDashBoard(), // Adding ChartDashBoard here
-                    SizedBox(height: 20), // Space between ChartDashBoard and RecentDashBoard
-                    RecentDashBoard(), // Adding RecentDashBoard here
-                  ],
+    return Scaffold(
+      backgroundColor: AppColors.bg,
+      body: Stack(
+        // Use Stack to allow overlapping widgets
+        children: const [
+          Column(
+            children: [
+              BannerDashBoard(), // Keep the banner at the top
+              SizedBox(height: 50), // Space before the ChartDashBoard
+              SizedBox(
+                height: 400, // Fixed height for ChartDashBoard
+                child: ChartDashBoard(), // ChartDashBoard without scrolling
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 200, // Fixed height for RecentDashBoard
+                        child: SingleChildScrollView(
+                          child: RecentDashBoard(),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
+          Positioned(
+            top: 190, // Adjust this value to move RecDashBoard up/down
+            left: 0,
+            right: 0,
+            child: RecDashBoard(), // RecDashBoard over both the banner and Expanded
+          ),
+        ],
       ),
     );
   }

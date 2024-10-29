@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:finance/import.dart'; // Your existing imports
 
 class RecentDashBoard extends StatelessWidget {
@@ -15,9 +14,9 @@ class RecentDashBoard extends StatelessWidget {
             child: const Text(
               'Yêu cầu gần đây', // Title
               style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+                  fontFamily: "PublicSans",
+                  fontSize: AppFonts.fontSize14,
+                  fontWeight: AppFonts.semiBold),
             ),
           ),
           const SizedBox(height: 20), // Space between title and items
@@ -78,28 +77,32 @@ class RecentDashBoard extends StatelessWidget {
             children: [
               // Gradient text container for title
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: gradientColors,
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                 ),
                 child: Text(
                   title,
                   style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white, // Text color for title
+                    fontFamily: "Inter",
+                    fontSize: AppFonts.fontSize12,
+                    fontWeight: AppFonts.bold,
+                    color: AppColors.bg,
                   ),
                 ),
               ),
               Text(
                 orderId,
                 style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black, // Text color for order ID
+                  fontFamily: "Roboto",
+                  fontSize: AppFonts.fontSize12,
+                  fontWeight: AppFonts.medium,
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -110,12 +113,21 @@ class RecentDashBoard extends StatelessWidget {
             children: [
               Text(
                 requestTime,
-                style: const TextStyle(fontSize: 16, color: Colors.black), // Request time style
+                style: const TextStyle(
+                  fontFamily: "Inter",
+                  fontSize: AppFonts.fontSize12,
+                  fontWeight: AppFonts.medium,
+                  color: AppColors.text_1,
+                ), // Request time style
               ),
               const Text(
                 'dd/mm/yyyy hh:mm:ss', // This can be dynamically replaced
                 style: TextStyle(
-                    fontSize: 16, color: Colors.black), // Replace with dynamic date if needed
+                  fontFamily: "Inter",
+                  fontSize: AppFonts.fontSize12,
+                  fontWeight: AppFonts.regular,
+                  color: AppColors.text_2,
+                ), // Replace with dynamic date if needed
               ),
             ],
           ),
@@ -125,12 +137,21 @@ class RecentDashBoard extends StatelessWidget {
             children: [
               Text(
                 'Số tiền:',
-                style: const TextStyle(fontSize: 16, color: Colors.black), // Amount text style
+                style: const TextStyle(
+                  fontFamily: "Inter",
+                  fontSize: AppFonts.fontSize12,
+                  fontWeight: AppFonts.medium,
+                  color: AppColors.text_1,
+                ), // Amount text style
               ),
               Text(
                 amount,
                 style: const TextStyle(
-                    fontSize: 16, color: Colors.black), // Replace with dynamic amount
+                  fontFamily: "Roboto",
+                  fontSize: AppFonts.fontSize15,
+                  fontWeight: AppFonts.medium,
+                  color: AppColors.main,
+                ), // Replace with dynamic amount
               ),
             ],
           ),

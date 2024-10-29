@@ -8,7 +8,7 @@ class SignInButton extends StatelessWidget {
       height: 50.0,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/display');
+          Navigator.pushNamed(context, '/menu');
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.main, // Button background color

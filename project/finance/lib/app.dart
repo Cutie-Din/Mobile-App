@@ -14,12 +14,12 @@ class MyApp extends StatelessWidget {
         '/forgotPass': (context) => const ForgotPassScreen(),
         '/changePass': (context) => const ChangePassScreen(),
         '/otp': (context) => const OTPScreen(),
-        '/display': (context) => const DisplayScreen(),
-        // '/menu': (context) => const BottomMenu(),
-        '/dashboard': (context) => const DashboardScreen(),
-        '/history': (context) => const HistoryScreen(),
-        '/notification': (context) => const NotificationScreen(),
-        '/account': (context) => const AccountScreen(),
+        '/menu': (context) => const BottomMenu(),
+        '/first': (context) => const DashboardScreen(),
+        '/second': (context) => const HistoryScreen(),
+        '/third': (context) => AddScreen(),
+        '/fourth': (context) => const NotificationScreen(),
+        '/fifth': (context) => const AccountScreen(),
       },
     );
   }

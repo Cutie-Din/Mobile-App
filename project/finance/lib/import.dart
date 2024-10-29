@@ -11,6 +11,7 @@ export 'package:dotted_border/dotted_border.dart';
 export 'package:image_picker/image_picker.dart';
 export 'dart:io';
 export 'package:fl_chart/fl_chart.dart';
+export 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 // Export work packages
 export 'app.dart';
@@ -25,7 +26,6 @@ export 'package:finance/ui/pages/modules/account/account.dart';
 export 'package:finance/ui/pages/modules/notification/notification.dart';
 export 'package:finance/ui/pages/modules/add/add.dart';
 export 'package:finance/ui/pages/modules/menu.dart';
-export 'package:finance/ui/pages/display.dart';
 
 // Export utilities packages
 export 'package:finance/core/constants/colors.dart';
@@ -33,8 +33,3 @@ export 'package:finance/core/constants/helper_functions.dart';
 export 'package:finance/core/constants/fonts.dart';
 export 'package:finance/core/constants/image_strings.dart';
 export 'package:finance/core/constants/validators.dart';
-
-// Export BloC packages
-export 'package:finance/ui/bloc/menu/menu_bloc.dart';
-export 'package:finance/ui/bloc/menu/menu_event.dart';
-export 'package:finance/ui/bloc/menu/menu_state.dart';

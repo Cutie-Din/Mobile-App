@@ -15,12 +15,12 @@ class BannerDashBoard extends StatelessWidget {
       height: bannerHeight, // Set the overall height of the banner
       child: Stack(
         children: [
-          // Background SVG image
+          // Background image
           SizedBox(
-            width: double.infinity, // Make it full width
+            width: double.infinity,
             height: bannerHeight,
             child: Image.asset(
-              AppImg.banner_db, // Path to your SVG image
+              AppImg.banner_db,
               fit: BoxFit.cover, // Ensure the image covers the entire area
             ),
           ),
@@ -35,27 +35,34 @@ class BannerDashBoard extends StatelessWidget {
                 // Column for text
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Padding(
-                      padding: EdgeInsets.only(left: 30.0),
+                      padding: EdgeInsets.only(
+                          left: getResponsivePadding(context).left + 15.0), // Responsive padding
                       child: Text(
                         'Welcome to',
                         style: TextStyle(
                           fontFamily: 'PublicSans',
                           color: Colors.white,
-                          fontSize: AppFonts.fontSize14,
+                          fontSize: getResponsiveFontSize(context,
+                              small: AppFonts.fontSize14,
+                              medium: AppFonts.fontSize16,
+                              large: AppFonts.fontSize18), // Responsive font size
                           fontWeight: AppFonts.bold,
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 30.0),
+                      padding: EdgeInsets.only(left: getResponsivePadding(context).left + 15.0),
                       child: Text(
                         'CreditHub',
                         style: TextStyle(
                           fontFamily: 'PublicSans',
                           color: Colors.white,
-                          fontSize: AppFonts.fontSize36,
+                          fontSize: getResponsiveFontSize(context,
+                              small: AppFonts.fontSize36,
+                              medium: AppFonts.fontSize36,
+                              large: AppFonts.fontSize36), // Responsive font size
                           fontWeight: AppFonts.bold,
                         ),
                       ),
@@ -64,11 +71,15 @@ class BannerDashBoard extends StatelessWidget {
                 ),
                 // POS image on the right
                 Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
+                  padding: const EdgeInsets.only(right: 15.0),
                   child: Image.asset(
-                    AppImg.pos_db, // Path to your POS image
-                    width: 142,
-                    height: 107,
+                    AppImg.pos_db,
+                    width: getResponsivePadding(context).left < 20.0
+                        ? 100
+                        : 142, // Responsive width based on screen size
+                    height: getResponsivePadding(context).left < 20.0
+                        ? 100
+                        : 107, // Responsive height based on screen size
                     fit: BoxFit.contain,
                   ),
                 ),

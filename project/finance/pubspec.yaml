@@ -27,7 +27,7 @@ dependencies:
   flutter_otp_text_field:
   dotted_border:  
   image_picker:
-  animated_bottom_navigation_bar:
+  persistent_bottom_nav_bar:
   fl_chart:
 
 dev_dependencies:
