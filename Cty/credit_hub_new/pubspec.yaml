@@ -24,13 +24,17 @@ dependencies:
   flutter_svg:
   flutter_dotenv: 
   freezed_annotation:
-  get_it:
+  get:
+  gap:
   intl:
   image_picker: 
   json_annotation: 
   logger:
-  retrofit: 
-  shared_preferences: 
+  retrofit:
+  pinput:  
+  shared_preferences:
+  stylish_bottom_bar:
+
 
 dev_dependencies:
   flutter_test:
@@ -48,19 +52,58 @@ flutter:
 
   assets:
     - .env
-    - assets/images/login/header_login.png
-    - assets/images/login/coin_right_login.png
-    - assets/images/login/footer_login.png
+    - assets/images/auth/header_signin.png
+    - assets/images/auth/coin_right_signin.png
+    - assets/images/auth/footer_signin.png
+    - assets/images/main/account.svg
+    - assets/images/main/history.svg
+    - assets/images/main/home.svg
+    - assets/images/main/notification.svg
+    - assets/images/main/filter.svg
+    - assets/images/main/back.svg
+    - assets/images/main/pos.png
+    - assets/images/main/banner_dashboard.png
+    - assets/images/main/banner_account.png
 
 
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+
+fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/roboto/Roboto-Regular.ttf
+        - asset: assets/fonts/roboto/Roboto-Medium.ttf
+        - asset: assets/fonts/roboto/Roboto-Bold.ttf
+        - asset: assets/fonts/roboto/Roboto-Black.ttf
+
+    - family: PublicSans
+      fonts:
+        - asset: assets/fonts/public_sans/PublicSans-Regular.ttf
+        - asset: assets/fonts/public_sans/PublicSans-Medium.ttf
+        - asset: assets/fonts/public_sans/PublicSans-Bold.ttf
+        - asset: assets/fonts/public_sans/PublicSans-Bold.ttf
+        - asset: assets/fonts/public_sans/PublicSans-Black.ttf
+
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter_18pt-Regular.ttf
+        - asset: assets/fonts/inter/Inter_24pt-Regular.ttf
+        - asset: assets/fonts/inter/Inter_28pt-Regular.ttf
+        - asset: assets/fonts/inter/Inter_18pt-Medium.ttf
+        - asset: assets/fonts/inter/Inter_24pt-Medium.ttf
+        - asset: assets/fonts/inter/Inter_28pt-Medium.ttf
+        - asset: assets/fonts/inter/Inter_18pt-Italic.ttf
+        - asset: assets/fonts/inter/Inter_24pt-Italic.ttf
+        - asset: assets/fonts/inter/Inter_28pt-Italic.ttf
+        - asset: assets/fonts/inter/Inter_18pt-Bold.ttf
+        - asset: assets/fonts/inter/Inter_24pt-Bold.ttf
+        - asset: assets/fonts/inter/Inter_28pt-Bold.ttf
+        - asset: assets/fonts/inter/Inter_18pt-Black.ttf
+        - asset: assets/fonts/inter/Inter_24pt-Black.ttf
+        - asset: assets/fonts/inter/Inter_28pt-Black.ttf
+
+    - family: SFProDisplay
+      fonts:
+        - asset: assets/fonts/sf/SF-Pro-Display-Regular.otf
+        - asset: assets/fonts/sf/SF-Pro-Display-Medium.otf
+        - asset: assets/fonts/sf/SF-Pro-Display-Bold.otf
+        - asset: assets/fonts/sf/SF-Pro-Display-Black.otf
