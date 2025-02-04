@@ -30,6 +30,11 @@ class AppColors {
     end: Alignment.centerLeft,
   );
 
+  static const LinearGradient chart = LinearGradient(colors: [
+    Color(0x33FF4A4A),
+    Color(0xFFFFFFFF),
+  ]);
+
   // Text Colors
   static const Color button = Color(0xFFFFFFFF);
   static const Color black1 = Color(0xFF525252);

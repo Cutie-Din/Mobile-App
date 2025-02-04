@@ -34,6 +34,7 @@ dependencies:
   pinput:  
   shared_preferences:
   stylish_bottom_bar:
+  syncfusion_flutter_datepicker:
 
 
 dev_dependencies:

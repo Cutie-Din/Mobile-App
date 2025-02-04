@@ -66,8 +66,8 @@ class _BottomMenuState extends State<BottomMenu> {
       floatingActionButton: Transform.translate(
         offset: const Offset(0, 10),
         child: Container(
-          width: 50.0,
-          height: 50.0,
+          width: 60.0,
+          height: 60.0,
           decoration: BoxDecoration(
             color: AppColors.primary,
             borderRadius: BorderRadius.circular(20),
@@ -105,7 +105,7 @@ class _BottomMenuState extends State<BottomMenu> {
                         'Trang chủ',
                         style: TextStyle(
                           fontFamily: 'Inter',
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -125,7 +125,7 @@ class _BottomMenuState extends State<BottomMenu> {
                         'Lịch sử',
                         style: TextStyle(
                           fontFamily: 'Inter',
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -154,7 +154,7 @@ class _BottomMenuState extends State<BottomMenu> {
                         'Thông báo',
                         style: TextStyle(
                           fontFamily: 'Inter',
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -174,7 +174,7 @@ class _BottomMenuState extends State<BottomMenu> {
                         'Tài khoản',
                         style: TextStyle(
                           fontFamily: 'Inter',
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

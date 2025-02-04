@@ -17,5 +17,5 @@ class AppImages {
   static const String pos_dashboard = "assets/images/main/pos.png";
   static const String banner_account = "assets/images/main/banner_account.png";
 
-  static const String menu_nothing = "";
+  static const String menu_nothing = "assets/images/main/notification.svg";
 }
