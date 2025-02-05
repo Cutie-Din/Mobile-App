@@ -8,7 +8,8 @@ export 'package:gap/gap.dart';
 export 'dart:async';
 export 'package:pinput/pinput.dart';
 export 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
-// export 'package:fl_chart/fl_chart.dart';
+export 'package:fl_chart/fl_chart.dart';
+export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 export 'package:credit_hub_new/src/constant/app_colors.dart';
 export 'package:credit_hub_new/src/constant/app_images.dart';
@@ -29,3 +30,5 @@ export 'package:credit_hub_new/src/ui/main/history/history_screen.dart';
 export 'package:credit_hub_new/src/ui/main/notification/notification_screen.dart';
 
 export 'package:credit_hub_new/src/ui/splash/splash_screen.dart';
+
+export 'package:credit_hub_new/src/ui/main/dashboard/widgets/app_chart.dart';

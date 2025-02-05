@@ -74,7 +74,9 @@ class _BottomMenuState extends State<BottomMenu> {
           ),
           child: IconButton(
             icon: const Icon(Icons.add, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+              Get.toNamed(AppRoute.add.name);
+            },
           ),
         ),
       ),
@@ -139,7 +141,7 @@ class _BottomMenuState extends State<BottomMenu> {
                       showBadge: showContainer,
                       isSelected: selected == 2,
                     ),
-                    title: const Text(' '),
+                    title: const Text(''),
                     unSelectedColor: Colors.white,
                   ),
                   BottomBarItem(
@@ -187,7 +189,8 @@ class _BottomMenuState extends State<BottomMenu> {
                 onTap: (index) {
                   setState(() {
                     if (index == 2) {
-                      // Get.toNamed(RouteHelper.getAddRoute());
+                      Get.toNamed(AppRoute.add.name);
+
                       return;
                     }
                     selected = index;

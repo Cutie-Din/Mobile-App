@@ -24,6 +24,8 @@ dependencies:
   flutter_svg:
   flutter_dotenv: 
   freezed_annotation:
+  font_awesome_flutter:
+  fl_chart: 0.69.2
   get:
   gap:
   intl:

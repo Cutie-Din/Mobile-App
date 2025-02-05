@@ -1,4 +1,5 @@
 import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:intl/intl.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -8,11 +9,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  List<Color> gradientColors = [
-    Color(0x33FF4A4A),
-    AppColors.button,
-  ];
-
   bool showAvg = false;
 
   @override
@@ -26,7 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       children: [
         Stack(
-          clipBehavior: Clip.none, // Đảm bảo không cắt nội dung bị tràn
+          clipBehavior: Clip.none,
           children: [
             SizedBox(
               width: double.infinity,
@@ -89,7 +85,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ],
         ),
-        _buildChart(),
+        const Gap(55),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _buildChart(),
+                const Gap(30),
+                _buildRecent(),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -117,7 +124,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Text(
             number,
             style: TextStyle(
-              fontFamily: 'PublicSans',
+              fontFamily: 'Public Sans',
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: isLeft ? AppColors.primary : AppColors.secondary,
@@ -126,7 +133,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Text(
             text,
             style: const TextStyle(
-              fontFamily: 'PublicSans',
+              fontFamily: 'Public Sans',
               fontSize: 12,
               fontWeight: FontWeight.w400,
               color: AppColors.grey1,
@@ -138,17 +145,190 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildChart() {
-    return const Column(
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return Stack(
+          children: <Widget>[
+            const Center(
+              child: Text(
+                "Doanh số theo thời gian",
+                style: TextStyle(
+                  fontFamily: 'Public Sans',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            AspectRatio(
+              aspectRatio: 1.5,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 25,
+                  left: 12,
+                  top: 24,
+                  bottom: 12,
+                ),
+                child: LineChart(
+                  showAvg ? avgData() : mainData(),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  String format(double? value) {
+    if (value == null) return '';
+    return NumberFormat.decimalPattern('vi_VN').format(value);
+  }
+
+  LinearGradient getStatus(String? status) {
+    if (status != null && status.contains("Chờ quyết toán")) {
+      return AppColors.waiting;
+    } else if (status != null && status.contains("Đã quyết toán")) {
+      return AppColors.confirmed;
+    } else if (status != null && status.contains("Không quyết toán")) {
+      return AppColors.cancelled;
+    } else {
+      return AppColors.uploading;
+    }
+  }
+
+  Widget _buildRecent() {
+    return Column(
       children: [
-        Gap(53),
-        Center(
+        const Center(
           child: Text(
-            "Doanh số theo thời gian",
+            "Yêu cầu gần đây",
             style: TextStyle(
-              fontFamily: 'PublicSans',
-              fontSize: 14,
+              fontFamily: 'Public Sans',
               fontWeight: FontWeight.w600,
-              color: AppColors.grey2,
+              fontSize: 14,
+            ),
+          ),
+        ),
+        const Gap(30),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: AppColors.button,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.grey.withOpacity(0.5),
+                width: 1.0,
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Status Box
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: AppColors.waiting,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: const Padding(
+                          padding: EdgeInsets.all(3.0),
+                          child: Text(
+                            'Chờ quyết toán',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                              color: AppColors.button,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Gap(8),
+                      // "Ngày yêu cầu" Text
+                      const Text(
+                        'Ngày yêu cầu',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: AppColors.grey3,
+                        ),
+                      ),
+                      const Gap(11),
+
+                      // "Số tiền" Text
+                      const Text(
+                        'Số tiền',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: AppColors.grey3,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      // Order ID
+                      Gap(8),
+                      Text(
+                        '000392',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          color: AppColors.black5,
+                        ),
+                      ),
+                      Gap(8),
+                      // Request Time
+                      Text(
+                        '22/07/2021 07:20:11',
+                        style: TextStyle(
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          color: AppColors.grey4,
+                        ),
+                      ),
+                      // Amount
+                      Gap(11),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            '3.000.000',
+                            style: TextStyle(
+                              fontFamily: 'Roboto',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          Icon(
+                            FontAwesomeIcons.dongSign,
+                            size: 14,
+                            color: AppColors.primary,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),

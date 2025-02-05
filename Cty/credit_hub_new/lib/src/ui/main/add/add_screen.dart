@@ -5,8 +5,33 @@ class AddScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.button,
+      appBar: AppBar(
+        title: const Center(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
+            child: Text(
+              'Tạo yêu cầu rút tiền',
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: AppColors.black4,
+              ),
+            ),
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(
+            FontAwesomeIcons.chevronLeft,
+            size: 12,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ),
     );
   }
 }

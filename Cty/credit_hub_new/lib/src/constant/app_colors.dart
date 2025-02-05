@@ -14,26 +14,27 @@ class AppColors {
   //Transaction Colors
   static const LinearGradient waiting = LinearGradient(
     colors: [Color(0xFFFFD001), Color(0xFFFFC727)],
-    begin: Alignment.centerRight,
-    end: Alignment.centerLeft,
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   );
 
   static const LinearGradient confirmed = LinearGradient(
     colors: [Color(0xFF4BF56C), Color(0xFF1AC53B)],
-    begin: Alignment.centerRight,
-    end: Alignment.centerLeft,
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   );
 
   static const LinearGradient cancelled = LinearGradient(
     colors: [Color(0xFFFF754A), Color(0xFFFF4A4A)],
-    begin: Alignment.centerRight,
-    end: Alignment.centerLeft,
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
   );
 
-  static const LinearGradient chart = LinearGradient(colors: [
-    Color(0x33FF4A4A),
-    Color(0xFFFFFFFF),
-  ]);
+  static const LinearGradient uploading = LinearGradient(
+    colors: [Color(0xFF525252), Color(0xFF525252)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 
   // Text Colors
   static const Color button = Color(0xFFFFFFFF);

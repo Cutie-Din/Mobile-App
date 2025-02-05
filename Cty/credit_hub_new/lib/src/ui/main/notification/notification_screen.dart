@@ -5,8 +5,23 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: AppColors.primary,
+    return Scaffold(
+      backgroundColor: AppColors.button,
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            'Thông báo',
+            style: TextStyle(
+              fontFamily: 'Inter',
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              color: AppColors.black4,
+            ),
+          ),
+        ),
+        elevation: 0,
+        automaticallyImplyLeading: false,
+      ),
     );
   }
 }
