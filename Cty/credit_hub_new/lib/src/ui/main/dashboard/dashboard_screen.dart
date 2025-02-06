@@ -34,13 +34,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Welcome to',
-                        style: TextStyle(
-                          fontFamily: 'PublicSans',
+                        style: GoogleFonts.publicSans(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: AppColors.button,
@@ -48,14 +47,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       Text(
                         'CreditHub',
-                        style: TextStyle(
-                          fontFamily: 'PublicSans',
+                        style: GoogleFonts.publicSans(
                           fontSize: 36,
                           fontWeight: FontWeight.w700,
                           color: AppColors.button,
                         ),
                       ),
-                      Gap(15),
+                      const Gap(15),
                     ],
                   ),
                   const Gap(25),
@@ -92,7 +90,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 _buildChart(),
                 const Gap(30),
-                _buildRecent(),
+                _buildRecent("Đã quyết toán", "000392", "22/07/2021 07:20:11", "3.000.000"),
               ],
             ),
           ),
@@ -123,8 +121,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Text(
             number,
-            style: TextStyle(
-              fontFamily: 'Public Sans',
+            style: GoogleFonts.publicSans(
               fontSize: 20,
               fontWeight: FontWeight.w700,
               color: isLeft ? AppColors.primary : AppColors.secondary,
@@ -132,8 +129,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           Text(
             text,
-            style: const TextStyle(
-              fontFamily: 'Public Sans',
+            style: GoogleFonts.publicSans(
               fontSize: 12,
               fontWeight: FontWeight.w400,
               color: AppColors.grey1,
@@ -149,11 +145,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       builder: (context, setState) {
         return Stack(
           children: <Widget>[
-            const Center(
+            Center(
               child: Text(
                 "Doanh số theo thời gian",
-                style: TextStyle(
-                  fontFamily: 'Public Sans',
+                style: GoogleFonts.publicSans(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                 ),
@@ -196,14 +191,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
-  Widget _buildRecent() {
+  Widget _buildRecent(
+    String status,
+    String id,
+    String date,
+    String money,
+  ) {
     return Column(
       children: [
-        const Center(
+        Center(
           child: Text(
             "Yêu cầu gần đây",
-            style: TextStyle(
-              fontFamily: 'Public Sans',
+            style: GoogleFonts.publicSans(
               fontWeight: FontWeight.w600,
               fontSize: 14,
             ),
@@ -233,16 +232,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       // Status Box
                       Container(
                         decoration: BoxDecoration(
-                          gradient: AppColors.waiting,
+                          gradient: getStatus(status),
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(3.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(3.0),
                           child: Text(
-                            'Chờ quyết toán',
+                            status,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Inter',
+                            style: GoogleFonts.inter(
                               fontWeight: FontWeight.w700,
                               fontSize: 12,
                               color: AppColors.button,
@@ -252,10 +250,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                       const Gap(8),
                       // "Ngày yêu cầu" Text
-                      const Text(
+                      Text(
                         'Ngày yêu cầu',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
+                        style: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
                           color: AppColors.grey3,
@@ -264,10 +261,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       const Gap(11),
 
                       // "Số tiền" Text
-                      const Text(
+                      Text(
                         'Số tiền',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
+                        style: GoogleFonts.inter(
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
                           color: AppColors.grey3,
@@ -276,49 +272,46 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(5.0),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       // Order ID
-                      Gap(8),
+                      const Gap(8),
                       Text(
-                        '000392',
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
+                        id,
+                        style: GoogleFonts.roboto(
                           fontWeight: FontWeight.w500,
                           fontSize: 12,
                           color: AppColors.black5,
                         ),
                       ),
-                      Gap(8),
+                      const Gap(8),
                       // Request Time
                       Text(
-                        '22/07/2021 07:20:11',
-                        style: TextStyle(
-                          fontFamily: 'Roboto',
+                        date,
+                        style: GoogleFonts.roboto(
                           fontWeight: FontWeight.w400,
                           fontSize: 12,
                           color: AppColors.grey4,
                         ),
                       ),
                       // Amount
-                      Gap(11),
+                      const Gap(11),
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            '3.000.000',
-                            style: TextStyle(
-                              fontFamily: 'Roboto',
+                            money,
+                            style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w500,
                               fontSize: 15,
                               color: AppColors.primary,
                             ),
                           ),
-                          Icon(
+                          const Icon(
                             FontAwesomeIcons.dongSign,
                             size: 14,
                             color: AppColors.primary,

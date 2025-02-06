@@ -6,51 +6,50 @@ List<Color> gradientColors = [
 ];
 
 Widget bottomTitleWidgets(double value, TitleMeta meta) {
-  const style = TextStyle(
-    fontFamily: 'Public Sans',
-    fontWeight: FontWeight.w400,
+  final style = GoogleFonts.publicSans(
     fontSize: 8,
+    fontWeight: FontWeight.w400,
   );
   Widget text;
   switch (value.toInt()) {
     case 0:
-      text = const Text('1', style: style);
+      text = Text('1', style: style);
       break;
     case 1:
-      text = const Text('2', style: style);
+      text = Text('2', style: style);
       break;
     case 2:
-      text = const Text('3', style: style);
+      text = Text('3', style: style);
       break;
     case 3:
-      text = const Text('4', style: style);
+      text = Text('4', style: style);
       break;
     case 4:
-      text = const Text('5', style: style);
+      text = Text('5', style: style);
       break;
     case 5:
-      text = const Text('6', style: style);
+      text = Text('6', style: style);
       break;
     case 6:
-      text = const Text('7', style: style);
+      text = Text('7', style: style);
       break;
     case 7:
-      text = const Text('8', style: style);
+      text = Text('8', style: style);
       break;
     case 8:
-      text = const Text('9', style: style);
+      text = Text('9', style: style);
       break;
     case 9:
-      text = const Text('10', style: style);
+      text = Text('10', style: style);
       break;
     case 10:
-      text = const Text('11', style: style);
+      text = Text('11', style: style);
       break;
     case 11:
-      text = const Text('12', style: style);
+      text = Text('12', style: style);
       break;
     default:
-      text = const Text('', style: style);
+      text = Text('', style: style);
       break;
   }
 

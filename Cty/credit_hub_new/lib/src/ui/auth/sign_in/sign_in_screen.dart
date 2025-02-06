@@ -35,12 +35,11 @@ class _SignInScreenState extends State<SignInScreen> {
         Expanded(
           child: Column(
             children: [
-              const Align(
-                alignment: Alignment(-0.65, -0.5),
+              Align(
+                alignment: const Alignment(-0.65, -0.5),
                 child: Text(
                   "Đăng nhập",
-                  style: TextStyle(
-                    fontFamily: 'PublicSans',
+                  style: GoogleFonts.publicSans(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                   ),
@@ -49,20 +48,20 @@ class _SignInScreenState extends State<SignInScreen> {
               const Gap(50),
               AppTextField(
                 hint: "Tên đăng nhập",
-                hintStyle: const TextStyle(
-                  fontFamily: 'PublicSans',
+                hintStyle: GoogleFonts.publicSans(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
                 ),
                 controller: _usernameController,
               ),
               const Gap(25),
               AppTextField(
                 hint: "Mật khẩu",
-                hintStyle: const TextStyle(
-                  fontFamily: 'PublicSans',
+                hintStyle: GoogleFonts.publicSans(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
                 ),
                 controller: _passwordController,
                 obscureText: _obscureText,
@@ -84,10 +83,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   style: ButtonStyle(
                     overlayColor: MaterialStateProperty.all(Colors.transparent),
                   ),
-                  child: const Text(
+                  child: Text(
                     "Quên mật khẩu?",
-                    style: TextStyle(
-                      fontFamily: 'PublicSans',
+                    style: GoogleFonts.publicSans(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       color: AppColors.primary,
@@ -100,7 +98,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 onPressed: () {
                   Get.toNamed(AppRoute.main.name);
                 },
-                buttonText: "Đăng nhập",
+                buttonText: "ĐĂNG NHẬP",
                 sizeButton: 'large',
               ),
             ],

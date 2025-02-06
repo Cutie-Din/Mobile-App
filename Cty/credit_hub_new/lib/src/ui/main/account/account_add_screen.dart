@@ -1,29 +1,29 @@
-import 'dart:io';
-
+import 'package:credit_hub_new/src/components/bottomsheet/app_bottom_sheet.dart';
 import 'package:credit_hub_new/src/utils/app_export.dart';
-import 'package:dotted_border/dotted_border.dart';
 
-class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+class AccountAddScreen extends StatefulWidget {
+  const AccountAddScreen({super.key});
 
   @override
-  State<AddScreen> createState() => _AddScreenState();
+  State<AccountAddScreen> createState() => _AccountAddScreenState();
 }
 
-class _AddScreenState extends State<AddScreen> {
-  XFile? _image; // Holds the selected image
-  final ImagePicker _picker = ImagePicker();
-  final TextEditingController _idController = TextEditingController();
-  final TextEditingController _moneyController = TextEditingController();
+class _AccountAddScreenState extends State<AccountAddScreen> {
+  final TextEditingController _numAccController = TextEditingController();
+  final TextEditingController _nameAccController = TextEditingController();
+  final TextEditingController _bankAccController = TextEditingController();
 
-  Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = pickedFile;
-      });
-    }
+  void _showAppBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return AppBottomSheet(
+          onClose: () {
+            print('BottomSheet đóng');
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -35,7 +35,7 @@ class _AddScreenState extends State<AddScreen> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
             child: Text(
-              'Tạo yêu cầu rút tiền',
+              'Thêm tài khoản nhận tiền',
               style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.w400,
@@ -50,7 +50,7 @@ class _AddScreenState extends State<AddScreen> {
             size: 12,
           ),
           onPressed: () {
-            Get.offAllNamed(AppRoute.main.name);
+            Get.back();
           },
         ),
       ),
@@ -74,7 +74,7 @@ class _AddScreenState extends State<AddScreen> {
                   color: AppColors.black4,
                 ),
                 children: [
-                  TextSpan(text: 'Số lô'),
+                  TextSpan(text: 'Số tài khoản'),
                   TextSpan(
                     text: '*',
                     style: TextStyle(
@@ -95,7 +95,7 @@ class _AddScreenState extends State<AddScreen> {
                 fontWeight: FontWeight.w400,
                 color: AppColors.black4,
               ),
-              controller: _idController,
+              controller: _numAccController,
             ),
           ],
         ),
@@ -112,7 +112,7 @@ class _AddScreenState extends State<AddScreen> {
                   color: AppColors.black4,
                 ),
                 children: [
-                  TextSpan(text: 'Số tiền'),
+                  TextSpan(text: 'Tên tài khoản'),
                   TextSpan(
                     text: '*',
                     style: TextStyle(
@@ -133,7 +133,7 @@ class _AddScreenState extends State<AddScreen> {
                 fontWeight: FontWeight.w400,
                 color: AppColors.black4,
               ),
-              controller: _idController,
+              controller: _nameAccController,
             ),
           ],
         ),
@@ -150,7 +150,7 @@ class _AddScreenState extends State<AddScreen> {
                   color: AppColors.black4,
                 ),
                 children: [
-                  TextSpan(text: 'Tải hình ảnh hoá đơn'),
+                  TextSpan(text: 'Ngân hàng'),
                   TextSpan(
                     text: '*',
                     style: TextStyle(
@@ -164,49 +164,30 @@ class _AddScreenState extends State<AddScreen> {
               ),
             ),
             const Gap(10),
-            GestureDetector(
-              onTap: _pickImage,
-              child: Container(
-                width: 318,
-                height: 114,
-                decoration: BoxDecoration(
-                  color: Color(0xFFF5F6F8),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: _image == null
-                    ? DottedBorder(
-                        color: Colors.grey,
-                        dashPattern: [6, 8],
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(10),
-                        child: Center(
-                          child: Image.asset(
-                            AppImages.cam, // Đường dẫn đến ảnh biểu tượng camera
-                            width: 40,
-                            height: 40,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.file(
-                          File(_image!.path),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                      ),
+            AppTextField(
+              readOnly: true,
+              hint: "",
+              hintStyle: GoogleFonts.publicSans(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: AppColors.black4,
               ),
+              controller: _bankAccController,
+              suffixIcon: const Icon(
+                FontAwesomeIcons.chevronDown,
+                size: 15,
+                color: AppColors.black4,
+              ),
+              onSuffixIconTap: () => _showAppBottomSheet(context),
             ),
           ],
         ),
-        const Gap(30),
+        const Gap(60),
         AppButton(
           onPressed: () {
-            Get.offAllNamed(AppRoute.main.name);
+            Get.toNamed(AppRoute.accountlist.name);
           },
-          buttonText: "Gửi yêu cầu",
+          buttonText: "THÊM MỚI",
           sizeButton: 'medium',
         ),
       ],

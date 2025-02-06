@@ -76,7 +76,7 @@ class _AppButtonState extends State<AppButton> {
       disabledBackgroundColor: AppColors.primary,
       padding: const EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(30),
       ),
     );
 
@@ -93,11 +93,11 @@ class _AppButtonState extends State<AppButton> {
               Text(
                 widget.buttonText,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.button),
+                style: GoogleFonts.publicSans(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.button,
+                ),
               ),
             ],
           ),

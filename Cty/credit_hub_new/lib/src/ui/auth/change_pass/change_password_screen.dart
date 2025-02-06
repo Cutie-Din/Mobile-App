@@ -40,14 +40,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
         Expanded(
           child: Column(
             children: [
-              const Align(
-                alignment: Alignment(-0.6, -0.5),
+              Align(
+                alignment: const Alignment(-0.6, -0.5),
                 child: Text(
                   "Đổi mật khẩu",
-                  style: TextStyle(
-                    fontFamily: 'PublicSans',
+                  style: GoogleFonts.publicSans(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
+                    color: AppColors.black4,
                   ),
                 ),
               ),
@@ -55,10 +55,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               // Trường mật khẩu mới
               AppTextField(
                 hint: "Mật khẩu mới",
-                hintStyle: const TextStyle(
-                  fontFamily: 'PublicSans',
+                hintStyle: GoogleFonts.publicSans(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
                 ),
                 controller: _newPasswordController,
                 obscureText: _obscureNewPassword,
@@ -74,10 +74,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               // Trường xác nhận mật khẩu
               AppTextField(
                 hint: "Xác nhận mật khẩu",
-                hintStyle: const TextStyle(
-                  fontFamily: 'PublicSans',
+                hintStyle: GoogleFonts.publicSans(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
                 ),
                 controller: _confirmPasswordController,
                 obscureText: _obscureConfirmPassword,
@@ -94,7 +94,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 onPressed: () {
                   Get.toNamed(AppRoute.signIn.name);
                 },
-                buttonText: "Xác nhận",
+                buttonText: "XÁC NHẬN",
                 sizeButton: 'large',
               ),
             ],

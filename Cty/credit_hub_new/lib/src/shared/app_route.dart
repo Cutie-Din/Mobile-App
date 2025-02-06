@@ -1,5 +1,3 @@
-import 'package:credit_hub_new/src/ui/main/add/add_screen.dart';
-import 'package:credit_hub_new/src/ui/main/menu/bottom_menu.dart';
 import 'package:credit_hub_new/src/utils/app_export.dart';
 
 enum AppRoute {
@@ -13,7 +11,11 @@ enum AppRoute {
   history,
   add,
   notification,
-  account
+  account,
+  accountdetails,
+  accountlist,
+  accountadd,
+  accountedit,
 }
 
 extension AppRouteExt on AppRoute {
@@ -41,6 +43,14 @@ extension AppRouteExt on AppRoute {
         return '/change_password';
       case AppRoute.account:
         return '/account';
+      case AppRoute.accountdetails:
+        return '/account_details';
+      case AppRoute.accountlist:
+        return '/account_list';
+      case AppRoute.accountadd:
+        return '/account_add';
+      case AppRoute.accountedit:
+        return '/account_edit';
       default:
         return '';
     }
@@ -123,7 +133,30 @@ extension AppRouteExt on AppRoute {
           page: () => const AccountScreen(),
           bindings: [],
         );
-
+      case AppRoute.accountdetails:
+        return GetPageRoute(
+          settings: settings,
+          page: () => const AccountDetailsScreen(),
+          bindings: [],
+        );
+      case AppRoute.accountlist:
+        return GetPageRoute(
+          settings: settings,
+          page: () => const AccountListScreen(),
+          bindings: [],
+        );
+      case AppRoute.accountadd:
+        return GetPageRoute(
+          settings: settings,
+          page: () => const AccountAddScreen(),
+          bindings: [],
+        );
+      case AppRoute.accountedit:
+        return GetPageRoute(
+          settings: settings,
+          page: () => const AccountEditScreen(),
+          bindings: [],
+        );
       default:
         return GetPageRoute(
           settings: settings,

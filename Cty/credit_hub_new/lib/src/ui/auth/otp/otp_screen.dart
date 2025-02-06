@@ -61,14 +61,14 @@ class _OtpScreenState extends State<OtpScreen> {
         Expanded(
           child: Column(
             children: [
-              const Align(
-                alignment: Alignment(-0.65, -0.5),
+              Align(
+                alignment: const Alignment(-0.65, -0.5),
                 child: Text(
                   "Nhập OTP",
-                  style: TextStyle(
-                    fontFamily: 'PublicSans',
+                  style: GoogleFonts.publicSans(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
+                    color: AppColors.black4,
                   ),
                 ),
               ),
@@ -76,20 +76,20 @@ class _OtpScreenState extends State<OtpScreen> {
               Align(
                 alignment: const Alignment(-0.4, -0.5),
                 child: RichText(
-                  text: const TextSpan(
-                    style: TextStyle(
-                      fontFamily: 'PublicSans',
+                  text: TextSpan(
+                    style: GoogleFonts.publicSans(
                       fontSize: 16,
                       fontWeight: FontWeight.w400,
-                      color: Colors.black,
+                      color: AppColors.black4,
                     ),
                     children: [
-                      TextSpan(text: 'OTP đã được gửi về email:\n'),
+                      const TextSpan(text: 'OTP đã được gửi về email:\n'),
                       TextSpan(
                         text: 'dcv@dcv.vn',
-                        style: TextStyle(
+                        style: GoogleFonts.publicSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
                           color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       TextSpan(text: '. Hãy kiểm tra và nhập\nxuống phía dưới'),
@@ -107,6 +107,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 focusedPinTheme: PinTheme(
@@ -115,6 +116,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: AppColors.primary),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 submittedPinTheme: PinTheme(
@@ -123,6 +125,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: AppColors.primary),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
@@ -135,9 +138,10 @@ class _OtpScreenState extends State<OtpScreen> {
                     _remainingTime > 0
                         ? 'Gửi lại mã sau ${_formatTime(_remainingTime)}'
                         : 'Gửi lại mã',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFFFFB000),
+                    style: GoogleFonts.publicSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.secondary,
                     ),
                   ),
                 ),
@@ -147,7 +151,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 onPressed: () {
                   Get.toNamed(AppRoute.changePassword.name);
                 },
-                buttonText: "Xác thực",
+                buttonText: "XÁC THỰC",
                 sizeButton: 'large',
               ),
             ],

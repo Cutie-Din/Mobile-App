@@ -18,4 +18,9 @@ class AppImages {
   static const String banner_account = "assets/images/main/banner_account.png";
 
   static const String menu_nothing = "assets/images/main/notification.svg";
+
+  static const String money_acc = "assets/images/main/money_acc.png";
+  static const String money_add = "assets/images/main/money_add.png";
+
+  static const String cam = "assets/images/main/camera.png";
 }

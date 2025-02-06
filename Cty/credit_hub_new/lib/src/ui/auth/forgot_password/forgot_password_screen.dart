@@ -24,33 +24,33 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         Expanded(
           child: Column(
             children: [
-              const Align(
-                alignment: Alignment(-0.59, -0.5),
+              Align(
+                alignment: const Alignment(-0.59, -0.5),
                 child: Text(
                   "Quên mật khẩu",
-                  style: TextStyle(
-                    fontFamily: 'PublicSans',
+                  style: GoogleFonts.publicSans(
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
+                    color: AppColors.black4,
                   ),
                 ),
               ),
               const Gap(20),
-              const Text(
+              Text(
                 'Quên mật khẩu? Nhập email của bạn vào\nđây, chúng tôi sẽ cấp lại cho bạn qua email',
-                style: TextStyle(
-                  fontFamily: 'PublicSans',
+                style: GoogleFonts.publicSans(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
                 ),
               ),
               const Gap(50),
               AppTextField(
                 hint: "Email",
-                hintStyle: const TextStyle(
-                  fontFamily: 'PublicSans',
+                hintStyle: GoogleFonts.publicSans(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
                 ),
                 controller: _emailController,
               ),
@@ -59,7 +59,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                 onPressed: () {
                   Get.toNamed(AppRoute.otp.name);
                 },
-                buttonText: "Gửi",
+                buttonText: "GỬI",
                 sizeButton: 'large',
               ),
               const Gap(25),
@@ -80,10 +80,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         color: AppColors.primary,
                       ),
                       const Gap(10),
-                      const Text(
+                      Text(
                         "Trở lại đăng nhập",
-                        style: TextStyle(
-                          fontFamily: 'PublicSans',
+                        style: GoogleFonts.publicSans(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
                           color: AppColors.primary,

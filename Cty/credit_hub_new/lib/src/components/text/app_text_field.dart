@@ -90,7 +90,7 @@ class _AppTextFieldState extends State<AppTextField> {
           height: _height,
           width: 327,
           decoration: BoxDecoration(
-            color: AppColors.grey8,
+            color: AppColors.button,
             borderRadius: _borderRadius,
             border: _border,
           ),

@@ -66,8 +66,8 @@ class _BottomMenuState extends State<BottomMenu> {
       floatingActionButton: Transform.translate(
         offset: const Offset(0, 10),
         child: Container(
-          width: 60.0,
-          height: 60.0,
+          width: 55.0,
+          height: 55.0,
           decoration: BoxDecoration(
             color: AppColors.primary,
             borderRadius: BorderRadius.circular(20),
@@ -101,12 +101,11 @@ class _BottomMenuState extends State<BottomMenu> {
                       showBadge: false,
                       isSelected: selected == 0,
                     ),
-                    title: const Padding(
-                      padding: EdgeInsets.only(top: 4.0),
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Trang chủ',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
+                        style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
@@ -121,12 +120,11 @@ class _BottomMenuState extends State<BottomMenu> {
                       showBadge: false,
                       isSelected: selected == 1,
                     ),
-                    title: const Padding(
-                      padding: EdgeInsets.only(top: 4.0),
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Lịch sử',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
+                        style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
@@ -150,12 +148,11 @@ class _BottomMenuState extends State<BottomMenu> {
                       showBadge: showNotificationBadge,
                       isSelected: selected == 3,
                     ),
-                    title: const Padding(
-                      padding: EdgeInsets.only(top: 4.0),
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Thông báo',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
+                        style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
@@ -170,12 +167,11 @@ class _BottomMenuState extends State<BottomMenu> {
                       showBadge: showAccountBadge,
                       isSelected: selected == 4,
                     ),
-                    title: const Padding(
-                      padding: EdgeInsets.only(top: 4.0),
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
                       child: Text(
                         'Tài khoản',
-                        style: TextStyle(
-                          fontFamily: 'Inter',
+                        style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
                         ),
