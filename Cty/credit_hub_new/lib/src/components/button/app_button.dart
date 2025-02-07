@@ -67,12 +67,16 @@ class _AppButtonState extends State<AppButton> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isRefresh = widget.buttonText == 'Làm mới';
+
     final ButtonStyle elevatedButtonStyle = ElevatedButton.styleFrom(
-      backgroundColor: widget.onPressed == null
-          ? AppColors.primary
-          : widget.transparent
-              ? Colors.transparent
-              : widget.color ?? AppColors.primary,
+      backgroundColor: isRefresh
+          ? AppColors.button
+          : widget.onPressed == null
+              ? AppColors.primary
+              : widget.transparent
+                  ? Colors.transparent
+                  : widget.color ?? AppColors.primary,
       disabledBackgroundColor: AppColors.primary,
       padding: const EdgeInsets.all(15),
       shape: RoundedRectangleBorder(
@@ -96,7 +100,7 @@ class _AppButtonState extends State<AppButton> {
                 style: GoogleFonts.publicSans(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.button,
+                  color: isRefresh ? AppColors.black5 : AppColors.button,
                 ),
               ),
             ],

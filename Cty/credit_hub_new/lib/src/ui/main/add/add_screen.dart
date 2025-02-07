@@ -50,7 +50,7 @@ class _AddScreenState extends State<AddScreen> {
             size: 12,
           ),
           onPressed: () {
-            Get.offAllNamed(AppRoute.main.name);
+            Get.back();
           },
         ),
       ),

@@ -9,6 +9,7 @@ enum AppRoute {
   main,
   dashboard,
   history,
+  historydetail,
   add,
   notification,
   account,
@@ -37,6 +38,8 @@ extension AppRouteExt on AppRoute {
         return '/dashboard';
       case AppRoute.history:
         return '/history';
+      case AppRoute.historydetail:
+        return '/history_detail';
       case AppRoute.add:
         return '/add';
       case AppRoute.notification:
@@ -113,6 +116,12 @@ extension AppRouteExt on AppRoute {
         return GetPageRoute(
           settings: settings,
           page: () => const HistoryScreen(),
+          bindings: [],
+        );
+      case AppRoute.historydetail:
+        return GetPageRoute(
+          settings: settings,
+          page: () => const HistoryDetailScreen(),
           bindings: [],
         );
       case AppRoute.add:

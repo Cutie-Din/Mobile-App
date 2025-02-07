@@ -23,4 +23,7 @@ class AppImages {
   static const String money_add = "assets/images/main/money_add.png";
 
   static const String cam = "assets/images/main/camera.png";
+
+  static const String rubbish = "assets/images/main/rubbish.png";
+  static const String edit = "assets/images/main/edit.png";
 }

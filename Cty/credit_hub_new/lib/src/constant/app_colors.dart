@@ -53,4 +53,7 @@ class AppColors {
   static const Color grey7 = Color(0xFF7E7E7E);
   static const Color grey8 = Color(0xFFF5F5F5);
   static const Color grey9 = Color(0xFFA9AAAE);
+
+  // Progress Colors
+  static const Color progress = Color(0xFFFFD0CD);
 }
