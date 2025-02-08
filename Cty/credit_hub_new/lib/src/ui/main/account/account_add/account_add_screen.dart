@@ -18,6 +18,7 @@ class _AccountAddScreenState extends State<AccountAddScreen> {
       builder: (BuildContext context) {
         return AppBottomSheet(
           onClose: () {},
+          pickerType: 'AppBankPicker',
         );
       },
     );

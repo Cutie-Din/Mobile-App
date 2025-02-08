@@ -39,8 +39,7 @@ dependencies:
   shared_preferences:
   stylish_bottom_bar:
   calendar_date_picker2:
-  # syncfusion_flutter_datepicker: 21.2.10
-  # flutter_date_picker_timeline:
+  pull_to_refresh:
 
 
 dev_dependencies:

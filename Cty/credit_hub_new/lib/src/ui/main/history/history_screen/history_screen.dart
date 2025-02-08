@@ -67,7 +67,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 AppImages.filter_icon,
                 color: AppColors.primary,
               ),
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return AppBottomSheet(
+                      onClose: () => Navigator.of(context).pop(),
+                      pickerType: 'AppDatePicker',
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],

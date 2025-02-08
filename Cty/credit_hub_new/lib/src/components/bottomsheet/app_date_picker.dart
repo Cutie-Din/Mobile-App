@@ -12,61 +12,90 @@ class _AppDatePickerState extends State<AppDatePicker> {
 
   @override
   Widget build(BuildContext context) {
+    final _config = CalendarDatePicker2Config(
+      calendarType: CalendarDatePicker2Type.range,
+      centerAlignModePicker: true,
+      controlsHeight: 65,
+      controlsTextStyle: GoogleFonts.manrope(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.black5,
+      ),
+      lastMonthIcon: _buildIcon(Icons.chevron_left),
+      nextMonthIcon: _buildIcon(Icons.chevron_right),
+      selectedDayHighlightColor: AppColors.primary,
+      dayTextStyle: GoogleFonts.manrope(
+        fontSize: 15,
+        fontWeight: FontWeight.w300,
+        color: AppColors.black5,
+      ),
+      selectedDayTextStyle: GoogleFonts.manrope(
+        fontSize: 15,
+        fontWeight: FontWeight.w300,
+        color: AppColors.button,
+      ),
+      dayBuilder: _buildSelected,
+    );
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         CalendarDatePicker2(
-          config: CalendarDatePicker2Config(
-            calendarType: CalendarDatePicker2Type.multi,
-            centerAlignModePicker: true,
-            controlsHeight: 50,
-            controlsTextStyle: GoogleFonts.manrope(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.black5,
-            ),
-            lastMonthIcon: const Icon(Icons.chevron_left, size: 24),
-            nextMonthIcon: const Icon(Icons.chevron_right, size: 24),
-            selectedDayHighlightColor: AppColors.primary,
-            dayTextStyle: GoogleFonts.manrope(
-              fontSize: 15,
-              fontWeight: FontWeight.w300,
-              color: AppColors.black5,
-            ),
-            selectedDayTextStyle: GoogleFonts.manrope(
-              fontSize: 15,
-              fontWeight: FontWeight.w300,
-              color: AppColors.button,
-            ),
-          ),
+          config: _config,
           value: [_selectedDate],
-          onValueChanged: (dates) {
-            setState(() {
-              _selectedDate = dates.isNotEmpty ? dates.first : null;
-            });
-          },
         ),
-        const Gap(10),
+        const Gap(15),
         AppButton(
           buttonText: 'Lọc',
           sizeButton: 'large',
-          onPressed: () {
-            if (_selectedDate != null) {
-              print('Ngày đã chọn: $_selectedDate');
-            }
-          },
+          onPressed: () {},
         ),
         const Gap(10),
         AppButton(
           buttonText: 'Làm mới',
           sizeButton: 'large',
-          onPressed: () {
-            setState(() {
-              _selectedDate = DateTime.now();
-            });
-          },
+          onPressed: () {},
         ),
       ],
+    );
+  }
+
+  Widget _buildIcon(IconData icon) {
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        border: Border.all(color: Color(0xFFD0D5DD), width: 1),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Center(
+        child: Icon(icon, size: 16, color: Color(0xFFD0D5DD)),
+      ),
+    );
+  }
+
+  Widget _buildSelected({
+    required DateTime date,
+    BoxDecoration? decoration,
+    bool? isDisabled,
+    bool? isSelected,
+    bool? isToday,
+    TextStyle? textStyle,
+  }) {
+    return Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: isSelected == true ? AppColors.primary : Colors.transparent,
+        borderRadius: BorderRadius.circular(8), // Bo góc nhẹ
+      ),
+      child: Text(
+        '${date.day}',
+        style: textStyle ??
+            GoogleFonts.manrope(
+              fontSize: 15,
+              fontWeight: FontWeight.w300,
+              color: isSelected == true ? AppColors.button : AppColors.black5,
+            ),
+      ),
     );
   }
 }

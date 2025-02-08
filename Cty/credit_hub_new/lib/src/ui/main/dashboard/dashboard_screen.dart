@@ -10,10 +10,36 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   bool showAvg = false;
+  late ScrollController _scrollController;
+  double _opacity = 1.0;
 
   final List<Map<String, String>> recentRequests = [
     {
       "status": "Đã quyết toán",
+      "id": "000392",
+      "date": "22/07/2021 07:20:11",
+      "money": "3.000.000"
+    },
+    {
+      "status": "Chờ quyết toán",
+      "id": "000392",
+      "date": "22/07/2021 07:20:11",
+      "money": "3.000.000"
+    },
+    {
+      "status": "Không quyết toán",
+      "id": "000392",
+      "date": "22/07/2021 07:20:11",
+      "money": "3.000.000"
+    },
+    {
+      "status": "Đã quyết toán",
+      "id": "000392",
+      "date": "22/07/2021 07:20:11",
+      "money": "3.000.000"
+    },
+    {
+      "status": "Chờ quyết toán",
       "id": "000392",
       "date": "22/07/2021 07:20:11",
       "money": "3.000.000"
@@ -33,6 +59,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()
+      ..addListener(() {
+        double newOpacity = 1.0 - (_scrollController.offset / 200).clamp(0.0, 1.0);
+        setState(() {
+          _opacity = newOpacity;
+        });
+      });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildContent(),
@@ -40,19 +84,34 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildContent() {
-    return Column(
+    return Stack(
       children: [
-        _buildBanner(),
-        const Gap(55),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildChartSection(),
-                const Gap(30),
-                _buildRecentRequests(),
-              ],
+        Column(
+          children: [
+            _buildBanner(),
+            Expanded(
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  children: [
+                    const Gap(45),
+                    _buildChartSection(),
+                    const Gap(30),
+                    _buildRecentRequests(),
+                  ],
+                ),
+              ),
             ),
+          ],
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          top: 240,
+          child: AnimatedOpacity(
+            duration: Duration(milliseconds: 0),
+            opacity: _opacity,
+            child: _buildStats(),
           ),
         ),
       ],
@@ -102,12 +161,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ],
           ),
-        ),
-        Positioned(
-          left: 0,
-          right: 0,
-          top: 240,
-          child: _buildStats(),
         ),
       ],
     );

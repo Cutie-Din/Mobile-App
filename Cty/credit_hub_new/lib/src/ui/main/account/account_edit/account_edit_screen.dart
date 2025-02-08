@@ -18,6 +18,7 @@ class _AccountEditScreenState extends State<AccountEditScreen> {
       builder: (BuildContext context) {
         return AppBottomSheet(
           onClose: () {},
+          pickerType: 'AppBankPicker',
         );
       },
     );
