@@ -31,6 +31,22 @@ class AccountDetailsScreen extends StatelessWidget {
           },
         ),
       ),
+      body: _buildContent(),
+    );
+  }
+
+  Widget _buildContent() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 700),
+          child: AppButton(
+            buttonText: 'Đăng xuất',
+            sizeButton: 'medium',
+            onPressed: () => Get.offAllNamed(AppRoute.signIn.name),
+          ),
+        )
+      ],
     );
   }
 }
