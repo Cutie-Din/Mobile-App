@@ -40,6 +40,7 @@ dependencies:
   stylish_bottom_bar:
   calendar_date_picker2:
   pull_to_refresh:
+  pretty_dio_logger: 
 
 
 dev_dependencies:
@@ -80,39 +81,6 @@ flutter:
 
 
 fonts:
-    # - family: Roboto
-    #   fonts:
-    #     - asset: assets/fonts/roboto/Roboto-Regular.ttf
-    #     - asset: assets/fonts/roboto/Roboto-Medium.ttf
-    #     - asset: assets/fonts/roboto/Roboto-Bold.ttf
-    #     - asset: assets/fonts/roboto/Roboto-Black.ttf
-
-    # - family: PublicSans
-    #   fonts:
-    #     - asset: assets/fonts/public_sans/PublicSans-Regular.ttf
-    #     - asset: assets/fonts/public_sans/PublicSans-Medium.ttf
-    #     - asset: assets/fonts/public_sans/PublicSans-Bold.ttf
-    #     - asset: assets/fonts/public_sans/PublicSans-Bold.ttf
-    #     - asset: assets/fonts/public_sans/PublicSans-Black.ttf
-
-    # - family: Inter
-    #   fonts:
-    #     - asset: assets/fonts/inter/Inter_18pt-Regular.ttf
-    #     - asset: assets/fonts/inter/Inter_24pt-Regular.ttf
-    #     - asset: assets/fonts/inter/Inter_28pt-Regular.ttf
-    #     - asset: assets/fonts/inter/Inter_18pt-Medium.ttf
-    #     - asset: assets/fonts/inter/Inter_24pt-Medium.ttf
-    #     - asset: assets/fonts/inter/Inter_28pt-Medium.ttf
-    #     - asset: assets/fonts/inter/Inter_18pt-Italic.ttf
-    #     - asset: assets/fonts/inter/Inter_24pt-Italic.ttf
-    #     - asset: assets/fonts/inter/Inter_28pt-Italic.ttf
-    #     - asset: assets/fonts/inter/Inter_18pt-Bold.ttf
-    #     - asset: assets/fonts/inter/Inter_24pt-Bold.ttf
-    #     - asset: assets/fonts/inter/Inter_28pt-Bold.ttf
-    #     - asset: assets/fonts/inter/Inter_18pt-Black.ttf
-    #     - asset: assets/fonts/inter/Inter_24pt-Black.ttf
-    #     - asset: assets/fonts/inter/Inter_28pt-Black.ttf
-
     - family: SFProDisplay
       fonts:
         - asset: assets/fonts/sf/SF-Pro-Display-Regular.otf

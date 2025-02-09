@@ -1,3 +1,4 @@
+import 'package:credit_hub_new/src/ui/auth/sign_in/cubit/sign_in_cubit.dart';
 import 'package:credit_hub_new/src/utils/app_export.dart';
 
 enum AppRoute {
@@ -79,7 +80,7 @@ extension AppRouteExt on AppRoute {
         return GetPageRoute(
           settings: settings,
           page: () => const SignInScreen(),
-          bindings: [],
+          bindings: [BindingsBuilder.put(() => SignInCubit(Get.find(), Get.find()))],
         );
       case AppRoute.forgotPassword:
         return GetPageRoute(

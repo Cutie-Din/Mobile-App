@@ -86,20 +86,45 @@ class _AppTextFieldState extends State<AppTextField> {
           Text(widget.title ?? ''),
           const Gap(7),
         ],
-        Container(
-          height: _height,
+        SizedBox(
+          height: _height + 20,
           width: 327,
-          decoration: BoxDecoration(
-            color: AppColors.button,
-            borderRadius: _borderRadius,
-            border: _border,
-          ),
           child: TextFormField(
             autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: widget.validator,
             textAlignVertical:
                 (_prefixIcon == null && _suffixIcon == null) ? null : TextAlignVertical.center,
-            decoration: _decoration,
+            decoration: InputDecoration(
+              hintText: widget.hint,
+              hintStyle: const TextStyle(
+                fontSize: 16,
+                color: AppColors.black4,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: AppColors.black5),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: AppColors.black5),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: AppColors.primary),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(color: AppColors.primary),
+              ),
+              errorStyle: const TextStyle(
+                color: AppColors.primary,
+                fontSize: 13,
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+              suffixIcon: _suffixIcon,
+              prefixIcon: _prefixIcon,
+              helperText: "", // Đặt helperText rỗng để giữ không gian
+            ),
             cursorColor: AppColors.black5,
             keyboardType: _keyboardType,
             controller: _controller,

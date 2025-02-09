@@ -1,20 +1,22 @@
+import 'package:credit_hub_new/src/utils/app_dependencies.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:credit_hub_new/src/utils/app_export.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: ".env");
-
+  provideDependencies();
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
-      builder: (context) => const MyApp(),
+      builder: (context) => MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final GlobalManager _globalManager = Get.find();
 
   // This widget is the root of your application.
   @override
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       initialRoute: AppRoute.splash.name,
       onGenerateRoute: AppRouteExt.generateRoute,
+      navigatorKey: _globalManager.navigatorKey,
     );
   }
 }
