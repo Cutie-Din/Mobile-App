@@ -70,7 +70,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   onPressed: _toggleNewPasswordVisibility,
                 ),
               ),
-              const Gap(25),
+              const Gap(5),
               // Trường xác nhận mật khẩu
               AppTextField(
                 hint: "Xác nhận mật khẩu",

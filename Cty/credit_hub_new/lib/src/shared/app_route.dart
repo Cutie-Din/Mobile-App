@@ -1,3 +1,5 @@
+import 'package:credit_hub_new/src/ui/auth/forgot_password/cubit/forgot_password_cubit.dart';
+import 'package:credit_hub_new/src/ui/auth/otp/cubit/otp_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/sign_in/cubit/sign_in_cubit.dart';
 import 'package:credit_hub_new/src/utils/app_export.dart';
 
@@ -86,13 +88,16 @@ extension AppRouteExt on AppRoute {
         return GetPageRoute(
           settings: settings,
           page: () => const ForgetPasswordScreen(),
-          bindings: [],
+          bindings: [BindingsBuilder.put(() => ForgotPasswordCubit(Get.find(), Get.find()))],
         );
       case AppRoute.otp:
         return GetPageRoute(
           settings: settings,
           page: () => const OtpScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => OtpCubit(Get.find(), Get.find())),
+            BindingsBuilder.put(() => ForgotPasswordCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.changePassword:
         return GetPageRoute(

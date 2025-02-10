@@ -1,4 +1,8 @@
+import 'package:credit_hub_new/src/ui/auth/forgot_password/cubit/forgot_password_cubit.dart';
+import 'package:credit_hub_new/src/ui/auth/otp/cubit/otp_cubit.dart';
+import 'package:credit_hub_new/src/ui/auth/otp/cubit/otp_state.dart';
 import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -11,10 +15,15 @@ class _OtpScreenState extends State<OtpScreen> {
   final TextEditingController _otpController = TextEditingController();
   Timer? _timer;
   int _remainingTime = 120;
+  late String email;
+
+  OtpCubit get _cubit => Get.find<OtpCubit>();
+  ForgotPasswordCubit get _cubitforgot => Get.find<ForgotPasswordCubit>();
 
   @override
   void initState() {
     super.initState();
+    email = Get.arguments ?? "Không có email";
     _startTimer();
   }
 
@@ -50,7 +59,25 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildContent(),
+      body: BlocListener<OtpCubit, OtpState>(
+        bloc: _cubit,
+        listener: (context, state) {
+          if (state.status == OtpStatus.loading) {
+            AppLoading.show();
+            return;
+          }
+          AppLoading.dismiss();
+          if (state.status == OtpStatus.success) {
+            // Get.offAllNamed(AppRoute.changePassword.name);
+            return;
+          }
+          if (state.status == OtpStatus.failure) {
+            AppDialog.show(context, msg: state.message);
+            return;
+          }
+        },
+        child: _buildContent(),
+      ),
     );
   }
 
@@ -85,7 +112,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     children: [
                       const TextSpan(text: 'OTP đã được gửi về email:\n'),
                       TextSpan(
-                        text: 'dcv@dcv.vn',
+                        text: email,
                         style: GoogleFonts.publicSans(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -133,7 +160,12 @@ class _OtpScreenState extends State<OtpScreen> {
               Align(
                 alignment: const Alignment(-0.6, -0.5),
                 child: GestureDetector(
-                  onTap: _remainingTime == 0 ? _startTimer : null,
+                  onTap: _remainingTime == 0
+                      ? () {
+                          _cubitforgot.sendEmail(email: email);
+                          _startTimer();
+                        }
+                      : null,
                   child: Text(
                     _remainingTime > 0
                         ? 'Gửi lại mã sau ${_formatTime(_remainingTime)}'
@@ -149,7 +181,8 @@ class _OtpScreenState extends State<OtpScreen> {
               const Gap(25),
               AppButton(
                 onPressed: () {
-                  Get.toNamed(AppRoute.changePassword.name);
+                  String otp = _otpController.text;
+                  _cubit.confirmOtp(otp_code: otp);
                 },
                 buttonText: "XÁC THỰC",
                 sizeButton: 'large',

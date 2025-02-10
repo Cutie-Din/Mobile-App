@@ -52,8 +52,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget _buildContent() {
     return Form(
-      // Thêm Form widget
-      key: _formKey, // Gán key cho form
+      key: _formKey,
       child: Column(
         children: [
           Image.asset(AppImages.header_signin),
@@ -101,7 +100,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed: _toggle,
                   ),
                 ),
-                const Gap(15),
                 Align(
                   alignment: const Alignment(0.72, -0.5),
                   child: TextButton(
