@@ -19,7 +19,8 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
       ForgotPasswordParam forgotPasswordParam = ForgotPasswordParam(email: email);
       final response = await repo.sendEmail(param: forgotPasswordParam);
 
-      logger.d('response, ${response.data.toString()}');
+      logger.d('response: ${response.toJson((data) => data)}');
+
       emit(state.copyWith(status: ForgotPasswordStatus.success));
     } catch (e) {
       emit(state.copyWith(status: ForgotPasswordStatus.failure, message: e.toString()));

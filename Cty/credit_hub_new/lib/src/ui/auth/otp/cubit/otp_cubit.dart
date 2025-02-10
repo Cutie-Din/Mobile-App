@@ -20,8 +20,17 @@ class OtpCubit extends Cubit<OtpState> {
 
       OtpModel otp = OtpModel(otp_code: otp_code);
       final response = await repo.confirmOtp(otp: otp);
-      logger.d('response, ${response.data.toString()}');
-      emit(state.copyWith(status: OtpStatus.success));
+
+      logger.d('response: ${response.toJson((data) => data)}');
+
+      if (response.code == '200') {
+        emit(state.copyWith(status: OtpStatus.success));
+      } else {
+        emit(state.copyWith(
+          status: OtpStatus.failure,
+          message: response.error ?? 'Unknown error',
+        ));
+      }
     } catch (e) {
       emit(state.copyWith(status: OtpStatus.failure, message: e.toString()));
     }

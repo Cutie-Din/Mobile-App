@@ -23,7 +23,8 @@ class SignInCubit extends Cubit<SignInState> {
             status: SignInStatus.failure, message: 'Sign-in response data is null.'));
         return;
       }
-      logger.d('response, ${response.data.toString()}');
+      logger.d('Response: ${jsonEncode(response.toJson((data) => data ?? {}))}');
+
       await appManager.saveToken(token: response.data!.token);
       await appManager.saveUserInfo(user: response.data!);
       await appManager.saveSignedInStatus(signedInStatus: true);

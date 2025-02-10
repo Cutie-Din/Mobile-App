@@ -1,3 +1,4 @@
+import 'package:credit_hub_new/src/ui/auth/change_pass/cubit/change_password_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/forgot_password/cubit/forgot_password_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/otp/cubit/otp_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/sign_in/cubit/sign_in_cubit.dart';
@@ -103,7 +104,9 @@ extension AppRouteExt on AppRoute {
         return GetPageRoute(
           settings: settings,
           page: () => const ChangePasswordScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => ChangePasswordCubit(Get.find(), Get.find())),
+          ],
         );
 
       case AppRoute.main:

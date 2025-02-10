@@ -1,4 +1,5 @@
 import 'package:credit_hub_new/src/data/_base/base_barrel.dart';
+import 'package:credit_hub_new/src/data/model/auth/change_password_model.dart';
 import 'package:credit_hub_new/src/data/model/auth/forgot_password_param.dart';
 import 'package:credit_hub_new/src/data/model/auth/otp_model.dart';
 import 'package:credit_hub_new/src/data/model/model_barrel.dart';
@@ -21,8 +22,8 @@ abstract class AuthService {
   // Future<HttpResponse<BaseResponse<AccountModel>>> updateAvatar(
   //     @Path() String id, @Body() UploadImageModel param);
 
-  // @PUT('/api/change-password')
-  // Future<HttpResponse<BaseResponse>> changePassword(@Body() ChangePasswordModel param);
+  @POST('/app/auth/userChangePass')
+  Future<HttpResponse<BaseResponse>> changePassword(@Body() ChangePasswordModel param);
 
   @POST('/app/auth/sendCodeForgetBrand')
   Future<HttpResponse<BaseResponse>> sendEmail(@Body() ForgotPasswordParam body);

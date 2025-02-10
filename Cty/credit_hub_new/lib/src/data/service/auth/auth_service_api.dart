@@ -1,5 +1,6 @@
 import 'package:credit_hub_new/src/data/_base/base_barrel.dart';
 import 'package:credit_hub_new/src/data/_base/base_remote_source.dart';
+import 'package:credit_hub_new/src/data/model/auth/change_password_model.dart';
 import 'package:credit_hub_new/src/data/model/auth/forgot_password_param.dart';
 import 'package:credit_hub_new/src/data/model/auth/otp_model.dart';
 import 'package:credit_hub_new/src/data/model/model_barrel.dart';
@@ -36,6 +37,16 @@ class AuthServiceApi extends BaseRemoteSource implements AuthRepository {
     return response;
   }
 
+  @override
+  Future<BaseResponse> changePassword({required ChangePasswordModel param}) {
+    final response = callApiWithErrorParser(service.changePassword(param)).then(
+      (httpResponse) {
+        return httpResponse.data;
+      },
+    );
+    return response;
+  }
+
   // @override
   // Future<BaseResponse<AccountModel>> getUser({required int? id}) {
   //   final response = callApiWithErrorParser(service.getUser(id.toString())).then(
@@ -60,16 +71,6 @@ class AuthServiceApi extends BaseRemoteSource implements AuthRepository {
   // Future<BaseResponse<AccountModel>> updateAvatar(
   //     {required UploadImageModel param, required int? id}) {
   //   final response = callApiWithErrorParser(service.updateAvatar(id.toString(), param)).then(
-  //     (httpResponse) {
-  //       return httpResponse.data;
-  //     },
-  //   );
-  //   return response;
-  // }
-
-  // @override
-  // Future<BaseResponse> changePassword({required ChangePasswordModel param}) {
-  //   final response = callApiWithErrorParser(service.changePassword(param)).then(
   //     (httpResponse) {
   //       return httpResponse.data;
   //     },

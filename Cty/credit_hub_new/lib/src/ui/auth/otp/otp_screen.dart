@@ -68,7 +68,7 @@ class _OtpScreenState extends State<OtpScreen> {
           }
           AppLoading.dismiss();
           if (state.status == OtpStatus.success) {
-            // Get.offAllNamed(AppRoute.changePassword.name);
+            Get.offAllNamed(AppRoute.changePassword.name);
             return;
           }
           if (state.status == OtpStatus.failure) {
