@@ -29,11 +29,11 @@ class AppManager {
     return data;
   }
 
-  Future<String?> getFirebaseToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    final data = prefs.getString(_firebaseTokenKey);
-    return data;
-  }
+  // Future<String?> getFirebaseToken() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final data = prefs.getString(_firebaseTokenKey);
+  //   return data;
+  // }
 
   Future<UserModel> getUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
@@ -54,10 +54,10 @@ class AppManager {
     return prefs.setString(_tokenKey, jsonEncode(token));
   }
 
-  Future<bool> saveFirebaseToken({required String token}) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.setString(_firebaseTokenKey, token);
-  }
+  // Future<bool> saveFirebaseToken({required String token}) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.setString(_firebaseTokenKey, token);
+  // }
 
   Future<bool> clearToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -86,16 +86,16 @@ class AppManager {
     return data;
   }
 
-  Future<bool> saveBiometicLogin({required bool biometicLogin}) async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.setBool(_biometicLogin, biometicLogin);
-  }
+  // Future<bool> saveBiometicLogin({required bool biometicLogin}) async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs.setBool(_biometicLogin, biometicLogin);
+  // }
 
-  Future<bool> getBiometicLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    final data = prefs.getBool(_biometicLogin) ?? false;
-    return data;
-  }
+  // Future<bool> getBiometicLogin() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final data = prefs.getBool(_biometicLogin) ?? false;
+  //   return data;
+  // }
 
   Future<bool> saveSignedInStatus({required bool signedInStatus}) async {
     final prefs = await SharedPreferences.getInstance();
