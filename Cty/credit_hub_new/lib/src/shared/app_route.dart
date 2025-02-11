@@ -103,7 +103,7 @@ extension AppRouteExt on AppRoute {
       case AppRoute.changePassword:
         return GetPageRoute(
           settings: settings,
-          page: () => const ChangePasswordScreen(),
+          page: () => ChangePasswordScreen(appManager: Get.find<AppManager>()),
           bindings: [
             BindingsBuilder.put(() => ChangePasswordCubit(Get.find(), Get.find())),
           ],

@@ -1,10 +1,5 @@
-import 'package:credit_hub_new/src/data/_base/base_barrel.dart';
-import 'package:credit_hub_new/src/data/repository/auth/auth_repository.dart';
-import 'package:credit_hub_new/src/data/repository/auth/auth_repository_impl.dart';
-import 'package:credit_hub_new/src/data/service/service_barrel.dart';
 import 'package:credit_hub_new/src/utils/app_export.dart';
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
 
 void provideDependencies() {
   Get.put(AppManager());

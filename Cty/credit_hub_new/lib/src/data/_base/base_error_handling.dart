@@ -1,8 +1,6 @@
 import 'dart:io';
-
-import 'package:credit_hub_new/src/data/_base/api_exception.dart';
-import 'package:credit_hub_new/src/utils/app_export.dart';
 import 'package:dio/dio.dart';
+import 'base_barrel.dart';
 
 Exception handleError(String error) {
   return ApiException(message: error);

@@ -101,7 +101,7 @@ class __$$OtpStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$OtpStateImpl implements _OtpState {
+class _$OtpStateImpl with DiagnosticableTreeMixin implements _OtpState {
   const _$OtpStateImpl({this.status = OtpStatus.initial, this.message = ''});
 
   @override
@@ -112,8 +112,17 @@ class _$OtpStateImpl implements _OtpState {
   final String message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'OtpState(status: $status, message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'OtpState'))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override

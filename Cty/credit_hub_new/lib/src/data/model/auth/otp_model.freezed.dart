@@ -95,7 +95,7 @@ class __$$OtpModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$OtpModelImpl implements _OtpModel {
+class _$OtpModelImpl with DiagnosticableTreeMixin implements _OtpModel {
   const _$OtpModelImpl({this.otp_code = ''});
 
   factory _$OtpModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -106,8 +106,16 @@ class _$OtpModelImpl implements _OtpModel {
   final String otp_code;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'OtpModel(otp_code: $otp_code)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'OtpModel'))
+      ..add(DiagnosticsProperty('otp_code', otp_code));
   }
 
   @override

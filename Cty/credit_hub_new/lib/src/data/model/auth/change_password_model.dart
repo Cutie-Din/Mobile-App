@@ -7,6 +7,7 @@ class ChangePasswordModel with _$ChangePasswordModel {
   const factory ChangePasswordModel({
     @Default('') final String old_password,
     @Default('') final String new_password,
+    @Default('') final String otp_code,
   }) = _ChangePasswordModel;
 
   factory ChangePasswordModel.fromJson(Map<String, dynamic> json) =>

@@ -118,7 +118,9 @@ class __$$ErrorResponseImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ErrorResponseImpl implements _ErrorResponse {
+class _$ErrorResponseImpl
+    with DiagnosticableTreeMixin
+    implements _ErrorResponse {
   const _$ErrorResponseImpl(
       {this.message = '', this.error = '', this.status = 1});
 
@@ -136,8 +138,18 @@ class _$ErrorResponseImpl implements _ErrorResponse {
   final int status;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ErrorResponse(message: $message, error: $error, status: $status)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ErrorResponse'))
+      ..add(DiagnosticsProperty('message', message))
+      ..add(DiagnosticsProperty('error', error))
+      ..add(DiagnosticsProperty('status', status));
   }
 
   @override

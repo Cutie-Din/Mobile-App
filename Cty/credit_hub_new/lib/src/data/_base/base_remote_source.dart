@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
-import 'base_error_handling.dart';
-import 'base_exception.dart';
+import 'base_barrel.dart';
 
 abstract class BaseRemoteSource {
   Future<HttpResponse<T>> callApiWithErrorParser<T>(Future<HttpResponse<T>> api) async {

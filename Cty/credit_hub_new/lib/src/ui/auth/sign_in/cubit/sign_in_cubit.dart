@@ -20,14 +20,18 @@ class SignInCubit extends Cubit<SignInState> {
       final response = await repo.signIn(param: signInParam);
       if (response.data == null) {
         emit(state.copyWith(
-            status: SignInStatus.failure, message: 'Sign-in response data is null.'));
+          status: SignInStatus.failure,
+          message: response.error ?? "Unknown",
+        ));
         return;
       }
       logger.d('Response: ${jsonEncode(response.toJson((data) => data ?? {}))}');
 
       await appManager.saveToken(token: response.data!.token);
+      logger.d('Saved Token: ${response.data!.token}');
       await appManager.saveUserInfo(user: response.data!);
       await appManager.saveSignedInStatus(signedInStatus: true);
+
       emit(state.copyWith(status: SignInStatus.success, data: response.data!));
     } catch (e) {
       emit(state.copyWith(status: SignInStatus.failure, message: e.toString()));

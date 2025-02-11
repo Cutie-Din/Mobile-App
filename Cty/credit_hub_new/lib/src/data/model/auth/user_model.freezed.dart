@@ -162,7 +162,7 @@ class __$$UserModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$UserModelImpl implements _UserModel {
+class _$UserModelImpl with DiagnosticableTreeMixin implements _UserModel {
   const _$UserModelImpl(
       {this.id,
       this.user_id = 0,
@@ -193,8 +193,21 @@ class _$UserModelImpl implements _UserModel {
   final String token;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'UserModel(id: $id, user_id: $user_id, username: $username, name: $name, address: $address, token: $token)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserModel'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('user_id', user_id))
+      ..add(DiagnosticsProperty('username', username))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('address', address))
+      ..add(DiagnosticsProperty('token', token));
   }
 
   @override

@@ -1,6 +1,6 @@
-import 'package:credit_hub_new/src/data/_base/bloc/base_state.dart';
 import 'package:credit_hub_new/src/utils/app_export.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'base_state.dart';
 
 class BaseBlocConsumer<C extends Cubit<S>, S> extends StatelessWidget {
   final C bloc;

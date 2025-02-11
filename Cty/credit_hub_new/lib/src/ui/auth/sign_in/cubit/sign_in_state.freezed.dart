@@ -126,7 +126,7 @@ class __$$SignInStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SignInStateImpl implements _SignInState {
+class _$SignInStateImpl with DiagnosticableTreeMixin implements _SignInState {
   const _$SignInStateImpl(
       {this.status = SignInStatus.initial,
       this.data = const UserModel(),
@@ -143,8 +143,18 @@ class _$SignInStateImpl implements _SignInState {
   final String message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SignInState(status: $status, data: $data, message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SignInState'))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('data', data))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override

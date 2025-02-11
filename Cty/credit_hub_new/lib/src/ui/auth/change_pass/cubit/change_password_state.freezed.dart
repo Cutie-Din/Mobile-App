@@ -102,7 +102,9 @@ class __$$ChangePasswordStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChangePasswordStateImpl implements _ChangePasswordState {
+class _$ChangePasswordStateImpl
+    with DiagnosticableTreeMixin
+    implements _ChangePasswordState {
   const _$ChangePasswordStateImpl(
       {this.status = ChangePasswordStatus.initial, this.message = ''});
 
@@ -114,8 +116,17 @@ class _$ChangePasswordStateImpl implements _ChangePasswordState {
   final String message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ChangePasswordState(status: $status, message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ChangePasswordState'))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override

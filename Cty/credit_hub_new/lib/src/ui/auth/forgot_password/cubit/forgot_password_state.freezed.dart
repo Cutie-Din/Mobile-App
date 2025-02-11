@@ -102,7 +102,9 @@ class __$$ForgotPasswordStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ForgotPasswordStateImpl implements _ForgotPasswordState {
+class _$ForgotPasswordStateImpl
+    with DiagnosticableTreeMixin
+    implements _ForgotPasswordState {
   const _$ForgotPasswordStateImpl(
       {this.status = ForgotPasswordStatus.initial, this.message = ''});
 
@@ -114,8 +116,17 @@ class _$ForgotPasswordStateImpl implements _ForgotPasswordState {
   final String message;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ForgotPasswordState(status: $status, message: $message)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ForgotPasswordState'))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('message', message));
   }
 
   @override

@@ -5,7 +5,8 @@ import 'package:credit_hub_new/src/utils/app_validators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  const ChangePasswordScreen({super.key});
+  final AppManager appManager;
+  const ChangePasswordScreen({super.key, required this.appManager});
 
   @override
   State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
@@ -121,12 +122,25 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 ),
                 const Gap(25),
                 AppButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      // Kiểm tra hợp lệ
-                      String _newPassword = _newPasswordController.text;
-                      String _oldPassword = _oldPasswordController.text;
-                      _cubit.changePassword(new_password: _newPassword, old_password: _oldPassword);
+                      // Lấy otp_code từ appManager
+                      String? otpCode = await widget.appManager.getToken();
+
+                      // Kiểm tra nếu otpCode là null hoặc rỗng
+                      if (otpCode == null || otpCode.isEmpty) {
+                        AppDialog.show(context, msg: "Không tìm thấy mã OTP");
+                        return;
+                      }
+
+                      String newPassword = _newPasswordController.text;
+                      String oldPassword = _oldPasswordController.text;
+
+                      _cubit.changePassword(
+                        new_password: newPassword,
+                        old_password: oldPassword,
+                        otp_code: otpCode,
+                      );
                     }
                   },
                   buttonText: "XÁC NHẬN",

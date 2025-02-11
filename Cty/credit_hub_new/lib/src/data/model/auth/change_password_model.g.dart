@@ -11,6 +11,7 @@ _$ChangePasswordModelImpl _$$ChangePasswordModelImplFromJson(
     _$ChangePasswordModelImpl(
       old_password: json['old_password'] as String? ?? '',
       new_password: json['new_password'] as String? ?? '',
+      otp_code: json['otp_code'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$ChangePasswordModelImplToJson(
@@ -18,4 +19,5 @@ Map<String, dynamic> _$$ChangePasswordModelImplToJson(
     <String, dynamic>{
       'old_password': instance.old_password,
       'new_password': instance.new_password,
+      'otp_code': instance.otp_code,
     };

@@ -22,6 +22,7 @@ ChangePasswordModel _$ChangePasswordModelFromJson(Map<String, dynamic> json) {
 mixin _$ChangePasswordModel {
   String get old_password => throw _privateConstructorUsedError;
   String get new_password => throw _privateConstructorUsedError;
+  String get otp_code => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $ChangePasswordModelCopyWith<$Res> {
           ChangePasswordModel value, $Res Function(ChangePasswordModel) then) =
       _$ChangePasswordModelCopyWithImpl<$Res, ChangePasswordModel>;
   @useResult
-  $Res call({String old_password, String new_password});
+  $Res call({String old_password, String new_password, String otp_code});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$ChangePasswordModelCopyWithImpl<$Res, $Val extends ChangePasswordModel>
   $Res call({
     Object? old_password = null,
     Object? new_password = null,
+    Object? otp_code = null,
   }) {
     return _then(_value.copyWith(
       old_password: null == old_password
@@ -62,6 +64,10 @@ class _$ChangePasswordModelCopyWithImpl<$Res, $Val extends ChangePasswordModel>
       new_password: null == new_password
           ? _value.new_password
           : new_password // ignore: cast_nullable_to_non_nullable
+              as String,
+      otp_code: null == otp_code
+          ? _value.otp_code
+          : otp_code // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -75,7 +81,7 @@ abstract class _$$ChangePasswordModelImplCopyWith<$Res>
       __$$ChangePasswordModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String old_password, String new_password});
+  $Res call({String old_password, String new_password, String otp_code});
 }
 
 /// @nodoc
@@ -91,6 +97,7 @@ class __$$ChangePasswordModelImplCopyWithImpl<$Res>
   $Res call({
     Object? old_password = null,
     Object? new_password = null,
+    Object? otp_code = null,
   }) {
     return _then(_$ChangePasswordModelImpl(
       old_password: null == old_password
@@ -101,15 +108,21 @@ class __$$ChangePasswordModelImplCopyWithImpl<$Res>
           ? _value.new_password
           : new_password // ignore: cast_nullable_to_non_nullable
               as String,
+      otp_code: null == otp_code
+          ? _value.otp_code
+          : otp_code // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ChangePasswordModelImpl implements _ChangePasswordModel {
+class _$ChangePasswordModelImpl
+    with DiagnosticableTreeMixin
+    implements _ChangePasswordModel {
   const _$ChangePasswordModelImpl(
-      {this.old_password = '', this.new_password = ''});
+      {this.old_password = '', this.new_password = '', this.otp_code = ''});
 
   factory _$ChangePasswordModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ChangePasswordModelImplFromJson(json);
@@ -120,10 +133,23 @@ class _$ChangePasswordModelImpl implements _ChangePasswordModel {
   @override
   @JsonKey()
   final String new_password;
+  @override
+  @JsonKey()
+  final String otp_code;
 
   @override
-  String toString() {
-    return 'ChangePasswordModel(old_password: $old_password, new_password: $new_password)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ChangePasswordModel(old_password: $old_password, new_password: $new_password, otp_code: $otp_code)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ChangePasswordModel'))
+      ..add(DiagnosticsProperty('old_password', old_password))
+      ..add(DiagnosticsProperty('new_password', new_password))
+      ..add(DiagnosticsProperty('otp_code', otp_code));
   }
 
   @override
@@ -134,12 +160,15 @@ class _$ChangePasswordModelImpl implements _ChangePasswordModel {
             (identical(other.old_password, old_password) ||
                 other.old_password == old_password) &&
             (identical(other.new_password, new_password) ||
-                other.new_password == new_password));
+                other.new_password == new_password) &&
+            (identical(other.otp_code, otp_code) ||
+                other.otp_code == otp_code));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, old_password, new_password);
+  int get hashCode =>
+      Object.hash(runtimeType, old_password, new_password, otp_code);
 
   @JsonKey(ignore: true)
   @override
@@ -159,7 +188,8 @@ class _$ChangePasswordModelImpl implements _ChangePasswordModel {
 abstract class _ChangePasswordModel implements ChangePasswordModel {
   const factory _ChangePasswordModel(
       {final String old_password,
-      final String new_password}) = _$ChangePasswordModelImpl;
+      final String new_password,
+      final String otp_code}) = _$ChangePasswordModelImpl;
 
   factory _ChangePasswordModel.fromJson(Map<String, dynamic> json) =
       _$ChangePasswordModelImpl.fromJson;
@@ -168,6 +198,8 @@ abstract class _ChangePasswordModel implements ChangePasswordModel {
   String get old_password;
   @override
   String get new_password;
+  @override
+  String get otp_code;
   @override
   @JsonKey(ignore: true)
   _$$ChangePasswordModelImplCopyWith<_$ChangePasswordModelImpl> get copyWith =>

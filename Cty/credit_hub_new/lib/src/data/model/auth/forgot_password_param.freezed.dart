@@ -96,7 +96,9 @@ class __$$ForgotPasswordParamImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ForgotPasswordParamImpl implements _ForgotPasswordParam {
+class _$ForgotPasswordParamImpl
+    with DiagnosticableTreeMixin
+    implements _ForgotPasswordParam {
   const _$ForgotPasswordParamImpl({this.email = ''});
 
   factory _$ForgotPasswordParamImpl.fromJson(Map<String, dynamic> json) =>
@@ -107,8 +109,16 @@ class _$ForgotPasswordParamImpl implements _ForgotPasswordParam {
   final String email;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ForgotPasswordParam(email: $email)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ForgotPasswordParam'))
+      ..add(DiagnosticsProperty('email', email));
   }
 
   @override

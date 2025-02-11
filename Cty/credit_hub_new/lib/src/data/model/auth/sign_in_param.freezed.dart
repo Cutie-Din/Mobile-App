@@ -118,7 +118,7 @@ class __$$SignInParamImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$SignInParamImpl implements _SignInParam {
+class _$SignInParamImpl with DiagnosticableTreeMixin implements _SignInParam {
   const _$SignInParamImpl(
       {this.username = '', this.password = '', this.device_id = ''});
 
@@ -136,8 +136,18 @@ class _$SignInParamImpl implements _SignInParam {
   final String device_id;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'SignInParam(username: $username, password: $password, device_id: $device_id)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SignInParam'))
+      ..add(DiagnosticsProperty('username', username))
+      ..add(DiagnosticsProperty('password', password))
+      ..add(DiagnosticsProperty('device_id', device_id));
   }
 
   @override

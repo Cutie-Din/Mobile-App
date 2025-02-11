@@ -1,6 +1,5 @@
-import 'package:credit_hub_new/src/data/_base/base_barrel.dart';
-import 'package:credit_hub_new/src/utils/app_export.dart';
 import 'package:dio/dio.dart';
+import 'base_barrel.dart';
 
 class BaseError implements Exception {
   ErrorResponse? resError;
