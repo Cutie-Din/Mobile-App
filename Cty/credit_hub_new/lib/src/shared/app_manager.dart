@@ -26,12 +26,7 @@ class AppManager {
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final String? data = prefs.getString(_tokenKey);
-
-    if (data != null) {
-      final cleanedToken = data.replaceAll(RegExp(r'^"|"$'), ''); // Loại bỏ dấu " ở đầu và cuối
-      return cleanedToken;
-    }
-    return null;
+    return data;
   }
 
   // Future<String?> getFirebaseToken() async {

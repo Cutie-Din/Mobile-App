@@ -77,7 +77,7 @@ extension AppAppDioExtension on Dio {
 
   Future<void> requestInterceptor(RequestOptions options, RequestInterceptorHandler handler) async {
     try {
-      final token = await _getAccessToken(); // ✅ Kiểm tra token ở đây
+      final token = await _getAccessToken();
       log('🔍 Token lấy từ local: $token');
 
       if (token != null && token.isNotEmpty) {
@@ -147,6 +147,9 @@ extension AppAppDioExtension on Dio {
   // Lấy access token từ storage
   Future<String> _getAccessToken() async {
     final String? token = await g.Get.find<AppManager>().getToken();
+    if (token != null && token.length > 2) {
+      return token.substring(1, token.length - 1); // Cắt bỏ ký tự đầu và cuối
+    }
     return token ?? '';
   }
 
