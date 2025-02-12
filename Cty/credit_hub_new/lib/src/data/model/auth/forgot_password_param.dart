@@ -1,4 +1,4 @@
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 part 'forgot_password_param.freezed.dart';
 part 'forgot_password_param.g.dart';
 

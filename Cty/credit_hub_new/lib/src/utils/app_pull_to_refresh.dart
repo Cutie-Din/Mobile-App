@@ -1,5 +1,5 @@
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 
 class ViRefreshString implements RefreshString {
   var a = 'vi';

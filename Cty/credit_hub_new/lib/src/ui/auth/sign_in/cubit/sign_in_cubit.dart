@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 
 import 'sign_in_state.dart';
 
@@ -28,7 +28,6 @@ class SignInCubit extends Cubit<SignInState> {
       logger.d('Response: ${jsonEncode(response.toJson((data) => data ?? {}))}');
 
       await appManager.saveToken(token: response.data!.token);
-      logger.d('Saved Token: ${response.data!.token}');
       await appManager.saveUserInfo(user: response.data!);
       await appManager.saveSignedInStatus(signedInStatus: true);
 

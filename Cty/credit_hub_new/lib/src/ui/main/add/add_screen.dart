@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 import 'package:dotted_border/dotted_border.dart';
 
 class AddScreen extends StatefulWidget {

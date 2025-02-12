@@ -19,20 +19,20 @@ class NetworkManager {
     receiveTimeout: const Duration(seconds: 30),
   );
 
-  BaseOptions optsGoogleMap = BaseOptions(
-    baseUrl: '',
-    contentType: 'application/json',
-    connectTimeout: const Duration(seconds: 30),
-    receiveTimeout: const Duration(seconds: 30),
-  );
+  // BaseOptions optsGoogleMap = BaseOptions(
+  //   baseUrl: '',
+  //   contentType: 'application/json',
+  //   connectTimeout: const Duration(seconds: 30),
+  //   receiveTimeout: const Duration(seconds: 30),
+  // );
 
   Dio createDio() {
-    return createDioWith(opts);
+    return createDioWith(opts).addInterceptors();
   }
 
-  Dio createDioGoogleMaps() {
-    return Dio(optsGoogleMap);
-  }
+  // Dio createDioGoogleMaps() {
+  //   return Dio(optsGoogleMap);
+  // }
 
   Dio createDioWith(BaseOptions opts) {
     final dio = Dio(opts);
@@ -65,30 +65,39 @@ class NetworkManager {
 extension AppAppDioExtension on Dio {
   Dio addInterceptors() {
     return this
-      ..interceptors.add(PrettyDioLogger(requestBody: true, requestHeader: true))
+      ..interceptors.add(PrettyDioLogger(
+        requestBody: true,
+        requestHeader: true,
+      ))
       ..interceptors.add(InterceptorsWrapper(
           onRequest: requestInterceptor,
           onResponse: responseInterceptor,
           onError: errorInterceptor));
   }
 
-  Future requestInterceptor(RequestOptions options, RequestInterceptorHandler handler) async {
+  Future<void> requestInterceptor(RequestOptions options, RequestInterceptorHandler handler) async {
     try {
-      final token = await g.Get.find<AppManager>().getToken();
-      if (token != null) {
-        options.headers.addAll({'access-token': token});
-        log('access_token:  ${token}');
+      final token = await _getAccessToken(); // ✅ Kiểm tra token ở đây
+      log('🔍 Token lấy từ local: $token');
+
+      if (token != null && token.isNotEmpty) {
+        options.headers['Authorization'] = '$token';
+        log('✅ Token đã được thêm vào headers: ${options.headers}');
+      } else {
+        log('⚠️ Token NULL hoặc RỖNG! Không thể thêm vào headers.');
       }
 
-      return handler.next(options);
+      handler.next(options); // Tiếp tục request
     } catch (e) {
-      return handler.next(options);
+      log('❌ [Request Interceptor Error]: $e');
+      handler.next(options);
     }
   }
 
   Future responseInterceptor(Response response, ResponseInterceptorHandler handler) async {
     try {
-      log('token: Bearer ${response.data?['message']}');
+      final token = await _getAccessToken();
+      log('token: Bearer $token\n ${response.data?['message']}');
 
       return handler.next(response);
     } catch (e) {
@@ -123,7 +132,7 @@ extension AppAppDioExtension on Dio {
     final refreshToken = await _getRefreshToken(); // Lấy refresh token từ storage
 
     final response = await get(
-      '${AppConfig.url}/api/refresh-token/$refreshToken',
+      '${AppConfig.url}/refresh-token/$refreshToken',
     );
     final String token = response.data;
     _saveToken(token);

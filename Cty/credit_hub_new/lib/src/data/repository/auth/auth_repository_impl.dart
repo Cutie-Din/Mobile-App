@@ -1,4 +1,4 @@
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 
 import 'auth_repository.dart';
 

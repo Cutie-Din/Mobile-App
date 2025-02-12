@@ -1,4 +1,4 @@
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 
 class AccountAddScreen extends StatefulWidget {
   const AccountAddScreen({super.key});

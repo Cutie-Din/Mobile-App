@@ -1,6 +1,6 @@
 import 'package:credit_hub_new/src/utils/app_dependencies.dart';
 import 'package:device_preview/device_preview.dart';
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
   final GlobalManager _globalManager = Get.find();
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([

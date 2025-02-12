@@ -2,7 +2,8 @@ import 'package:credit_hub_new/src/ui/auth/change_pass/cubit/change_password_cub
 import 'package:credit_hub_new/src/ui/auth/forgot_password/cubit/forgot_password_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/otp/cubit/otp_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/sign_in/cubit/sign_in_cubit.dart';
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
+import 'package:credit_hub_new/src/ui/main/dashboard/cubit/dashboard_cubit.dart';
 
 enum AppRoute {
   splash,
@@ -108,18 +109,22 @@ extension AppRouteExt on AppRoute {
             BindingsBuilder.put(() => ChangePasswordCubit(Get.find(), Get.find())),
           ],
         );
-
       case AppRoute.main:
         return GetPageRoute(
           settings: settings,
           page: () => const BottomMenu(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => DashboardCubit(Get.find(), Get.find())),
+          ],
         );
+
       case AppRoute.dashboard:
         return GetPageRoute(
           settings: settings,
           page: () => const DashboardScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => DashboardCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.history:
         return GetPageRoute(

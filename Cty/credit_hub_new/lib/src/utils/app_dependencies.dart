@@ -1,4 +1,4 @@
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 import 'package:dio/dio.dart';
 
 void provideDependencies() {
@@ -14,7 +14,7 @@ void provideDependencies() {
       () => AuthRepositoryImpl(repo: AuthServiceApi(service: AuthService(Get.find<Dio>()))),
       fenix: true);
 
-  // Get.lazyPut<HomeRepository>(
-  //     () => HomeRepositoryImpl(repo: HomeServiceApi(service: HomeService(Get.find<Dio>()))),
-  //     fenix: true);
+  Get.lazyPut<MainRepository>(
+      () => MainRepositoryImpl(repo: MainServiceApi(service: MainService(Get.find<Dio>()))),
+      fenix: true);
 }

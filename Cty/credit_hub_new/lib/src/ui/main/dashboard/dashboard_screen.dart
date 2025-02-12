@@ -1,4 +1,7 @@
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
+import 'package:credit_hub_new/src/ui/main/dashboard/cubit/dashboard_cubit.dart';
+import 'package:credit_hub_new/src/ui/main/dashboard/cubit/dashboard_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -12,6 +15,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   bool showAvg = false;
   late ScrollController _scrollController;
   double _opacity = 1.0;
+  DashboardCubit get _cubit => Get.find<DashboardCubit>();
 
   final List<Map<String, String>> recentRequests = [
     {
@@ -68,6 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           _opacity = newOpacity;
         });
       });
+    Future.microtask(() => _cubit.getDashboard());
   }
 
   @override
@@ -79,7 +84,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildContent(),
+      body: BlocListener<DashboardCubit, DashboardState>(
+        bloc: _cubit,
+        listener: (context, state) {
+          if (state.status == DashboardStatus.loading) {
+            AppLoading.show();
+            return;
+          }
+          AppLoading.dismiss();
+          if (state.status == DashboardStatus.success) {
+            Get.offAllNamed(AppRoute.main.name);
+            return;
+          }
+          if (state.status == DashboardStatus.failure) {
+            AppDialog.show(context, msg: state.message);
+            return;
+          }
+        },
+        child: _buildContent(),
+      ),
     );
   }
 
@@ -167,13 +190,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildStats() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildInfoBox('70', 'Yêu cầu chờ quyết toán', isLeft: true),
-        const Gap(20),
-        _buildInfoBox('300.000.000', 'Số tiền chờ quyết toán', isLeft: false),
-      ],
+    return BlocBuilder<DashboardCubit, DashboardState>(
+      bloc: _cubit,
+      builder: (context, state) {
+        final totalRequest = state.data?.total_request ?? 0;
+        final totalMoney = state.data?.total_money ?? 0;
+
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _buildInfoBox('$totalRequest', 'Yêu cầu chờ quyết toán', isLeft: true),
+            const Gap(20),
+            _buildInfoBox('${NumberFormat("#,###").format(totalMoney)}', 'Số tiền chờ quyết toán',
+                isLeft: false),
+          ],
+        );
+      },
     );
   }
 

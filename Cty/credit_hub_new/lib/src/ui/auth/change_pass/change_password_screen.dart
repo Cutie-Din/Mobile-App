@@ -1,6 +1,6 @@
 import 'package:credit_hub_new/src/ui/auth/change_pass/cubit/change_password_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/change_pass/cubit/change_password_state.dart';
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 import 'package:credit_hub_new/src/utils/app_validators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -81,7 +81,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
                 const Gap(50),
-                // Trường mật khẩu mới
                 AppTextField(
                   validator: AppValidator.validatePassword,
                   hint: "Mật khẩu mới",
@@ -101,7 +100,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   ),
                 ),
                 const Gap(5),
-                // Trường xác nhận mật khẩu
                 AppTextField(
                   validator: AppValidator.validatePassword,
                   hint: "Xác nhận mật khẩu",
@@ -125,10 +123,9 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       // Lấy otp_code từ appManager
-                      String? otpCode = await widget.appManager.getToken();
+                      String? token = await widget.appManager.getToken();
 
-                      // Kiểm tra nếu otpCode là null hoặc rỗng
-                      if (otpCode == null || otpCode.isEmpty) {
+                      if (token == null || token.isEmpty) {
                         AppDialog.show(context, msg: "Không tìm thấy mã OTP");
                         return;
                       }
@@ -139,7 +136,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       _cubit.changePassword(
                         new_password: newPassword,
                         old_password: oldPassword,
-                        otp_code: otpCode,
+                        token: token,
                       );
                     }
                   },

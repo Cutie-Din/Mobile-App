@@ -1,6 +1,6 @@
 import 'package:credit_hub_new/src/ui/auth/forgot_password/cubit/forgot_password_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/forgot_password/cubit/forgot_password_state.dart';
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 import 'package:credit_hub_new/src/utils/app_validators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

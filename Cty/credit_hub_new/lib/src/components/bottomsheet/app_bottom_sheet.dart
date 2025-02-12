@@ -1,4 +1,4 @@
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 
 part 'app_bank_picker.dart';

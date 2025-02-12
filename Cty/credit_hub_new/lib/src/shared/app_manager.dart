@@ -1,4 +1,4 @@
-import 'package:credit_hub_new/src/utils/app_export.dart';
+import 'package:credit_hub_new/src/shared/app_export.dart';
 
 class AppManager {
   final String _firstTimeOpenAppKey = "firstTimeOpenAppKey";
@@ -26,7 +26,12 @@ class AppManager {
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     final String? data = prefs.getString(_tokenKey);
-    return data;
+
+    if (data != null) {
+      final cleanedToken = data.replaceAll(RegExp(r'^"|"$'), ''); // Loại bỏ dấu " ở đầu và cuối
+      return cleanedToken;
+    }
+    return null;
   }
 
   // Future<String?> getFirebaseToken() async {
