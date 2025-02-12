@@ -8,6 +8,5 @@ class MainRepositoryImpl implements MainRepository {
   const MainRepositoryImpl({required this.repo});
 
   @override
-  Future<BaseResponse> getDashboard({required DashboardModel param}) =>
-      repo.getDashboard(param: param);
+  Future<BaseResponse> getDashboard() => repo.getDashboard();
 }

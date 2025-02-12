@@ -14,6 +14,8 @@ class SignInCubit extends Cubit<SignInState> {
   Future<void> signIn({required String username, required String password}) async {
     try {
       emit(state.copyWith(status: SignInStatus.loading));
+      logger.d('Current state: ${state.toString()}');
+
       SignInParam signInParam = SignInParam(
           username: username, password: password, device_id: await AppConfig.getDeviceId());
 
@@ -23,6 +25,8 @@ class SignInCubit extends Cubit<SignInState> {
           status: SignInStatus.failure,
           message: response.error ?? "Unknown",
         ));
+        logger.d('Response from repo: ${response.toString()}');
+
         return;
       }
       logger.d('Response: ${jsonEncode(response.toJson((data) => data ?? {}))}');

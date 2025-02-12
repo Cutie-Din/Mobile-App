@@ -17,39 +17,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   double _opacity = 1.0;
   DashboardCubit get _cubit => Get.find<DashboardCubit>();
 
-  final List<Map<String, String>> recentRequests = [
-    {
-      "status": "Đã quyết toán",
-      "id": "000392",
-      "date": "22/07/2021 07:20:11",
-      "money": "3.000.000"
-    },
-    {
-      "status": "Chờ quyết toán",
-      "id": "000392",
-      "date": "22/07/2021 07:20:11",
-      "money": "3.000.000"
-    },
-    {
-      "status": "Không quyết toán",
-      "id": "000392",
-      "date": "22/07/2021 07:20:11",
-      "money": "3.000.000"
-    },
-    {
-      "status": "Đã quyết toán",
-      "id": "000392",
-      "date": "22/07/2021 07:20:11",
-      "money": "3.000.000"
-    },
-    {
-      "status": "Chờ quyết toán",
-      "id": "000392",
-      "date": "22/07/2021 07:20:11",
-      "money": "3.000.000"
-    },
-  ];
-
   LinearGradient getStatus(String? status) {
     if (status != null && status.contains("Chờ quyết toán")) {
       return AppColors.waiting;
@@ -65,6 +32,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    _cubit.getDashboard();
+
     _scrollController = ScrollController()
       ..addListener(() {
         double newOpacity = 1.0 - (_scrollController.offset / 200).clamp(0.0, 1.0);
@@ -72,7 +41,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           _opacity = newOpacity;
         });
       });
-    Future.microtask(() => _cubit.getDashboard());
   }
 
   @override
@@ -87,15 +55,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       body: BlocListener<DashboardCubit, DashboardState>(
         bloc: _cubit,
         listener: (context, state) {
-          if (state.status == DashboardStatus.loading) {
-            AppLoading.show();
-            return;
-          }
-          AppLoading.dismiss();
-          if (state.status == DashboardStatus.success) {
-            Get.offAllNamed(AppRoute.main.name);
-            return;
-          }
           if (state.status == DashboardStatus.failure) {
             AppDialog.show(context, msg: state.message);
             return;
@@ -193,23 +152,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return BlocBuilder<DashboardCubit, DashboardState>(
       bloc: _cubit,
       builder: (context, state) {
-        final totalRequest = state.data?.total_request ?? 0;
-        final totalMoney = state.data?.total_money ?? 0;
+        final int totalRequest = state.data?.total_request ?? 0;
+        final double totalMoney = state.data?.total_money ?? 0.0;
 
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildInfoBox('$totalRequest', 'Yêu cầu chờ quyết toán', isLeft: true),
+            _buildInfoBox(totalRequest, 'Yêu cầu chờ quyết toán', isLeft: true),
             const Gap(20),
-            _buildInfoBox('${NumberFormat("#,###").format(totalMoney)}', 'Số tiền chờ quyết toán',
-                isLeft: false),
+            _buildInfoBox(totalMoney, 'Số tiền chờ quyết toán', isLeft: false),
           ],
         );
       },
     );
   }
 
-  Widget _buildInfoBox(String number, String text, {required bool isLeft}) {
+  Widget _buildInfoBox(num number, String text, {required bool isLeft}) {
     return Container(
       width: 158,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -229,20 +187,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            number,
-            style: GoogleFonts.publicSans(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: isLeft ? AppColors.primary : AppColors.secondary,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              number is double
+                  ? NumberFormat("#,###", "vi_VN").format(number.toInt())
+                  : number.toString(),
+              style: GoogleFonts.publicSans(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: isLeft ? AppColors.primary : AppColors.secondary,
+              ),
+              maxLines: 1, // ✅ Giới hạn 1 dòng
+              overflow: TextOverflow.ellipsis,
             ),
           ),
-          Text(
-            text,
-            style: GoogleFonts.publicSans(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: AppColors.grey1,
+          const SizedBox(height: 2),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              text,
+              style: GoogleFonts.publicSans(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: AppColors.grey1,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
@@ -281,51 +252,77 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   Widget _buildRecentRequests() {
-    return GestureDetector(
-      onTap: () => Get.toNamed(AppRoute.historydetail.name),
-      child: Column(
-        children: [
-          Center(
+    return BlocBuilder<DashboardCubit, DashboardState>(
+      bloc: _cubit,
+      builder: (context, state) {
+        if (state.status == DashboardStatus.loading) {
+          return const AppLoading();
+        }
+
+        if (state.status == DashboardStatus.failure) {
+          return Center(
             child: Text(
-              "Yêu cầu gần đây",
-              style: GoogleFonts.publicSans(
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
+              state.message ?? "Không thể tải dữ liệu",
+              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          );
+        }
+
+        final requests = state.data?.lstRequests ?? []; // ✅ Lấy danh sách yêu cầu từ DashboardModel
+
+        if (requests.isEmpty) {
+          return Center(
+            child: Text(
+              "Không có yêu cầu nào gần đây",
+              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          );
+        }
+
+        return Column(
+          children: [
+            Center(
+              child: Text(
+                "Yêu cầu gần đây",
+                style: GoogleFonts.publicSans(fontWeight: FontWeight.w600, fontSize: 14),
               ),
             ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: recentRequests.length,
-            itemBuilder: (context, index) {
-              final request = recentRequests[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 4.0), // Giảm khoảng cách giữa các item
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: AppColors.button,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Colors.grey.withOpacity(0.5),
-                      width: 1.0,
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: requests.length,
+              itemBuilder: (context, index) {
+                final request = requests[index]; // ✅ Lấy từng request từ lstRequests
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
+                  child: GestureDetector(
+                    onTap: () => Get.toNamed(AppRoute.historydetail.name, arguments: request),
+                    child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                        color: AppColors.button,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey.withOpacity(0.5), width: 1.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _buildRequestDetails(request.status_name),
+                          _buildRequestValues(
+                            request.id,
+                            request.date_request,
+                            request.money_request,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildRequestDetails(request["status"]!),
-                      _buildRequestValues(request["id"]!, request["date"]!, request["money"]!),
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -370,7 +367,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildRequestValues(String id, String date, String money) {
+  Widget _buildRequestValues(int id, String date, num money) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Column(
@@ -378,24 +375,33 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           const Gap(8),
           Text(
-            id,
+            id.toString(),
             style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.black5),
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: AppColors.black5,
+            ),
           ),
           const Gap(8),
           Text(
             date,
             style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.black5),
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: AppColors.black5,
+            ),
           ),
           const Gap(11),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                money,
+                NumberFormat("#,###").format(money), // ✅ Format số tiền có dấu phẩy
                 style: GoogleFonts.roboto(
-                    fontWeight: FontWeight.w500, fontSize: 15, color: AppColors.primary),
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                  color: AppColors.primary,
+                ),
               ),
               const Icon(FontAwesomeIcons.dongSign, size: 14, color: AppColors.primary),
             ],

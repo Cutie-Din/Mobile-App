@@ -22,12 +22,11 @@ class _MainService implements MainService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<BaseResponse<dynamic>>> getDashboard(
-      DashboardModel body) async {
+  Future<HttpResponse<BaseResponse<dynamic>>> getDashboard() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = body;
+    const Map<String, dynamic>? _data = null;
     final _options =
         _setStreamType<HttpResponse<BaseResponse<dynamic>>>(Options(
       method: 'GET',

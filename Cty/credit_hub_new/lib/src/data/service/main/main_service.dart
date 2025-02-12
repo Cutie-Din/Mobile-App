@@ -8,5 +8,5 @@ part 'main_service.g.dart';
 abstract class MainService {
   factory MainService(Dio dio, {String? baseUrl}) = _MainService;
   @GET('/app/home/homeInfo')
-  Future<HttpResponse<BaseResponse>> getDashboard(@Body() DashboardModel body);
+  Future<HttpResponse<BaseResponse>> getDashboard();
 }

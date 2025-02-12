@@ -20,11 +20,11 @@ Request _$RequestFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Request {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get date_request => throw _privateConstructorUsedError;
   String get lot_no => throw _privateConstructorUsedError;
   double get money_request => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
+  String get status_name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,11 +37,11 @@ abstract class $RequestCopyWith<$Res> {
       _$RequestCopyWithImpl<$Res, Request>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String date_request,
       String lot_no,
       double money_request,
-      String status});
+      String status_name});
 }
 
 /// @nodoc
@@ -61,13 +61,13 @@ class _$RequestCopyWithImpl<$Res, $Val extends Request>
     Object? date_request = null,
     Object? lot_no = null,
     Object? money_request = null,
-    Object? status = null,
+    Object? status_name = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       date_request: null == date_request
           ? _value.date_request
           : date_request // ignore: cast_nullable_to_non_nullable
@@ -80,9 +80,9 @@ class _$RequestCopyWithImpl<$Res, $Val extends Request>
           ? _value.money_request
           : money_request // ignore: cast_nullable_to_non_nullable
               as double,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      status_name: null == status_name
+          ? _value.status_name
+          : status_name // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -96,11 +96,11 @@ abstract class _$$RequestImplCopyWith<$Res> implements $RequestCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String date_request,
       String lot_no,
       double money_request,
-      String status});
+      String status_name});
 }
 
 /// @nodoc
@@ -118,13 +118,13 @@ class __$$RequestImplCopyWithImpl<$Res>
     Object? date_request = null,
     Object? lot_no = null,
     Object? money_request = null,
-    Object? status = null,
+    Object? status_name = null,
   }) {
     return _then(_$RequestImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       date_request: null == date_request
           ? _value.date_request
           : date_request // ignore: cast_nullable_to_non_nullable
@@ -137,9 +137,9 @@ class __$$RequestImplCopyWithImpl<$Res>
           ? _value.money_request
           : money_request // ignore: cast_nullable_to_non_nullable
               as double,
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
+      status_name: null == status_name
+          ? _value.status_name
+          : status_name // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -149,18 +149,18 @@ class __$$RequestImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RequestImpl implements _Request {
   const _$RequestImpl(
-      {this.id = '',
+      {this.id = 0,
       this.date_request = '',
       this.lot_no = '',
       this.money_request = 0.0,
-      this.status = ''});
+      this.status_name = ''});
 
   factory _$RequestImpl.fromJson(Map<String, dynamic> json) =>
       _$$RequestImplFromJson(json);
 
   @override
   @JsonKey()
-  final String id;
+  final int id;
   @override
   @JsonKey()
   final String date_request;
@@ -172,11 +172,11 @@ class _$RequestImpl implements _Request {
   final double money_request;
   @override
   @JsonKey()
-  final String status;
+  final String status_name;
 
   @override
   String toString() {
-    return 'Request(id: $id, date_request: $date_request, lot_no: $lot_no, money_request: $money_request, status: $status)';
+    return 'Request(id: $id, date_request: $date_request, lot_no: $lot_no, money_request: $money_request, status_name: $status_name)';
   }
 
   @override
@@ -190,13 +190,14 @@ class _$RequestImpl implements _Request {
             (identical(other.lot_no, lot_no) || other.lot_no == lot_no) &&
             (identical(other.money_request, money_request) ||
                 other.money_request == money_request) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status_name, status_name) ||
+                other.status_name == status_name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, date_request, lot_no, money_request, status);
+  int get hashCode => Object.hash(
+      runtimeType, id, date_request, lot_no, money_request, status_name);
 
   @JsonKey(ignore: true)
   @override
@@ -214,16 +215,16 @@ class _$RequestImpl implements _Request {
 
 abstract class _Request implements Request {
   const factory _Request(
-      {final String id,
+      {final int id,
       final String date_request,
       final String lot_no,
       final double money_request,
-      final String status}) = _$RequestImpl;
+      final String status_name}) = _$RequestImpl;
 
   factory _Request.fromJson(Map<String, dynamic> json) = _$RequestImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get date_request;
   @override
@@ -231,7 +232,7 @@ abstract class _Request implements Request {
   @override
   double get money_request;
   @override
-  String get status;
+  String get status_name;
   @override
   @JsonKey(ignore: true)
   _$$RequestImplCopyWith<_$RequestImpl> get copyWith =>

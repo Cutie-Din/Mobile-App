@@ -15,8 +15,8 @@ class NetworkManager {
   BaseOptions opts = BaseOptions(
     baseUrl: AppConfig.url,
     contentType: 'application/json',
-    connectTimeout: const Duration(seconds: 30),
-    receiveTimeout: const Duration(seconds: 30),
+    connectTimeout: const Duration(seconds: 60),
+    receiveTimeout: const Duration(seconds: 60),
   );
 
   // BaseOptions optsGoogleMap = BaseOptions(
@@ -27,7 +27,7 @@ class NetworkManager {
   // );
 
   Dio createDio() {
-    return createDioWith(opts).addInterceptors();
+    return createDioWith(opts);
   }
 
   // Dio createDioGoogleMaps() {
@@ -77,17 +77,14 @@ extension AppAppDioExtension on Dio {
 
   Future<void> requestInterceptor(RequestOptions options, RequestInterceptorHandler handler) async {
     try {
-      final token = await _getAccessToken();
-      log('🔍 Token lấy từ local: $token');
+      String token = await _getAccessToken();
+      token = token.replaceAll('"', '');
 
-      if (token != null && token.isNotEmpty) {
-        options.headers['Authorization'] = '$token';
-        log('✅ Token đã được thêm vào headers: ${options.headers}');
-      } else {
-        log('⚠️ Token NULL hoặc RỖNG! Không thể thêm vào headers.');
+      if (token.isNotEmpty) {
+        options.headers['Authorization'] = 'Bearer $token';
       }
 
-      handler.next(options); // Tiếp tục request
+      handler.next(options);
     } catch (e) {
       log('❌ [Request Interceptor Error]: $e');
       handler.next(options);
@@ -97,8 +94,6 @@ extension AppAppDioExtension on Dio {
   Future responseInterceptor(Response response, ResponseInterceptorHandler handler) async {
     try {
       final token = await _getAccessToken();
-      log('token: Bearer $token\n ${response.data?['message']}');
-
       return handler.next(response);
     } catch (e) {
       return handler.next(response);
@@ -147,9 +142,6 @@ extension AppAppDioExtension on Dio {
   // Lấy access token từ storage
   Future<String> _getAccessToken() async {
     final String? token = await g.Get.find<AppManager>().getToken();
-    if (token != null && token.length > 2) {
-      return token.substring(1, token.length - 1); // Cắt bỏ ký tự đầu và cuối
-    }
     return token ?? '';
   }
 

@@ -7,8 +7,8 @@ part 'dashboard_model.g.dart';
 @freezed
 class DashboardModel with _$DashboardModel {
   const factory DashboardModel({
-    @Default(0) int total_request,
-    @Default(0.0) double total_money,
+    @Default(0) final int total_request,
+    @Default(0.0) final double total_money,
     @Default([]) List<Request> lstRequests,
   }) = _DashboardModel;
 

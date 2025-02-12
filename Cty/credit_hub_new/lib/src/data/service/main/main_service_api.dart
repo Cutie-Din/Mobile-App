@@ -7,11 +7,10 @@ class MainServiceApi extends BaseRemoteSource implements MainRepository {
   MainServiceApi({required this.service});
 
   @override
-  Future<BaseResponse<DashboardModel>> getDashboard({required DashboardModel param}) {
-    final response = callApiWithErrorParser(service.getDashboard(param)).then((httpResponse) {
-      return httpResponse as BaseResponse<DashboardModel>;
+  Future<BaseResponse> getDashboard() {
+    final response = callApiWithErrorParser(service.getDashboard()).then((httpResponse) {
+      return httpResponse.data;
     });
-
     return response;
   }
 }

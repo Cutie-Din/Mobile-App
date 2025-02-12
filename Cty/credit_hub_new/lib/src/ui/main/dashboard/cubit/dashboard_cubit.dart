@@ -14,24 +14,13 @@ class DashboardCubit extends Cubit<DashboardState> {
   Future<void> getDashboard() async {
     try {
       emit(state.copyWith(status: DashboardStatus.loading));
-      DashboardModel dashboardModel = DashboardModel();
+      final response = await repo.getDashboard();
 
-      // log('📡 Fetching dashboard...');
-      final response = await repo.getDashboard(param: dashboardModel);
+      // ✅ Convert response.data từ Map -> DashboardModel
+      final dashboardModel = DashboardModel.fromJson(response.data as Map<String, dynamic>);
 
-      if (response.data == null) {
-        // log('❌ Error: ${response.error}');
-        emit(state.copyWith(
-          status: DashboardStatus.failure,
-          message: response.error ?? "Unknown",
-        ));
-        return;
-      }
-
-      logger.d('✅ Response: ${jsonEncode(response.toJson((data) => data ?? {}))}');
-      emit(state.copyWith(status: DashboardStatus.success, data: response.data!));
+      emit(state.copyWith(status: DashboardStatus.success, data: dashboardModel));
     } catch (e) {
-      // log('❌ API Call Error: $e');
       emit(state.copyWith(status: DashboardStatus.failure, message: e.toString()));
     }
   }
