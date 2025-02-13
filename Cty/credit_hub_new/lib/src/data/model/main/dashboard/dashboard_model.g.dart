@@ -11,7 +11,7 @@ _$DashboardModelImpl _$$DashboardModelImplFromJson(Map<String, dynamic> json) =>
       total_request: (json['total_request'] as num?)?.toInt() ?? 0,
       total_money: (json['total_money'] as num?)?.toDouble() ?? 0.0,
       lstRequests: (json['lstRequests'] as List<dynamic>?)
-              ?.map((e) => Request.fromJson(e as Map<String, dynamic>))
+              ?.map((e) => RequestDashboard.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
     );

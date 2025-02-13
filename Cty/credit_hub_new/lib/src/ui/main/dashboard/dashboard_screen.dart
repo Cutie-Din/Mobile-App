@@ -309,7 +309,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         children: [
                           _buildRequestDetails(request.status_name),
                           _buildRequestValues(
-                            request.id,
+                            request.id.toString(),
                             request.date_request,
                             request.money_request,
                           ),
@@ -367,7 +367,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget _buildRequestValues(int id, String date, num money) {
+  Widget _buildRequestValues(String id, String date, num money) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Column(
@@ -375,7 +375,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           const Gap(8),
           Text(
-            id.toString(),
+            id,
             style: GoogleFonts.roboto(
               fontWeight: FontWeight.w500,
               fontSize: 12,

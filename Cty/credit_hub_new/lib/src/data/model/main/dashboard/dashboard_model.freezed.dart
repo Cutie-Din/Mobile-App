@@ -22,7 +22,7 @@ DashboardModel _$DashboardModelFromJson(Map<String, dynamic> json) {
 mixin _$DashboardModel {
   int get total_request => throw _privateConstructorUsedError;
   double get total_money => throw _privateConstructorUsedError;
-  List<Request> get lstRequests => throw _privateConstructorUsedError;
+  List<RequestDashboard> get lstRequests => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,10 @@ abstract class $DashboardModelCopyWith<$Res> {
           DashboardModel value, $Res Function(DashboardModel) then) =
       _$DashboardModelCopyWithImpl<$Res, DashboardModel>;
   @useResult
-  $Res call({int total_request, double total_money, List<Request> lstRequests});
+  $Res call(
+      {int total_request,
+      double total_money,
+      List<RequestDashboard> lstRequests});
 }
 
 /// @nodoc
@@ -68,7 +71,7 @@ class _$DashboardModelCopyWithImpl<$Res, $Val extends DashboardModel>
       lstRequests: null == lstRequests
           ? _value.lstRequests
           : lstRequests // ignore: cast_nullable_to_non_nullable
-              as List<Request>,
+              as List<RequestDashboard>,
     ) as $Val);
   }
 }
@@ -81,7 +84,10 @@ abstract class _$$DashboardModelImplCopyWith<$Res>
       __$$DashboardModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int total_request, double total_money, List<Request> lstRequests});
+  $Res call(
+      {int total_request,
+      double total_money,
+      List<RequestDashboard> lstRequests});
 }
 
 /// @nodoc
@@ -111,7 +117,7 @@ class __$$DashboardModelImplCopyWithImpl<$Res>
       lstRequests: null == lstRequests
           ? _value._lstRequests
           : lstRequests // ignore: cast_nullable_to_non_nullable
-              as List<Request>,
+              as List<RequestDashboard>,
     ));
   }
 }
@@ -124,7 +130,7 @@ class _$DashboardModelImpl
   const _$DashboardModelImpl(
       {this.total_request = 0,
       this.total_money = 0.0,
-      final List<Request> lstRequests = const []})
+      final List<RequestDashboard> lstRequests = const []})
       : _lstRequests = lstRequests;
 
   factory _$DashboardModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -136,10 +142,10 @@ class _$DashboardModelImpl
   @override
   @JsonKey()
   final double total_money;
-  final List<Request> _lstRequests;
+  final List<RequestDashboard> _lstRequests;
   @override
   @JsonKey()
-  List<Request> get lstRequests {
+  List<RequestDashboard> get lstRequests {
     if (_lstRequests is EqualUnmodifiableListView) return _lstRequests;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_lstRequests);
@@ -197,7 +203,7 @@ abstract class _DashboardModel implements DashboardModel {
   const factory _DashboardModel(
       {final int total_request,
       final double total_money,
-      final List<Request> lstRequests}) = _$DashboardModelImpl;
+      final List<RequestDashboard> lstRequests}) = _$DashboardModelImpl;
 
   factory _DashboardModel.fromJson(Map<String, dynamic> json) =
       _$DashboardModelImpl.fromJson;
@@ -207,7 +213,7 @@ abstract class _DashboardModel implements DashboardModel {
   @override
   double get total_money;
   @override
-  List<Request> get lstRequests;
+  List<RequestDashboard> get lstRequests;
   @override
   @JsonKey(ignore: true)
   _$$DashboardModelImplCopyWith<_$DashboardModelImpl> get copyWith =>

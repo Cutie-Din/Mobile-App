@@ -10,7 +10,7 @@ export 'package:fl_chart/fl_chart.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:freezed_annotation/freezed_annotation.dart';
 export 'package:gap/gap.dart';
-export 'package:get/get.dart';
+export 'package:get/get.dart' hide formData;
 export 'package:google_fonts/google_fonts.dart';
 export 'package:image_picker/image_picker.dart';
 export 'package:json_annotation/json_annotation.dart';

@@ -9,4 +9,14 @@ class MainRepositoryImpl implements MainRepository {
 
   @override
   Future<BaseResponse> getDashboard() => repo.getDashboard();
+
+  @override
+  Future<BaseResponse> postHistory({required HistoryModel param}) => repo.postHistory(param: param);
+
+  @override
+  Future<BaseResponse> postAdd({required AddModel param}) => repo.postAdd(param: param);
+
+  @override
+  Future<BaseResponse> postAddImage({required AddImageModel param}) =>
+      repo.postAddImage(param: param);
 }

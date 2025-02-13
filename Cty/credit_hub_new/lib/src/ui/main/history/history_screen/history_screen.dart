@@ -1,5 +1,9 @@
 import 'package:credit_hub_new/src/shared/app_export.dart';
+import 'package:credit_hub_new/src/ui/main/history/cubit/history_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+
+import '../cubit/history_state.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -10,6 +14,7 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   String selectedType = 'Tất cả';
+  HistoryCubit get _cubit => Get.find<HistoryCubit>();
 
   final List<Map<String, String>> transactions = [
     {
@@ -40,49 +45,69 @@ class _HistoryScreenState extends State<HistoryScreen> {
   TextEditingController searchController = TextEditingController();
 
   @override
+  void initState() {
+    _cubit.postHistory(page_no: 1, page_size: 6);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.button,
-      appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 60),
-          child: Center(
-            child: Text(
-              'Lịch sử yêu cầu',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: AppColors.black4,
+    return BlocListener<HistoryCubit, HistoryState>(
+      bloc: _cubit,
+      listener: (context, state) {
+        if (state.status == HistoryStatus.loading) {
+          AppLoading.show();
+          return;
+        }
+        AppLoading.dismiss();
+        if (state.status == HistoryStatus.failure) {
+          AppDialog.show(context, msg: state.message);
+          return;
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.button,
+        appBar: AppBar(
+          title: Padding(
+            padding: const EdgeInsets.only(left: 60),
+            child: Center(
+              child: Text(
+                'Lịch sử yêu cầu',
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
+                ),
               ),
             ),
           ),
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: IconButton(
+                icon: SvgPicture.asset(
+                  AppImages.filter_icon,
+                  color: AppColors.primary,
+                ),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return AppBottomSheet(
+                        onClose: () => Navigator.of(context).pop(),
+                        pickerType: 'AppDatePicker',
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: IconButton(
-              icon: SvgPicture.asset(
-                AppImages.filter_icon,
-                color: AppColors.primary,
-              ),
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) {
-                    return AppBottomSheet(
-                      onClose: () => Navigator.of(context).pop(),
-                      pickerType: 'AppDatePicker',
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+        body: _buildContent(),
       ),
-      body: _buildContent(),
     );
   }
 
@@ -174,19 +199,49 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Widget _buildTransactionList() {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: filteredTransactions.length,
-        itemBuilder: (context, index) {
-          final transaction = filteredTransactions[index];
-          return _buildTransaction(
-            transaction["status"]!,
-            transaction["id"]!,
-            transaction["date"]!,
-            transaction["amount"]!,
+    return BlocBuilder<HistoryCubit, HistoryState>(
+      bloc: _cubit,
+      builder: (context, state) {
+        if (state.status == HistoryStatus.loading) {
+          return const AppLoading();
+        }
+
+        if (state.status == HistoryStatus.failure) {
+          return Center(
+            child: Text(
+              state.message ?? "Không thể tải dữ liệu",
+              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
           );
-        },
-      ),
+        }
+
+        final requests = state.data?.data ?? []; // ✅ Lấy danh sách yêu cầu từ DashboardModel
+
+        if (requests.isEmpty) {
+          return Center(
+            child: Text(
+              "Không có yêu cầu nào gần đây",
+              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          );
+        }
+
+        return Expanded(
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: requests.length,
+            itemBuilder: (context, index) {
+              final request = requests[index];
+              return _buildTransaction(
+                request.status_name,
+                request.id.toString(),
+                request.date_request,
+                request.money_request,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -211,7 +266,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     String status,
     String id,
     String date,
-    String money,
+    num money,
   ) {
     return GestureDetector(
       onTap: () {
@@ -294,7 +349,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  Widget _buildTransactionRightColumn(String id, String date, String money) {
+  Widget _buildTransactionRightColumn(String id, String date, num money) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Column(
@@ -325,12 +380,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  Widget _buildAmountRow(String money) {
+  Widget _buildAmountRow(num money) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          money,
+          NumberFormat("#,###").format(money),
           style: GoogleFonts.roboto(
             fontWeight: FontWeight.w500,
             fontSize: 15,

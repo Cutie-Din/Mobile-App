@@ -13,4 +13,28 @@ class MainServiceApi extends BaseRemoteSource implements MainRepository {
     });
     return response;
   }
+
+  @override
+  Future<BaseResponse> postHistory({required HistoryModel param}) {
+    final response = callApiWithErrorParser(service.postHistory(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> postAdd({required AddModel param}) {
+    final response = callApiWithErrorParser(service.postAdd(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> postAddImage({required AddImageModel param}) {
+    final response = callApiWithErrorParser(service.postAddImage(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
 }

@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:credit_hub_new/src/shared/app_export.dart';
+import 'package:credit_hub_new/src/ui/main/add/cubit/add_cubit.dart';
+import 'package:credit_hub_new/src/ui/main/add/cubit/add_image_state.dart';
+import 'package:credit_hub_new/src/ui/main/add/cubit/add_state.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -16,45 +20,62 @@ class _AddScreenState extends State<AddScreen> {
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _moneyController = TextEditingController();
 
+  AddImageCubit get _cubitImage => Get.find<AddImageCubit>();
+  AddCubit get _cubitAdd => Get.find<AddCubit>();
+
   Future<void> _pickImage() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      setState(() {
-        _image = pickedFile;
-      });
+      _cubitImage.postAddImage(imageFile: pickedFile);
+    } else {
+      print("No image selected.");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.button,
-      appBar: AppBar(
-        title: Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-            child: Text(
-              'Tạo yêu cầu rút tiền',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: AppColors.black4,
+    return BlocListener<AddCubit, AddState>(
+      bloc: _cubitAdd,
+      listener: (context, state) {
+        if (state.status == AddStatus.loading) {
+          AppLoading.show();
+          return;
+        }
+        AppLoading.dismiss();
+        if (state.status == AddStatus.failure) {
+          AppDialog.show(context, msg: state.message);
+          return;
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.button,
+        appBar: AppBar(
+          title: Center(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
+              child: Text(
+                'Tạo yêu cầu rút tiền',
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
+                ),
               ),
             ),
           ),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            FontAwesomeIcons.chevronLeft,
-            size: 12,
+          leading: IconButton(
+            icon: const Icon(
+              FontAwesomeIcons.chevronLeft,
+              size: 12,
+            ),
+            onPressed: () {
+              Get.back();
+            },
           ),
-          onPressed: () {
-            Get.back();
-          },
         ),
+        body: _buildContent(),
       ),
-      body: _buildContent(),
     );
   }
 
@@ -164,40 +185,45 @@ class _AddScreenState extends State<AddScreen> {
               ),
             ),
             const Gap(10),
-            GestureDetector(
-              onTap: _pickImage,
-              child: Container(
-                width: 318,
-                height: 114,
-                decoration: BoxDecoration(
-                  color: Color(0xFFF5F6F8),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: _image == null
-                    ? DottedBorder(
-                        color: Colors.grey,
-                        dashPattern: [6, 8],
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(10),
-                        child: Center(
-                          child: Image.asset(
-                            AppImages.cam, // Đường dẫn đến ảnh biểu tượng camera
-                            width: 40,
-                            height: 40,
+            BlocBuilder<AddImageCubit, AddImageState>(
+              bloc: _cubitImage,
+              builder: (context, state) {
+                return GestureDetector(
+                  onTap: _pickImage,
+                  child: Container(
+                    width: 318,
+                    height: 114,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF5F6F8),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: state.data.url.isEmpty
+                        ? DottedBorder(
                             color: Colors.grey,
+                            dashPattern: const [6, 8],
+                            borderType: BorderType.RRect,
+                            radius: const Radius.circular(10),
+                            child: Center(
+                              child: Image.asset(
+                                AppImages.cam,
+                                width: 40,
+                                height: 40,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          )
+                        : ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              state.data.url,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
                           ),
-                        ),
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.file(
-                          File(_image!.path),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
-                      ),
-              ),
+                  ),
+                );
+              },
             ),
           ],
         ),

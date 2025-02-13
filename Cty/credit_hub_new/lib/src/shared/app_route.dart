@@ -3,7 +3,9 @@ import 'package:credit_hub_new/src/ui/auth/forgot_password/cubit/forgot_password
 import 'package:credit_hub_new/src/ui/auth/otp/cubit/otp_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/sign_in/cubit/sign_in_cubit.dart';
 import 'package:credit_hub_new/src/shared/app_export.dart';
+import 'package:credit_hub_new/src/ui/main/add/cubit/add_cubit.dart';
 import 'package:credit_hub_new/src/ui/main/dashboard/cubit/dashboard_cubit.dart';
+import 'package:credit_hub_new/src/ui/main/history/cubit/history_cubit.dart';
 
 enum AppRoute {
   splash,
@@ -115,6 +117,7 @@ extension AppRouteExt on AppRoute {
           page: () => const BottomMenu(),
           bindings: [
             BindingsBuilder.put(() => DashboardCubit(Get.find(), Get.find())),
+            BindingsBuilder.put(() => HistoryCubit(Get.find(), Get.find())),
           ],
         );
 
@@ -130,7 +133,9 @@ extension AppRouteExt on AppRoute {
         return GetPageRoute(
           settings: settings,
           page: () => const HistoryScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => HistoryCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.historydetail:
         return GetPageRoute(
@@ -142,7 +147,10 @@ extension AppRouteExt on AppRoute {
         return GetPageRoute(
           settings: settings,
           page: () => const AddScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => AddCubit(Get.find(), Get.find())),
+            BindingsBuilder.put(() => AddImageCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.notification:
         return GetPageRoute(
