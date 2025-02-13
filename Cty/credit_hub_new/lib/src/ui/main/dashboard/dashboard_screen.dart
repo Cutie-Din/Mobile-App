@@ -309,7 +309,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         children: [
                           _buildRequestDetails(request.status_name),
                           _buildRequestValues(
-                            request.id.toString(),
+                            request.lot_no,
                             request.date_request,
                             request.money_request,
                           ),

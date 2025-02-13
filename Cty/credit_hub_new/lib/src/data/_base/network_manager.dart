@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as g;
+import 'package:image_picker/image_picker.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class NetworkManager {
@@ -84,6 +85,10 @@ extension AppAppDioExtension on Dio {
         options.headers['Authorization'] = 'Bearer $token';
       }
 
+      if (options.data is FormData) {
+        log("📤 [FormData] Sending FormData request to: ${options.path}");
+      }
+
       handler.next(options);
     } catch (e) {
       log('❌ [Request Interceptor Error]: $e');
@@ -147,5 +152,35 @@ extension AppAppDioExtension on Dio {
 
   void _saveToken(String token) {
     g.Get.find<AppManager>().saveToken(token: token);
+  }
+
+  Future<Response> uploadImage(XFile imageFile) async {
+    try {
+      File file = File(imageFile.path);
+      String fileName = file.path.split('/').last;
+
+      MultipartFile multipartFile = await MultipartFile.fromFile(
+        file.path,
+        filename: fileName,
+      );
+
+      // Đổi key thành "files" nếu backend yêu cầu
+      FormData formData = FormData.fromMap({
+        "files": multipartFile,
+      });
+      final response = await post(
+        "${AppConfig.url}/upload/uploadfile",
+        data: formData,
+        options: Options(
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        ),
+      );
+
+      return response;
+    } catch (e) {
+      throw Exception("Failed to upload image");
+    }
   }
 }

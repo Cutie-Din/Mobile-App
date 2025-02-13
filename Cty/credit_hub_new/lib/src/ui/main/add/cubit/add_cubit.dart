@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:credit_hub_new/src/ui/main/add/cubit/add_image_state.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:credit_hub_new/src/shared/app_export.dart';
 
@@ -44,12 +45,26 @@ class AddImageCubit extends Cubit<AddImageState> {
   final AppManager appManager;
 
   AddImageCubit(this.repo, this.appManager) : super(const AddImageState());
-
   Future<void> postAddImage({required XFile imageFile}) async {
     try {
       emit(state.copyWith(status: AddImageStatus.loading));
+
+      final response = await NetworkManager().createDio().uploadImage(imageFile);
+
+      if (response.statusCode == 200) {
+        final String imageUrl = response.data['data'][0]['url'] ?? '';
+        logger.d('${imageUrl}');
+        if (imageUrl.isNotEmpty) {
+          emit(state.copyWith(
+            status: AddImageStatus.success,
+            data: AddImageModel(url: imageUrl),
+          ));
+          return;
+        }
+      }
+
+      emit(state.copyWith(status: AddImageStatus.failure, message: "Upload failed"));
     } catch (e) {
-      logger.e("Error in postAddImage: $e");
       emit(state.copyWith(status: AddImageStatus.failure, message: e.toString()));
     }
   }

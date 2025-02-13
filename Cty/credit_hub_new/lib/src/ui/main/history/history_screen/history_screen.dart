@@ -16,30 +16,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
   String selectedType = 'Tất cả';
   HistoryCubit get _cubit => Get.find<HistoryCubit>();
 
-  final List<Map<String, String>> transactions = [
-    {
-      "status": "Chờ quyết toán",
-      "id": "000392",
-      "date": "22/07/2021 07:20:11",
-      "amount": "3.000.000"
-    },
-    {
-      "status": "Đã quyết toán",
-      "id": "000393",
-      "date": "23/07/2021 10:15:30",
-      "amount": "5.000.000"
-    },
-    {
-      "status": "Không quyết toán",
-      "id": "000394",
-      "date": "24/07/2021 14:05:45",
-      "amount": "1.500.000"
-    },
-  ];
-
-  List<Map<String, String>> get filteredTransactions {
-    if (selectedType == 'Tất cả') return transactions;
-    return transactions.where((t) => t['status'] == selectedType).toList();
+  List<RequestHistory> get filteredTransactions {
+    final requests = _cubit.state.data?.data ?? []; // Lấy dữ liệu từ cubit
+    if (selectedType == 'Tất cả') return requests;
+    return requests.where((t) => t.status_name == selectedType).toList();
   }
 
   TextEditingController searchController = TextEditingController();
@@ -215,8 +195,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           );
         }
 
-        final requests = state.data?.data ?? []; // ✅ Lấy danh sách yêu cầu từ DashboardModel
-
+        final requests = filteredTransactions;
         if (requests.isEmpty) {
           return Center(
             child: Text(
@@ -234,7 +213,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
               final request = requests[index];
               return _buildTransaction(
                 request.status_name,
-                request.id.toString(),
+                request.lot_no,
                 request.date_request,
                 request.money_request,
               );
@@ -349,7 +328,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     );
   }
 
-  Widget _buildTransactionRightColumn(String id, String date, num money) {
+  Widget _buildTransactionRightColumn(String lot_no, String date, num money) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Column(
@@ -357,7 +336,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         children: [
           const Gap(8),
           Text(
-            id,
+            lot_no,
             style: GoogleFonts.roboto(
               fontWeight: FontWeight.w500,
               fontSize: 12,

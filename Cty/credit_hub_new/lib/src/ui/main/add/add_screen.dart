@@ -15,7 +15,7 @@ class AddScreen extends StatefulWidget {
 }
 
 class _AddScreenState extends State<AddScreen> {
-  XFile? _image; // Holds the selected image
+  XFile? _image;
   final ImagePicker _picker = ImagePicker();
   final TextEditingController _idController = TextEditingController();
   final TextEditingController _moneyController = TextEditingController();
@@ -24,12 +24,11 @@ class _AddScreenState extends State<AddScreen> {
   AddCubit get _cubitAdd => Get.find<AddCubit>();
 
   Future<void> _pickImage() async {
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      _cubitImage.postAddImage(imageFile: pickedFile);
-    } else {
-      print("No image selected.");
+    if (image != null) {
+      _cubitImage.postAddImage(imageFile: image);
     }
   }
 
@@ -43,6 +42,10 @@ class _AddScreenState extends State<AddScreen> {
           return;
         }
         AppLoading.dismiss();
+        if (state.status == AddStatus.success) {
+          Get.back();
+          return;
+        }
         if (state.status == AddStatus.failure) {
           AppDialog.show(context, msg: state.message);
           return;
@@ -154,7 +157,7 @@ class _AddScreenState extends State<AddScreen> {
                 fontWeight: FontWeight.w400,
                 color: AppColors.black4,
               ),
-              controller: _idController,
+              controller: _moneyController,
             ),
           ],
         ),
@@ -230,7 +233,20 @@ class _AddScreenState extends State<AddScreen> {
         const Gap(30),
         AppButton(
           onPressed: () {
-            Get.offAllNamed(AppRoute.main.name);
+            String lot_no = _idController.text;
+            double? money_request = double.tryParse(_moneyController.text.trim());
+            String image_link = _cubitImage.state.data.url; // Lấy URL từ AddImageCubit
+
+            if (lot_no.isEmpty || money_request == null || image_link.isEmpty) {
+              AppDialog.show(context, msg: "Vui lòng nhập đầy đủ thông tin!");
+              return;
+            }
+
+            _cubitAdd.postAdd(
+              lot_no: lot_no,
+              money_request: money_request,
+              image_link: image_link,
+            );
           },
           buttonText: "Gửi yêu cầu",
           sizeButton: 'medium',
