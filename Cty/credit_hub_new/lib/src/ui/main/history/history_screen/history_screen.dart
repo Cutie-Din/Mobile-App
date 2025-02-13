@@ -15,6 +15,10 @@ class HistoryScreen extends StatefulWidget {
 class _HistoryScreenState extends State<HistoryScreen> {
   String selectedType = 'Tất cả';
   HistoryCubit get _cubit => Get.find<HistoryCubit>();
+  TextEditingController searchController = TextEditingController();
+  ScrollController _scrollController = ScrollController();
+  int pageNo = 1; // Biến lưu số trang
+  bool isLoadingMore = false; // Trạng thái tải thêm dữ liệu
 
   List<RequestHistory> get filteredTransactions {
     final requests = _cubit.state.data?.data ?? []; // Lấy dữ liệu từ cubit
@@ -22,12 +26,37 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return requests.where((t) => t.status_name == selectedType).toList();
   }
 
-  TextEditingController searchController = TextEditingController();
+  Future<void> _fetchData({bool refresh = false}) async {
+    if (refresh) {
+      pageNo = 1; // Reset về trang 1 khi pull-to-refresh
+    }
+    await _cubit.postHistory(page_no: pageNo, page_size: 6);
+  }
+
+  void _loadMore() async {
+    if (!isLoadingMore) {
+      setState(() {
+        isLoadingMore = true;
+      });
+      pageNo++; // Tăng số trang
+      await _fetchData();
+      setState(() {
+        isLoadingMore = false;
+      });
+    }
+  }
 
   @override
   void initState() {
-    _cubit.postHistory(page_no: 1, page_size: 6);
     super.initState();
+    _fetchData(refresh: true);
+
+    // Lắng nghe sự kiện cuộn để gọi phân trang
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+        _loadMore();
+      }
+    });
   }
 
   @override
@@ -35,7 +64,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return BlocListener<HistoryCubit, HistoryState>(
       bloc: _cubit,
       listener: (context, state) {
-        if (state.status == HistoryStatus.loading) {
+        if (state.status == HistoryStatus.loading && pageNo == 1) {
           AppLoading.show();
           return;
         }
@@ -86,7 +115,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
           ],
         ),
-        body: _buildContent(),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            await _fetchData(refresh: true);
+          },
+          child: _buildContent(),
+        ),
       ),
     );
   }
@@ -182,8 +216,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return BlocBuilder<HistoryCubit, HistoryState>(
       bloc: _cubit,
       builder: (context, state) {
-        if (state.status == HistoryStatus.loading) {
-          return const AppLoading();
+        if (state.status == HistoryStatus.loading && pageNo == 1) {
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (state.status == HistoryStatus.failure) {
@@ -207,16 +241,25 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
         return Expanded(
           child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: requests.length,
+            controller: _scrollController,
+            itemCount: requests.length + 1, // +1 để hiển thị loading cuối danh sách
             itemBuilder: (context, index) {
-              final request = requests[index];
-              return _buildTransaction(
-                request.status_name,
-                request.lot_no,
-                request.date_request,
-                request.money_request,
-              );
+              if (index < requests.length) {
+                final request = requests[index];
+                return _buildTransaction(
+                  request.status_name,
+                  request.lot_no,
+                  request.date_request,
+                  request.money_request,
+                );
+              } else if (isLoadingMore) {
+                return const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
             },
           ),
         );
