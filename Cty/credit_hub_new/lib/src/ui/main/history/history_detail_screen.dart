@@ -1,61 +1,130 @@
 import 'package:credit_hub_new/src/shared/app_export.dart';
+import 'package:credit_hub_new/src/ui/main/history/cubit/history_cubit.dart';
+import 'package:credit_hub_new/src/ui/main/history/cubit/history_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class HistoryDetailScreen extends StatelessWidget {
+class HistoryDetailScreen extends StatefulWidget {
   const HistoryDetailScreen({super.key});
 
   @override
+  State<HistoryDetailScreen> createState() => _HistoryDetailScreenState();
+}
+
+class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
+  HistoryCubit get _cubit => Get.find<HistoryCubit>();
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.button,
-      appBar: AppBar(
-        title: Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-            child: Text(
-              'Chi tiết yêu cầu',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: AppColors.black4,
+    final arguments = Get.arguments as Map<String, dynamic>?;
+    final transactionId = arguments?["id"];
+
+    if (transactionId != null) {
+      _cubit.getHistoryDetail(id: transactionId);
+    }
+
+    return BlocListener<HistoryCubit, HistoryState>(
+      bloc: _cubit,
+      listener: (context, state) {
+        if (state.status == HistoryStatus.loading) {
+          AppLoading.show();
+          return;
+        }
+        AppLoading.dismiss();
+        if (state.status == HistoryStatus.failure) {
+          AppDialog.show(context, msg: state.message);
+          return;
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.button,
+        appBar: AppBar(
+          title: Center(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
+              child: Text(
+                'Chi tiết yêu cầu',
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
+                ),
               ),
             ),
           ),
-        ),
-        leading: IconButton(
-          icon: const Icon(
-            FontAwesomeIcons.chevronLeft,
-            size: 12,
+          leading: IconButton(
+            icon: const Icon(
+              FontAwesomeIcons.chevronLeft,
+              size: 12,
+            ),
+            onPressed: () {
+              _cubit.postHistory(page_no: 1, page_size: 6);
+              Get.back();
+            },
           ),
-          onPressed: () {
-            Get.back();
-          },
         ),
+        body: _buildContent(),
       ),
-      body: _buildContent(),
     );
   }
 
   Widget _buildContent() {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          _buildTransaction("Chờ quyết toán", "000392", "22/07/2021 07:20:11", "3.000.000"),
-          const Gap(20),
-          _buildImageTransaction(),
-          const Gap(10),
-          _buildProgressTransaction('Gửi yêu cầu quyết toán', '22/07/2021 07:20:11'),
-          _buildProgressTransaction('Yêu cầu đang được xử lý', '22/07/2021 07:20:11'),
-          _buildProgressTransactionDone('Từ chối quyết toán', '22/07/2021 07:20:11'),
-          const Gap(30),
-          AppButton(
-            buttonText: "Yêu cầu lại",
-            sizeButton: 'Medium',
-            onPressed: () {
-              Get.back();
-            },
-          ),
-        ],
+      child: BlocBuilder<HistoryCubit, HistoryState>(
+        bloc: _cubit,
+        builder: (context, state) {
+          if (state.status == HistoryStatus.loading) {
+            return const AppLoading();
+          }
+
+          final transaction = state.data_received!;
+          final statusName = transaction.status_name ?? "N/A";
+
+          return Column(
+            children: [
+              _buildTransaction(
+                transaction.status_name ?? "N/A",
+                transaction.lot_no,
+                transaction.date_request ?? "N/A",
+                transaction.money_request,
+              ),
+              const Gap(20),
+              _buildImageTransaction(transaction.image_link),
+              const Gap(10),
+              _buildProgressTransaction(
+                  'Gửi yêu cầu quyết toán', transaction.date_request ?? "N/A"),
+              if (statusName != 'Chưa quyết toán')
+                _buildProgressTransaction(
+                    'Yêu cầu đang được xử lý', transaction.date_request ?? "N/A"),
+              if (statusName == 'Chờ quyết toán' || statusName == 'Đã quyết toán')
+                _buildProgressTransaction(
+                    'Số tiền đang được xử lý', transaction.date_request ?? "N/A"),
+              if (statusName == 'Chờ quyết toán')
+                _buildProgressTransactionDone(
+                    'Số tiền đang được xử lý', transaction.date_request ?? "N/A"),
+              if (statusName == 'Đã quyết toán' || statusName == 'Không quyết toán')
+                _buildProgressTransactionDone(
+                  transaction.status_name ?? "N/A",
+                  transaction.date_request ?? "N/A",
+                ),
+              if (statusName == 'Không quyết toán')
+                Column(
+                  children: [
+                    const Gap(30),
+                    AppButton(
+                      buttonText: "Yêu cầu lại",
+                      sizeButton: 'Medium',
+                      onPressed: () {
+                        _cubit.resendHistory(id: transaction.id!);
+                        _cubit.postHistory(page_no: 1, page_size: 6);
+                        Get.back();
+                      },
+                    ),
+                  ],
+                ),
+            ],
+          );
+        },
       ),
     );
   }
@@ -81,30 +150,25 @@ class HistoryDetailScreen extends StatelessWidget {
     String status,
     String id,
     String date,
-    String money,
+    num money,
   ) {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(AppRoute.historydetail.name);
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildTransactionLeftColumn(status),
-                  _buildTransactionRightColumn(id, date, money),
-                ],
-              ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildTransactionLeftColumn(status),
+                _buildTransactionRightColumn(id, date, money),
+              ],
             ),
           ),
-          const Gap(10),
-        ],
-      ),
+        ),
+        const Gap(10),
+      ],
     );
   }
 
@@ -156,7 +220,7 @@ class HistoryDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTransactionRightColumn(String id, String date, String money) {
+  Widget _buildTransactionRightColumn(String id, String date, num money) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Column(
@@ -187,12 +251,12 @@ class HistoryDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildAmountRow(String money) {
+  Widget _buildAmountRow(num money) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          money,
+          NumberFormat("#,###").format(money),
           style: GoogleFonts.roboto(
             fontWeight: FontWeight.w500,
             fontSize: 15,
@@ -208,7 +272,10 @@ class HistoryDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildImageTransaction() {
+  Widget _buildImageTransaction(String image_link) {
+    if (image_link == null || !image_link.startsWith('http')) {
+      return const Text("Không có ảnh");
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Column(
@@ -223,18 +290,39 @@ class HistoryDetailScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          Container(
-            width: double.infinity,
-            height: 335,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage('https://your-image-url.com'),
-                fit: BoxFit.cover,
+          if (image_link.isNotEmpty)
+            Container(
+              width: double.infinity,
+              height: 335,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(image_link), // Sử dụng ảnh từ API
+                  fit: BoxFit.cover,
+                ),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Color(0xFFE0E0E0), width: 1),
               ),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Color(0xFFE0E0E0), width: 1),
+            )
+          else
+            Container(
+              width: double.infinity,
+              height: 335,
+              decoration: BoxDecoration(
+                color: Colors.grey[300], // Placeholder khi không có ảnh
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Color(0xFFE0E0E0), width: 1),
+              ),
+              child: Center(
+                child: Text(
+                  'Không có hình ảnh',
+                  style: GoogleFonts.inter(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black54,
+                  ),
+                ),
+              ),
             ),
-          ),
         ],
       ),
     );

@@ -3,7 +3,7 @@ import 'package:credit_hub_new/src/ui/main/history/cubit/history_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-import '../cubit/history_state.dart';
+import 'cubit/history_state.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -17,18 +17,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
   HistoryCubit get _cubit => Get.find<HistoryCubit>();
   TextEditingController searchController = TextEditingController();
   ScrollController _scrollController = ScrollController();
-  int pageNo = 1; // Biến lưu số trang
-  bool isLoadingMore = false; // Trạng thái tải thêm dữ liệu
+  int pageNo = 1;
+  bool isLoadingMore = false;
 
   List<RequestHistory> get filteredTransactions {
-    final requests = _cubit.state.data?.data ?? []; // Lấy dữ liệu từ cubit
+    final requests = _cubit.state.data ?? [];
     if (selectedType == 'Tất cả') return requests;
     return requests.where((t) => t.status_name == selectedType).toList();
   }
 
   Future<void> _fetchData({bool refresh = false}) async {
     if (refresh) {
-      pageNo = 1; // Reset về trang 1 khi pull-to-refresh
+      pageNo = 1;
     }
     await _cubit.postHistory(page_no: pageNo, page_size: 6);
   }
@@ -38,7 +38,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       setState(() {
         isLoadingMore = true;
       });
-      pageNo++; // Tăng số trang
+      pageNo++;
       await _fetchData();
       setState(() {
         isLoadingMore = false;
@@ -51,7 +51,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     super.initState();
     _fetchData(refresh: true);
 
-    // Lắng nghe sự kiện cuộn để gọi phân trang
     _scrollController.addListener(() {
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         _loadMore();
@@ -217,7 +216,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       bloc: _cubit,
       builder: (context, state) {
         if (state.status == HistoryStatus.loading && pageNo == 1) {
-          return const Center(child: CircularProgressIndicator());
+          return const AppLoading();
         }
 
         if (state.status == HistoryStatus.failure) {
@@ -230,28 +229,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
         }
 
         final requests = filteredTransactions;
-        if (requests.isEmpty) {
-          return Center(
-            child: Text(
-              "Không có yêu cầu nào gần đây",
-              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-          );
-        }
 
         return Expanded(
           child: ListView.builder(
             controller: _scrollController,
-            itemCount: requests.length + 1, // +1 để hiển thị loading cuối danh sách
+            itemCount: requests.length + 1,
             itemBuilder: (context, index) {
               if (index < requests.length) {
                 final request = requests[index];
-                return _buildTransaction(
-                  request.status_name,
-                  request.lot_no,
-                  request.date_request,
-                  request.money_request,
-                );
+
+                return _buildRecentRequests();
               } else if (isLoadingMore) {
                 return const Padding(
                   padding: EdgeInsets.all(10),
@@ -284,124 +271,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     }
   }
 
-  Widget _buildTransaction(
-    String status,
-    String id,
-    String date,
-    num money,
-  ) {
-    return GestureDetector(
-      onTap: () {
-        Get.toNamed(AppRoute.historydetail.name);
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Container(
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: AppColors.button,
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: Colors.grey.withOpacity(0.5),
-                  width: 1.0,
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _buildTransactionLeftColumn(status),
-                  _buildTransactionRightColumn(id, date, money),
-                ],
-              ),
-            ),
-          ),
-          const Gap(10),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTransactionLeftColumn(String status) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildStatusBox(status),
-          const Gap(8),
-          _buildTransactionLabel("Ngày yêu cầu"),
-          const Gap(11),
-          _buildTransactionLabel("Số tiền"),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStatusBox(String status) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: getStatus(status),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Text(
-          status,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.inter(
-            fontWeight: FontWeight.w700,
-            fontSize: 12,
-            color: AppColors.button,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTransactionLabel(String label) {
-    return Text(
-      label,
-      style: GoogleFonts.inter(
-        fontWeight: FontWeight.w500,
-        fontSize: 12,
-        color: AppColors.grey3,
-      ),
-    );
-  }
-
-  Widget _buildTransactionRightColumn(String lot_no, String date, num money) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const Gap(8),
-          Text(
-            lot_no,
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
-              color: AppColors.black5,
-            ),
-          ),
-          const Gap(8),
-          Text(
-            date,
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w400,
-              fontSize: 12,
-              color: AppColors.grey4,
-            ),
-          ),
-          const Gap(11),
-          _buildAmountRow(money),
-        ],
-      ),
-    );
-  }
-
   Widget _buildAmountRow(num money) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -420,6 +289,161 @@ class _HistoryScreenState extends State<HistoryScreen> {
           color: AppColors.primary,
         ),
       ],
+    );
+  }
+
+  Widget _buildRecentRequests() {
+    return BlocBuilder<HistoryCubit, HistoryState>(
+      bloc: _cubit,
+      builder: (context, state) {
+        if (state.status == HistoryStatus.loading) {
+          return const AppLoading();
+        }
+
+        if (state.status == HistoryStatus.failure) {
+          return Center(
+            child: Text(
+              state.message ?? "Không thể tải dữ liệu",
+              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          );
+        }
+
+        final requests = state.data;
+
+        if (requests.isEmpty) {
+          return Center(
+            child: Text(
+              "Không có yêu cầu nào gần đây",
+              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          );
+        }
+
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: requests.length,
+          itemBuilder: (context, index) {
+            final request = requests[index];
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
+              child: GestureDetector(
+                onTap: () {
+                  Get.toNamed(
+                    AppRoute.historydetail.name,
+                    arguments: {"id": request.id}, // Đúng ID của từng request
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: AppColors.button,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.grey.withOpacity(0.5), width: 1.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildRequestDetails(request.status_name),
+                      _buildRequestValues(
+                        request.lot_no,
+                        request.date_request,
+                        request.money_request,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildRequestDetails(String status) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: getStatus(status),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Text(
+                status,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                  color: AppColors.button,
+                ),
+              ),
+            ),
+          ),
+          const Gap(8),
+          Text(
+            'Ngày yêu cầu',
+            style: GoogleFonts.inter(
+                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.grey3),
+          ),
+          const Gap(11),
+          Text(
+            'Số tiền',
+            style: GoogleFonts.inter(
+                fontWeight: FontWeight.w500, fontSize: 12, color: AppColors.grey3),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRequestValues(String lot_no, String date, num money) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          const Gap(8),
+          Text(
+            lot_no,
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: AppColors.black5,
+            ),
+          ),
+          const Gap(8),
+          Text(
+            date,
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.w500,
+              fontSize: 12,
+              color: AppColors.black5,
+            ),
+          ),
+          const Gap(11),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                NumberFormat("#,###").format(money),
+                style: GoogleFonts.roboto(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                  color: AppColors.primary,
+                ),
+              ),
+              const Icon(FontAwesomeIcons.dongSign, size: 14, color: AppColors.primary),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

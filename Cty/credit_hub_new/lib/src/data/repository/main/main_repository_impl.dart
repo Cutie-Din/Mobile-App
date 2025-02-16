@@ -14,9 +14,23 @@ class MainRepositoryImpl implements MainRepository {
   Future<BaseResponse> postHistory({required HistoryModel param}) => repo.postHistory(param: param);
 
   @override
+  Future<BaseResponse> getHistoryDetail({required int id}) => repo.getHistoryDetail(id: id);
+
+  @override
+  Future<BaseResponse> resendHistory({required RequestHistory param}) =>
+      repo.resendHistory(param: param);
+
+  @override
   Future<BaseResponse> postAdd({required AddModel param}) => repo.postAdd(param: param);
 
   @override
-  Future<BaseResponse> postAddImage({required AddImageModel param}) =>
-      repo.postAddImage(param: param);
+  Future<BaseResponse> postNotification({required NotificationModel param}) =>
+      repo.postNotification(param: param);
+
+  @override
+  Future<BaseResponse> getNotificationDetail({required int id}) =>
+      repo.getNotificationDetail(id: id);
+
+  @override
+  Future<BaseResponse> getDropdownBank() => repo.getDropdownBank();
 }

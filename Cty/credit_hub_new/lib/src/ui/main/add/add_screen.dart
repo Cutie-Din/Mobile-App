@@ -43,7 +43,7 @@ class _AddScreenState extends State<AddScreen> {
         }
         AppLoading.dismiss();
         if (state.status == AddStatus.success) {
-          Get.back();
+          Get.offAllNamed(AppRoute.main.name);
           return;
         }
         if (state.status == AddStatus.failure) {
@@ -52,6 +52,7 @@ class _AddScreenState extends State<AddScreen> {
         }
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.button,
         appBar: AppBar(
           title: Center(

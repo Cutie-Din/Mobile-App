@@ -7,8 +7,9 @@ enum HistoryStatus { initial, loading, success, failure }
 @freezed
 class HistoryState with _$HistoryState {
   const factory HistoryState({
-    @Default(HistoryStatus.initial) final HistoryStatus status,
-    @Default(HistoryModel()) final HistoryModel data,
-    @Default('') final String message,
+    @Default(HistoryStatus.initial) HistoryStatus status,
+    @Default([]) List<RequestHistory> data,
+    RequestHistory? data_received,
+    @Default('') String message,
   }) = _HistoryState;
 }

@@ -28,6 +28,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: BlocListener<SignInCubit, SignInState>(
         bloc: _cubit,
         listener: (context, state) {
@@ -58,81 +59,83 @@ class _SignInScreenState extends State<SignInScreen> {
           Image.asset(AppImages.header_signin),
           const Gap(80),
           Expanded(
-            child: Column(
-              children: [
-                Align(
-                  alignment: const Alignment(-0.65, -0.5),
-                  child: Text(
-                    "Đăng nhập",
-                    style: GoogleFonts.publicSans(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-                const Gap(50),
-                AppTextField(
-                  validator: AppValidator.validateUsername, // Validator sẽ hoạt động
-                  hint: "Tên đăng nhập",
-                  hintStyle: GoogleFonts.publicSans(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.black4,
-                  ),
-                  controller: _usernameController,
-                ),
-                const Gap(5),
-                AppTextField(
-                  validator: AppValidator.validatePassword, // Validator sẽ hoạt động
-                  hint: "Mật khẩu",
-                  hintStyle: GoogleFonts.publicSans(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.black4,
-                  ),
-                  controller: _passwordController,
-                  obscureText: _obscureText,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscureText ? Icons.visibility : Icons.visibility_off,
-                      color: AppColors.primary,
-                    ),
-                    onPressed: _toggle,
-                  ),
-                ),
-                Align(
-                  alignment: const Alignment(0.72, -0.5),
-                  child: TextButton(
-                    onPressed: () {
-                      Get.toNamed(AppRoute.forgotPassword.name);
-                    },
-                    style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all(Colors.transparent),
-                    ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Align(
+                    alignment: const Alignment(-0.65, -0.5),
                     child: Text(
-                      "Quên mật khẩu?",
+                      "Đăng nhập",
                       style: GoogleFonts.publicSans(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.primary,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
-                ),
-                const Gap(15),
-                AppButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // Kiểm tra hợp lệ
-                      String userNameLogin = _usernameController.text;
-                      String passwordLogin = _passwordController.text;
-                      _cubit.signIn(username: userNameLogin, password: passwordLogin);
-                    }
-                  },
-                  buttonText: "ĐĂNG NHẬP",
-                  sizeButton: 'large',
-                ),
-              ],
+                  const Gap(50),
+                  AppTextField(
+                    validator: AppValidator.validateUsername, // Validator sẽ hoạt động
+                    hint: "Tên đăng nhập",
+                    hintStyle: GoogleFonts.publicSans(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.black4,
+                    ),
+                    controller: _usernameController,
+                  ),
+                  const Gap(5),
+                  AppTextField(
+                    validator: AppValidator.validatePassword, // Validator sẽ hoạt động
+                    hint: "Mật khẩu",
+                    hintStyle: GoogleFonts.publicSans(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.black4,
+                    ),
+                    controller: _passwordController,
+                    obscureText: _obscureText,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureText ? Icons.visibility : Icons.visibility_off,
+                        color: AppColors.primary,
+                      ),
+                      onPressed: _toggle,
+                    ),
+                  ),
+                  Align(
+                    alignment: const Alignment(0.72, -0.5),
+                    child: TextButton(
+                      onPressed: () {
+                        Get.toNamed(AppRoute.forgotPassword.name);
+                      },
+                      style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      ),
+                      child: Text(
+                        "Quên mật khẩu?",
+                        style: GoogleFonts.publicSans(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Gap(15),
+                  AppButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        // Kiểm tra hợp lệ
+                        String userNameLogin = _usernameController.text;
+                        String passwordLogin = _passwordController.text;
+                        _cubit.signIn(username: userNameLogin, password: passwordLogin);
+                      }
+                    },
+                    buttonText: "ĐĂNG NHẬP",
+                    sizeButton: 'large',
+                  ),
+                ],
+              ),
             ),
           ),
           Image.asset(AppImages.footer_signin),

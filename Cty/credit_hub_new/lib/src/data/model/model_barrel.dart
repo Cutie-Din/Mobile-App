@@ -11,3 +11,7 @@ export 'main/history/history_model.dart';
 export 'main/history/history_request_model.dart';
 export 'main/add/add_image_model.dart';
 export 'main/add/add_model.dart';
+export 'main/notification/notification_model.dart';
+export 'main/notification//notification_request_model.dart';
+export 'main/account/account_model.dart';
+export 'main/account/account_bank_model.dart';

@@ -6,6 +6,7 @@ import 'package:credit_hub_new/src/shared/app_export.dart';
 import 'package:credit_hub_new/src/ui/main/add/cubit/add_cubit.dart';
 import 'package:credit_hub_new/src/ui/main/dashboard/cubit/dashboard_cubit.dart';
 import 'package:credit_hub_new/src/ui/main/history/cubit/history_cubit.dart';
+import 'package:credit_hub_new/src/ui/main/notification/cubit/notification_cubit.dart';
 
 enum AppRoute {
   splash,
@@ -118,6 +119,7 @@ extension AppRouteExt on AppRoute {
           bindings: [
             BindingsBuilder.put(() => DashboardCubit(Get.find(), Get.find())),
             BindingsBuilder.put(() => HistoryCubit(Get.find(), Get.find())),
+            BindingsBuilder.put(() => NotificationCubit(Get.find(), Get.find())),
           ],
         );
 
@@ -141,7 +143,9 @@ extension AppRouteExt on AppRoute {
         return GetPageRoute(
           settings: settings,
           page: () => const HistoryDetailScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => HistoryCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.add:
         return GetPageRoute(
@@ -156,7 +160,9 @@ extension AppRouteExt on AppRoute {
         return GetPageRoute(
           settings: settings,
           page: () => const NotificationScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => NotificationCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.account:
         return GetPageRoute(

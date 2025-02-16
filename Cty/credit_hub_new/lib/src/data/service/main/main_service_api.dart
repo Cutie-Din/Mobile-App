@@ -31,8 +31,40 @@ class MainServiceApi extends BaseRemoteSource implements MainRepository {
   }
 
   @override
-  Future<BaseResponse> postAddImage({required AddImageModel param}) {
-    final response = callApiWithErrorParser(service.postAddImage(param)).then((httpResponse) {
+  Future<BaseResponse> getHistoryDetail({required int id}) {
+    final response = callApiWithErrorParser(service.getHistoryDetail(id)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> resendHistory({required RequestHistory param}) {
+    final response = callApiWithErrorParser(service.resendHistory(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> postNotification({required NotificationModel param}) {
+    final response = callApiWithErrorParser(service.postNotification(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> getNotificationDetail({required int id}) {
+    final response = callApiWithErrorParser(service.getNotificationDetail(id)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> getDropdownBank() {
+    final response = callApiWithErrorParser(service.getDropdownBank()).then((httpResponse) {
       return httpResponse.data;
     });
     return response;

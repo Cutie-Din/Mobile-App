@@ -198,7 +198,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 fontWeight: FontWeight.w700,
                 color: isLeft ? AppColors.primary : AppColors.secondary,
               ),
-              maxLines: 1, // ✅ Giới hạn 1 dòng
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -292,11 +292,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: requests.length,
               itemBuilder: (context, index) {
-                final request = requests[index]; // ✅ Lấy từng request từ lstRequests
+                final request = requests[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
                   child: GestureDetector(
-                    onTap: () => Get.toNamed(AppRoute.historydetail.name, arguments: request),
+                    onTap: () {
+                      Get.toNamed(
+                        AppRoute.historydetail.name,
+                        arguments: {"id": request.id}, // Đúng ID của từng request
+                      );
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
@@ -396,7 +401,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                NumberFormat("#,###").format(money), // ✅ Format số tiền có dấu phẩy
+                NumberFormat("#,###").format(money),
                 style: GoogleFonts.roboto(
                   fontWeight: FontWeight.w500,
                   fontSize: 15,

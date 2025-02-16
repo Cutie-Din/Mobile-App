@@ -16,7 +16,6 @@ class DashboardCubit extends Cubit<DashboardState> {
       emit(state.copyWith(status: DashboardStatus.loading));
       final response = await repo.getDashboard();
 
-      // ✅ Convert response.data từ Map -> DashboardModel
       final dashboardModel = DashboardModel.fromJson(response.data as Map<String, dynamic>);
 
       emit(state.copyWith(status: DashboardStatus.success, data: dashboardModel));

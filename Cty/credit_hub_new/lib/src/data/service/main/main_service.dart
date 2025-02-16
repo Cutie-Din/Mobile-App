@@ -13,9 +13,21 @@ abstract class MainService {
   @POST('/app/requestmoneyorder/list')
   Future<HttpResponse<BaseResponse>> postHistory(@Body() HistoryModel body);
 
+  @POST('/app/requestmoneyorder/reRequest')
+  Future<HttpResponse<BaseResponse>> resendHistory(@Body() RequestHistory body);
+
+  @GET('/app/requestmoneyorder/detail/{id}')
+  Future<HttpResponse<BaseResponse>> getHistoryDetail(@Path('id') int id);
+
   @POST('/app/requestmoneyorder/create')
   Future<HttpResponse<BaseResponse>> postAdd(@Body() AddModel body);
 
-  @POST('/upload/uploadfile')
-  Future<HttpResponse<BaseResponse>> postAddImage(@Body() AddImageModel body);
+  @POST('/app/notification/getList')
+  Future<HttpResponse<BaseResponse>> postNotification(@Body() NotificationModel body);
+
+  @GET('/app/notification/detail/{id}')
+  Future<HttpResponse<BaseResponse>> getNotificationDetail(@Path('id') int id);
+
+  @GET('dropdown/bank')
+  Future<HttpResponse<BaseResponse>> getDropdownBank();
 }

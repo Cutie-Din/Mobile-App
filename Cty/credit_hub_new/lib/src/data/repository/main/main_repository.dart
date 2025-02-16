@@ -4,7 +4,13 @@ abstract class MainRepository {
   Future<BaseResponse> getDashboard();
 
   Future<BaseResponse> postHistory({required HistoryModel param});
+  Future<BaseResponse> getHistoryDetail({required int id});
+  Future<BaseResponse> resendHistory({required RequestHistory param});
 
   Future<BaseResponse> postAdd({required AddModel param});
-  Future<BaseResponse> postAddImage({required AddImageModel param});
+
+  Future<BaseResponse> postNotification({required NotificationModel param});
+  Future<BaseResponse> getNotificationDetail({required int id});
+
+  Future<BaseResponse> getDropdownBank();
 }
