@@ -53,6 +53,10 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return BlocBuilder<NotificationCubit, NotificationState>(
       bloc: _cubit,
       builder: (context, state) {
+        if (state.status == NotificationStatus.loading && pageNo == 1) {
+          return const AppLoading();
+        }
+
         return Scaffold(
           backgroundColor: AppColors.button,
           appBar: AppBar(
@@ -60,9 +64,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
               child: Text(
                 'Thông báo',
                 style: GoogleFonts.inter(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.black4,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -74,8 +77,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
             child: Column(
               children: [
                 Expanded(
-                  child: state.status == NotificationStatus.loading && pageNo == 1
-                      ? const Center(child: CircularProgressIndicator())
+                  child: (state.data == null || state.data.isEmpty)
+                      ? const Center(
+                          child: Text(
+                            "Chưa có thông báo mới",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        )
                       : ListView.builder(
                           controller: _scrollController,
                           itemCount: state.data.length + (isLoadingMore ? 1 : 0),
@@ -85,8 +97,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                                 child: _buildNotify(
-                                  notification.status_name,
-                                  notification.date_finish,
+                                  notification.status_name ?? "Không có tiêu đề",
+                                  notification.date_finish ?? "Không có ngày",
                                 ),
                               );
                             } else {
