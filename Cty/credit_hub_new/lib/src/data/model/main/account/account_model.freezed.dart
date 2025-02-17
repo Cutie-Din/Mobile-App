@@ -23,7 +23,7 @@ mixin _$AccountModel {
   int get page_no => throw _privateConstructorUsedError;
   int get page_size => throw _privateConstructorUsedError;
   List<DropdownBank> get dropdownbank => throw _privateConstructorUsedError;
-  List<AccountDetail> get accounts => throw _privateConstructorUsedError;
+  List<AccountDetail> get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +41,7 @@ abstract class $AccountModelCopyWith<$Res> {
       {int page_no,
       int page_size,
       List<DropdownBank> dropdownbank,
-      List<AccountDetail> accounts});
+      List<AccountDetail> data});
 }
 
 /// @nodoc
@@ -60,7 +60,7 @@ class _$AccountModelCopyWithImpl<$Res, $Val extends AccountModel>
     Object? page_no = null,
     Object? page_size = null,
     Object? dropdownbank = null,
-    Object? accounts = null,
+    Object? data = null,
   }) {
     return _then(_value.copyWith(
       page_no: null == page_no
@@ -75,9 +75,9 @@ class _$AccountModelCopyWithImpl<$Res, $Val extends AccountModel>
           ? _value.dropdownbank
           : dropdownbank // ignore: cast_nullable_to_non_nullable
               as List<DropdownBank>,
-      accounts: null == accounts
-          ? _value.accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
               as List<AccountDetail>,
     ) as $Val);
   }
@@ -95,7 +95,7 @@ abstract class _$$AccountModelImplCopyWith<$Res>
       {int page_no,
       int page_size,
       List<DropdownBank> dropdownbank,
-      List<AccountDetail> accounts});
+      List<AccountDetail> data});
 }
 
 /// @nodoc
@@ -112,7 +112,7 @@ class __$$AccountModelImplCopyWithImpl<$Res>
     Object? page_no = null,
     Object? page_size = null,
     Object? dropdownbank = null,
-    Object? accounts = null,
+    Object? data = null,
   }) {
     return _then(_$AccountModelImpl(
       page_no: null == page_no
@@ -127,9 +127,9 @@ class __$$AccountModelImplCopyWithImpl<$Res>
           ? _value._dropdownbank
           : dropdownbank // ignore: cast_nullable_to_non_nullable
               as List<DropdownBank>,
-      accounts: null == accounts
-          ? _value._accounts
-          : accounts // ignore: cast_nullable_to_non_nullable
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
               as List<AccountDetail>,
     ));
   }
@@ -142,9 +142,9 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
       {this.page_no = 0,
       this.page_size = 0,
       final List<DropdownBank> dropdownbank = const [],
-      final List<AccountDetail> accounts = const []})
+      final List<AccountDetail> data = const []})
       : _dropdownbank = dropdownbank,
-        _accounts = accounts;
+        _data = data;
 
   factory _$AccountModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$AccountModelImplFromJson(json);
@@ -164,18 +164,18 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
     return EqualUnmodifiableListView(_dropdownbank);
   }
 
-  final List<AccountDetail> _accounts;
+  final List<AccountDetail> _data;
   @override
   @JsonKey()
-  List<AccountDetail> get accounts {
-    if (_accounts is EqualUnmodifiableListView) return _accounts;
+  List<AccountDetail> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_accounts);
+    return EqualUnmodifiableListView(_data);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AccountModel(page_no: $page_no, page_size: $page_size, dropdownbank: $dropdownbank, accounts: $accounts)';
+    return 'AccountModel(page_no: $page_no, page_size: $page_size, dropdownbank: $dropdownbank, data: $data)';
   }
 
   @override
@@ -186,7 +186,7 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
       ..add(DiagnosticsProperty('page_no', page_no))
       ..add(DiagnosticsProperty('page_size', page_size))
       ..add(DiagnosticsProperty('dropdownbank', dropdownbank))
-      ..add(DiagnosticsProperty('accounts', accounts));
+      ..add(DiagnosticsProperty('data', data));
   }
 
   @override
@@ -199,7 +199,7 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
                 other.page_size == page_size) &&
             const DeepCollectionEquality()
                 .equals(other._dropdownbank, _dropdownbank) &&
-            const DeepCollectionEquality().equals(other._accounts, _accounts));
+            const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(ignore: true)
@@ -209,7 +209,7 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
       page_no,
       page_size,
       const DeepCollectionEquality().hash(_dropdownbank),
-      const DeepCollectionEquality().hash(_accounts));
+      const DeepCollectionEquality().hash(_data));
 
   @JsonKey(ignore: true)
   @override
@@ -230,7 +230,7 @@ abstract class _AccountModel implements AccountModel {
       {final int page_no,
       final int page_size,
       final List<DropdownBank> dropdownbank,
-      final List<AccountDetail> accounts}) = _$AccountModelImpl;
+      final List<AccountDetail> data}) = _$AccountModelImpl;
 
   factory _AccountModel.fromJson(Map<String, dynamic> json) =
       _$AccountModelImpl.fromJson;
@@ -242,7 +242,7 @@ abstract class _AccountModel implements AccountModel {
   @override
   List<DropdownBank> get dropdownbank;
   @override
-  List<AccountDetail> get accounts;
+  List<AccountDetail> get data;
   @override
   @JsonKey(ignore: true)
   _$$AccountModelImplCopyWith<_$AccountModelImpl> get copyWith =>

@@ -9,7 +9,7 @@ class AccountModel with _$AccountModel {
     @Default(0) final int page_no,
     @Default(0) final int page_size,
     @Default([]) List<DropdownBank> dropdownbank,
-    @Default([]) List<AccountDetail> accounts,
+    @Default([]) List<AccountDetail> data,
   }) = _AccountModel;
 
   factory AccountModel.fromJson(Map<String, dynamic> json) => _$AccountModelFromJson(json);

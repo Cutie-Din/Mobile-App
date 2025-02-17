@@ -43,6 +43,6 @@ abstract class MainService {
   @POST('/app/bankaccount/delete')
   Future<HttpResponse<BaseResponse>> deleteAccount(@Body() AccountDetail body);
 
-  @GET('app/bankaccount/{id}')
+  @GET('/app/bankaccount/{id}')
   Future<HttpResponse<BaseResponse>> getAccount(@Path('id') int id);
 }

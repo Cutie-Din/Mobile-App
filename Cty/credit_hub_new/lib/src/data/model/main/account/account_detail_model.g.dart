@@ -13,6 +13,7 @@ _$AccountDetailImpl _$$AccountDetailImplFromJson(Map<String, dynamic> json) =>
       bank_id: (json['bank_id'] as num?)?.toInt() ?? 0,
       bank_name: json['bank_name'] as String? ?? '',
       bank_account: json['bank_account'] as String? ?? '',
+      bank_no: json['bank_no'] as String? ?? '',
       bank_owner: json['bank_owner'] as String? ?? '',
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$$AccountDetailImplToJson(_$AccountDetailImpl instance) =>
       'bank_id': instance.bank_id,
       'bank_name': instance.bank_name,
       'bank_account': instance.bank_account,
+      'bank_no': instance.bank_no,
       'bank_owner': instance.bank_owner,
     };

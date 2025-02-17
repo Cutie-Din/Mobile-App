@@ -17,7 +17,6 @@ class HistoryCubit extends Cubit<HistoryState> {
       HistoryModel postHistory = HistoryModel(page_no: page_no, page_size: page_size);
       final response = await repo.postHistory(param: postHistory);
       final historyModel = HistoryModel.fromJson(response.data as Map<String, dynamic>);
-
       emit(state.copyWith(status: HistoryStatus.success, data: historyModel.data));
     } catch (e) {
       emit(state.copyWith(status: HistoryStatus.failure, message: e.toString()));

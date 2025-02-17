@@ -15,11 +15,11 @@ class _AccountListScreenState extends State<AccountListScreen> {
   int? swipedIndex;
   AccountCubit get _cubit => Get.find<AccountCubit>();
 
-  final List<Map<String, String>> accounts = [
-    {"name": "Nguyễn Văn A", "bank": "Vietcombank", "code": "12345678"},
-    {"name": "Trần Thị B", "bank": "Techcombank", "code": "87654321"},
-    {"name": "Phạm Văn C", "bank": "BIDV", "code": "11223344"},
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _cubit.postAccount(page_no: 1, page_size: 5);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,64 +86,95 @@ class _AccountListScreenState extends State<AccountListScreen> {
   }
 
   Widget _bankAccountList() {
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      itemCount: accounts.length,
-      itemBuilder: (context, index) {
-        final account = accounts[index];
+    return BlocBuilder<AccountCubit, AccountState>(
+      bloc: _cubit,
+      builder: (context, state) {
+        if (state.status == AccountStatus.loading) {
+          return const AppLoading();
+        }
 
-        return GestureDetector(
-          onTap: () {
-            setState(() {
-              selectedIndex = selectedIndex == index ? null : index; // Toggle chọn
-            });
-          },
-          onHorizontalDragUpdate: (details) {
-            setState(() {
-              if (details.primaryDelta! < -5) {
-                swipedIndex = index;
-              } else if (details.primaryDelta! > 5) {
-                swipedIndex = null;
-              }
-            });
-          },
-          child: Stack(
-            children: [
-              // Swipe Actions
-              Positioned.fill(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _buildActionContainer(
-                            AppColors.grey3,
-                            AppImages.edit,
-                            () => Get.toNamed(
-                                  AppRoute.accountedit.name,
-                                )),
-                        const Gap(10),
-                        _buildActionContainer(
-                          AppColors.primary,
-                          AppImages.rubbish,
-                          () {},
+        if (state.status == AccountStatus.failure) {
+          return Center(
+            child: Text(
+              state.message ?? "Không thể tải dữ liệu",
+              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          );
+        }
+
+        final bankAccounts = state.accounts ?? [];
+        return ListView.builder(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          itemCount: bankAccounts.length,
+          itemBuilder: (context, index) {
+            final account = bankAccounts[index];
+
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedIndex = selectedIndex == index ? null : index;
+                });
+              },
+              onHorizontalDragUpdate: (details) {
+                setState(() {
+                  if (details.primaryDelta! < -5) {
+                    swipedIndex = index;
+                  } else if (details.primaryDelta! > 5) {
+                    swipedIndex = null;
+                  }
+                });
+              },
+              child: Stack(
+                children: [
+                  // Swipe Actions
+                  Positioned.fill(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _buildActionContainer(AppColors.grey3, AppImages.edit, () {
+                              Get.toNamed(
+                                AppRoute.accountedit.name,
+                                arguments: {"id": account.id},
+                              )?.then((_) {
+                                _cubit.postAccount(page_no: 1, page_size: 5);
+                              });
+                            }),
+                            const Gap(10),
+                            _buildActionContainer(
+                              AppColors.primary,
+                              AppImages.rubbish,
+                              () async {
+                                await _cubit.deleteAccount(id: account.id!);
+                                await _cubit.postAccount(page_no: 1, page_size: 5);
+                              },
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
 
-              // Nội dung tài khoản
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 150),
-                transform: Matrix4.translationValues(swipedIndex == index ? -130 : 0, 0, 0),
-                child: _buildAccountItem(account, index),
+                  // Nội dung tài khoản
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 150),
+                    transform: Matrix4.translationValues(swipedIndex == index ? -130 : 0, 0, 0),
+                    child: _buildAccountItem(
+                      index,
+                      account.bank_owner,
+                      account.bank_no!,
+                      account.bank_name,
+                      account.bank_id,
+                      account.icons,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
@@ -171,7 +202,8 @@ class _AccountListScreenState extends State<AccountListScreen> {
     );
   }
 
-  Widget _buildAccountItem(Map<String, String> account, int index) {
+  Widget _buildAccountItem(
+      int index, String bank_name, String bank_no, String bank_owner, int id, String icons) {
     return Container(
       width: MediaQuery.of(context).size.width - 30,
       padding: const EdgeInsets.all(10),
@@ -183,16 +215,19 @@ class _AccountListScreenState extends State<AccountListScreen> {
       ),
       child: Row(
         children: [
-          _buildAccountIcon(),
+          _buildAccountIcon(icons),
           const Gap(10),
-          Expanded(child: _buildAccountDetails(account)),
+          Expanded(child: _buildAccountDetails(bank_name, bank_no, bank_owner, id)),
           if (selectedIndex == index) _buildSelectedIndicator(),
         ],
       ),
     );
   }
 
-  Widget _buildAccountIcon() {
+  Widget _buildAccountIcon(String icons) {
+    if (icons == null || !icons.startsWith('http')) {
+      return const Text("Không có ảnh");
+    }
     return Container(
       width: 55,
       height: 55,
@@ -200,19 +235,19 @@ class _AccountListScreenState extends State<AccountListScreen> {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: const Color(0xFFD0D0D0), width: 2),
         image: DecorationImage(
-          image: AssetImage(AppImages.money_add),
-          fit: BoxFit.fill,
+          image: NetworkImage(icons),
+          fit: BoxFit.contain,
         ),
       ),
     );
   }
 
-  Widget _buildAccountDetails(Map<String, String> account) {
+  Widget _buildAccountDetails(String bank_name, String bank_no, String bank_owner, int id) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          account["name"]!,
+          bank_name,
           style: GoogleFonts.roboto(
             fontSize: 12,
             fontWeight: FontWeight.w500,
@@ -220,7 +255,7 @@ class _AccountListScreenState extends State<AccountListScreen> {
           ),
         ),
         Text(
-          account["bank"]!,
+          bank_no,
           style: const TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
@@ -228,7 +263,7 @@ class _AccountListScreenState extends State<AccountListScreen> {
           ),
         ),
         Text(
-          account["code"]!,
+          bank_owner,
           style: const TextStyle(fontSize: 14, color: Color(0xFF7B7B7B)),
         ),
       ],

@@ -189,6 +189,9 @@ class _AccountAddScreenState extends State<AccountAddScreen> {
           bank_account: bank_account,
           bank_owner: bank_owner,
         );
+
+        _cubit.postAccount(page_no: 1, page_size: 5);
+
         Get.back();
       },
       buttonText: "THÊM MỚI",

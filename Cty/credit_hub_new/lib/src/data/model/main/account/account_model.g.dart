@@ -14,7 +14,7 @@ _$AccountModelImpl _$$AccountModelImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => DropdownBank.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      accounts: (json['accounts'] as List<dynamic>?)
+      data: (json['data'] as List<dynamic>?)
               ?.map((e) => AccountDetail.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
@@ -25,5 +25,5 @@ Map<String, dynamic> _$$AccountModelImplToJson(_$AccountModelImpl instance) =>
       'page_no': instance.page_no,
       'page_size': instance.page_size,
       'dropdownbank': instance.dropdownbank,
-      'accounts': instance.accounts,
+      'data': instance.data,
     };

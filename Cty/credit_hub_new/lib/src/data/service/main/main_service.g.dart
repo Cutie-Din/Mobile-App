@@ -499,7 +499,7 @@ class _MainService implements MainService {
     )
             .compose(
               _dio.options,
-              'app/bankaccount/${id}',
+              '/app/bankaccount/${id}',
               queryParameters: queryParameters,
               data: _data,
             )

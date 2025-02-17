@@ -11,6 +11,7 @@ class AccountDetail with _$AccountDetail {
     @Default(0) int bank_id,
     @Default('') String bank_name,
     @Default('') String bank_account,
+    @Default('') String bank_no,
     @Default('') String bank_owner,
   }) = _AccountDetail;
 

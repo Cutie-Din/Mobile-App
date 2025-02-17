@@ -25,6 +25,7 @@ mixin _$AccountDetail {
   int get bank_id => throw _privateConstructorUsedError;
   String get bank_name => throw _privateConstructorUsedError;
   String get bank_account => throw _privateConstructorUsedError;
+  String get bank_no => throw _privateConstructorUsedError;
   String get bank_owner => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $AccountDetailCopyWith<$Res> {
       int bank_id,
       String bank_name,
       String bank_account,
+      String bank_no,
       String bank_owner});
 }
 
@@ -66,6 +68,7 @@ class _$AccountDetailCopyWithImpl<$Res, $Val extends AccountDetail>
     Object? bank_id = null,
     Object? bank_name = null,
     Object? bank_account = null,
+    Object? bank_no = null,
     Object? bank_owner = null,
   }) {
     return _then(_value.copyWith(
@@ -89,6 +92,10 @@ class _$AccountDetailCopyWithImpl<$Res, $Val extends AccountDetail>
           ? _value.bank_account
           : bank_account // ignore: cast_nullable_to_non_nullable
               as String,
+      bank_no: null == bank_no
+          ? _value.bank_no
+          : bank_no // ignore: cast_nullable_to_non_nullable
+              as String,
       bank_owner: null == bank_owner
           ? _value.bank_owner
           : bank_owner // ignore: cast_nullable_to_non_nullable
@@ -111,6 +118,7 @@ abstract class _$$AccountDetailImplCopyWith<$Res>
       int bank_id,
       String bank_name,
       String bank_account,
+      String bank_no,
       String bank_owner});
 }
 
@@ -130,6 +138,7 @@ class __$$AccountDetailImplCopyWithImpl<$Res>
     Object? bank_id = null,
     Object? bank_name = null,
     Object? bank_account = null,
+    Object? bank_no = null,
     Object? bank_owner = null,
   }) {
     return _then(_$AccountDetailImpl(
@@ -153,6 +162,10 @@ class __$$AccountDetailImplCopyWithImpl<$Res>
           ? _value.bank_account
           : bank_account // ignore: cast_nullable_to_non_nullable
               as String,
+      bank_no: null == bank_no
+          ? _value.bank_no
+          : bank_no // ignore: cast_nullable_to_non_nullable
+              as String,
       bank_owner: null == bank_owner
           ? _value.bank_owner
           : bank_owner // ignore: cast_nullable_to_non_nullable
@@ -170,6 +183,7 @@ class _$AccountDetailImpl implements _AccountDetail {
       this.bank_id = 0,
       this.bank_name = '',
       this.bank_account = '',
+      this.bank_no = '',
       this.bank_owner = ''});
 
   factory _$AccountDetailImpl.fromJson(Map<String, dynamic> json) =>
@@ -191,11 +205,14 @@ class _$AccountDetailImpl implements _AccountDetail {
   final String bank_account;
   @override
   @JsonKey()
+  final String bank_no;
+  @override
+  @JsonKey()
   final String bank_owner;
 
   @override
   String toString() {
-    return 'AccountDetail(id: $id, icons: $icons, bank_id: $bank_id, bank_name: $bank_name, bank_account: $bank_account, bank_owner: $bank_owner)';
+    return 'AccountDetail(id: $id, icons: $icons, bank_id: $bank_id, bank_name: $bank_name, bank_account: $bank_account, bank_no: $bank_no, bank_owner: $bank_owner)';
   }
 
   @override
@@ -210,14 +227,15 @@ class _$AccountDetailImpl implements _AccountDetail {
                 other.bank_name == bank_name) &&
             (identical(other.bank_account, bank_account) ||
                 other.bank_account == bank_account) &&
+            (identical(other.bank_no, bank_no) || other.bank_no == bank_no) &&
             (identical(other.bank_owner, bank_owner) ||
                 other.bank_owner == bank_owner));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, icons, bank_id, bank_name, bank_account, bank_owner);
+  int get hashCode => Object.hash(runtimeType, id, icons, bank_id, bank_name,
+      bank_account, bank_no, bank_owner);
 
   @JsonKey(ignore: true)
   @override
@@ -240,6 +258,7 @@ abstract class _AccountDetail implements AccountDetail {
       final int bank_id,
       final String bank_name,
       final String bank_account,
+      final String bank_no,
       final String bank_owner}) = _$AccountDetailImpl;
 
   factory _AccountDetail.fromJson(Map<String, dynamic> json) =
@@ -255,6 +274,8 @@ abstract class _AccountDetail implements AccountDetail {
   String get bank_name;
   @override
   String get bank_account;
+  @override
+  String get bank_no;
   @override
   String get bank_owner;
   @override

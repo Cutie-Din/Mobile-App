@@ -229,7 +229,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
         }
 
         final requests = filteredTransactions;
-
         return Expanded(
           child: ListView.builder(
             controller: _scrollController,
@@ -332,7 +331,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 onTap: () {
                   Get.toNamed(
                     AppRoute.historydetail.name,
-                    arguments: {"id": request.id}, // Đúng ID của từng request
+                    arguments: {"id": request.id},
                   );
                 },
                 child: Container(
