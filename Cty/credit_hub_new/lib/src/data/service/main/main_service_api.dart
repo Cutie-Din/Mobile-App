@@ -69,4 +69,44 @@ class MainServiceApi extends BaseRemoteSource implements MainRepository {
     });
     return response;
   }
+
+  @override
+  Future<BaseResponse> postAccount({required AccountModel param}) {
+    final response = callApiWithErrorParser(service.postAccount(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> createAccount({required AccountDetail param}) {
+    final response = callApiWithErrorParser(service.createAccount(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> updateAccount({required AccountDetail param}) {
+    final response = callApiWithErrorParser(service.updateAccount(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> deleteAccount({required AccountDetail param}) {
+    final response = callApiWithErrorParser(service.deleteAccount(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
+
+  @override
+  Future<BaseResponse> getAccount({required int id}) {
+    final response = callApiWithErrorParser(service.getAccount(id)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
 }

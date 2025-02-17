@@ -268,7 +268,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           );
         }
 
-        final requests = state.data?.lstRequests ?? []; // ✅ Lấy danh sách yêu cầu từ DashboardModel
+        final requests = state.data?.lstRequests ?? [];
 
         if (requests.isEmpty) {
           return Center(

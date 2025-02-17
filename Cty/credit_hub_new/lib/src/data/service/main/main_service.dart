@@ -28,6 +28,21 @@ abstract class MainService {
   @GET('/app/notification/detail/{id}')
   Future<HttpResponse<BaseResponse>> getNotificationDetail(@Path('id') int id);
 
-  @GET('dropdown/bank')
+  @GET('/dropdown/bank')
   Future<HttpResponse<BaseResponse>> getDropdownBank();
+
+  @POST('/app/bankaccount/list')
+  Future<HttpResponse<BaseResponse>> postAccount(@Body() AccountModel body);
+
+  @POST('/app/bankaccount/create')
+  Future<HttpResponse<BaseResponse>> createAccount(@Body() AccountDetail body);
+
+  @POST('/app/bankaccount/update')
+  Future<HttpResponse<BaseResponse>> updateAccount(@Body() AccountDetail body);
+
+  @POST('/app/bankaccount/delete')
+  Future<HttpResponse<BaseResponse>> deleteAccount(@Body() AccountDetail body);
+
+  @GET('app/bankaccount/{id}')
+  Future<HttpResponse<BaseResponse>> getAccount(@Path('id') int id);
 }

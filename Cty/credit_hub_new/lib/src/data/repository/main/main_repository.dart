@@ -13,4 +13,9 @@ abstract class MainRepository {
   Future<BaseResponse> getNotificationDetail({required int id});
 
   Future<BaseResponse> getDropdownBank();
+  Future<BaseResponse> postAccount({required AccountModel param});
+  Future<BaseResponse> createAccount({required AccountDetail param});
+  Future<BaseResponse> updateAccount({required AccountDetail param});
+  Future<BaseResponse> deleteAccount({required AccountDetail param});
+  Future<BaseResponse> getAccount({required int id});
 }

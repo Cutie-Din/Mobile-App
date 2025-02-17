@@ -15,3 +15,4 @@ export 'main/notification/notification_model.dart';
 export 'main/notification//notification_request_model.dart';
 export 'main/account/account_model.dart';
 export 'main/account/account_bank_model.dart';
+export 'main/account/account_detail_model.dart';

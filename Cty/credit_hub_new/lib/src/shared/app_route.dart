@@ -3,6 +3,7 @@ import 'package:credit_hub_new/src/ui/auth/forgot_password/cubit/forgot_password
 import 'package:credit_hub_new/src/ui/auth/otp/cubit/otp_cubit.dart';
 import 'package:credit_hub_new/src/ui/auth/sign_in/cubit/sign_in_cubit.dart';
 import 'package:credit_hub_new/src/shared/app_export.dart';
+import 'package:credit_hub_new/src/ui/main/account/cubit/account_cubit.dart';
 import 'package:credit_hub_new/src/ui/main/add/cubit/add_cubit.dart';
 import 'package:credit_hub_new/src/ui/main/dashboard/cubit/dashboard_cubit.dart';
 import 'package:credit_hub_new/src/ui/main/history/cubit/history_cubit.dart';
@@ -120,6 +121,7 @@ extension AppRouteExt on AppRoute {
             BindingsBuilder.put(() => DashboardCubit(Get.find(), Get.find())),
             BindingsBuilder.put(() => HistoryCubit(Get.find(), Get.find())),
             BindingsBuilder.put(() => NotificationCubit(Get.find(), Get.find())),
+            BindingsBuilder.put(() => AccountCubit(Get.find(), Get.find())),
           ],
         );
 
@@ -168,31 +170,41 @@ extension AppRouteExt on AppRoute {
         return GetPageRoute(
           settings: settings,
           page: () => const AccountScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => AccountCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.accountdetails:
         return GetPageRoute(
           settings: settings,
           page: () => const AccountDetailsScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => AccountCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.accountlist:
         return GetPageRoute(
           settings: settings,
           page: () => const AccountListScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => AccountCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.accountadd:
         return GetPageRoute(
           settings: settings,
           page: () => const AccountAddScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => AccountCubit(Get.find(), Get.find())),
+          ],
         );
       case AppRoute.accountedit:
         return GetPageRoute(
           settings: settings,
           page: () => const AccountEditScreen(),
-          bindings: [],
+          bindings: [
+            BindingsBuilder.put(() => AccountCubit(Get.find(), Get.find())),
+          ],
         );
       default:
         return GetPageRoute(

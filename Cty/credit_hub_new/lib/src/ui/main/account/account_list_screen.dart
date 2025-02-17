@@ -1,4 +1,7 @@
 import 'package:credit_hub_new/src/shared/app_export.dart';
+import 'package:credit_hub_new/src/ui/main/account/cubit/account_cubit.dart';
+import 'package:credit_hub_new/src/ui/main/account/cubit/account_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountListScreen extends StatefulWidget {
   const AccountListScreen({super.key});
@@ -10,6 +13,7 @@ class AccountListScreen extends StatefulWidget {
 class _AccountListScreenState extends State<AccountListScreen> {
   int? selectedIndex;
   int? swipedIndex;
+  AccountCubit get _cubit => Get.find<AccountCubit>();
 
   final List<Map<String, String>> accounts = [
     {"name": "Nguyễn Văn A", "bank": "Vietcombank", "code": "12345678"},
@@ -19,33 +23,48 @@ class _AccountListScreenState extends State<AccountListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.button,
-      appBar: AppBar(
-        title: Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
-            child: Text(
-              'Danh sách tài khoản',
-              style: GoogleFonts.inter(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-                color: AppColors.black4,
+    return BlocListener<AccountCubit, AccountState>(
+      bloc: _cubit,
+      listener: (context, state) {
+        if (state.status == AccountStatus.loading) {
+          AppLoading.show();
+          return;
+        }
+        AppLoading.dismiss();
+
+        if (state.status == AccountStatus.failure) {
+          AppDialog.show(context, msg: state.message);
+          return;
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.button,
+        appBar: AppBar(
+          title: Center(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 50, 0),
+              child: Text(
+                'Danh sách tài khoản',
+                style: GoogleFonts.inter(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.black4,
+                ),
               ),
             ),
           ),
+          leading: IconButton(
+            icon: const Icon(FontAwesomeIcons.chevronLeft, size: 12),
+            onPressed: () => Get.back(),
+          ),
         ),
-        leading: IconButton(
-          icon: const Icon(FontAwesomeIcons.chevronLeft, size: 12),
-          onPressed: () => Get.back(),
+        body: _buildContent(),
+        floatingActionButton: FloatingActionButton(
+          shape: const CircleBorder(),
+          onPressed: () => Get.toNamed(AppRoute.accountadd.name),
+          backgroundColor: AppColors.primary,
+          child: const Icon(Icons.add, color: Colors.white),
         ),
-      ),
-      body: _buildContent(),
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        onPressed: () => Get.toNamed(AppRoute.accountadd.name),
-        backgroundColor: AppColors.primary,
-        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
@@ -132,7 +151,7 @@ class _AccountListScreenState extends State<AccountListScreen> {
 
   Widget _buildActionContainer(Color color, String icon, VoidCallback onTap) {
     return GestureDetector(
-      onTap: onTap, // Bắt sự kiện khi nhấn vào nút
+      onTap: onTap,
       child: Container(
         width: 55,
         height: 65,
@@ -167,8 +186,6 @@ class _AccountListScreenState extends State<AccountListScreen> {
           _buildAccountIcon(),
           const Gap(10),
           Expanded(child: _buildAccountDetails(account)),
-
-          // Hiển thị check_circle khi tài khoản được chọn
           if (selectedIndex == index) _buildSelectedIndicator(),
         ],
       ),
