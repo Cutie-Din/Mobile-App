@@ -30,14 +30,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
     if (refresh) {
       pageNo = 1;
     }
-    await _cubit.postHistory(page_no: pageNo, page_size: 6);
+    await _cubit.postHistory(page_no: pageNo, page_size: 5);
   }
 
   void _loadMore() async {
     if (!isLoadingMore) {
-      setState(() {
-        isLoadingMore = true;
-      });
       pageNo++;
       await _fetchData();
       setState(() {
@@ -229,6 +226,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         }
 
         final requests = filteredTransactions;
+
         return Expanded(
           child: ListView.builder(
             controller: _scrollController,
@@ -331,7 +329,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 onTap: () {
                   Get.toNamed(
                     AppRoute.historydetail.name,
-                    arguments: {"id": request.id},
+                    arguments: {"id": request.id}, // Đúng ID của từng request
                   );
                 },
                 child: Container(
