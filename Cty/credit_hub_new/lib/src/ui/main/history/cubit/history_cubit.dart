@@ -45,4 +45,22 @@ class HistoryCubit extends Cubit<HistoryState> {
       emit(state.copyWith(status: HistoryStatus.failure, message: e.toString()));
     }
   }
+
+  Future<void> searchHistory({required String lot_no}) async {
+    try {
+      emit(state.copyWith(status: HistoryStatus.loading));
+
+      HistoryModel postHistory = HistoryModel(lot_no: lot_no);
+      final response = await repo.postHistory(param: postHistory);
+
+      final historyModel = HistoryModel.fromJson(response.data as Map<String, dynamic>);
+
+      emit(state.copyWith(
+        status: HistoryStatus.success,
+        data: List.from(historyModel.data),
+      ));
+    } catch (e) {
+      emit(state.copyWith(status: HistoryStatus.failure, message: e.toString()));
+    }
+  }
 }

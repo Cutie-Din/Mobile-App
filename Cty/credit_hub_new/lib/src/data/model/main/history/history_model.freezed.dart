@@ -22,6 +22,7 @@ HistoryModel _$HistoryModelFromJson(Map<String, dynamic> json) {
 mixin _$HistoryModel {
   int get page_no => throw _privateConstructorUsedError;
   int get page_size => throw _privateConstructorUsedError;
+  String get lot_no => throw _privateConstructorUsedError;
   List<RequestHistory> get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +37,8 @@ abstract class $HistoryModelCopyWith<$Res> {
           HistoryModel value, $Res Function(HistoryModel) then) =
       _$HistoryModelCopyWithImpl<$Res, HistoryModel>;
   @useResult
-  $Res call({int page_no, int page_size, List<RequestHistory> data});
+  $Res call(
+      {int page_no, int page_size, String lot_no, List<RequestHistory> data});
 }
 
 /// @nodoc
@@ -54,6 +56,7 @@ class _$HistoryModelCopyWithImpl<$Res, $Val extends HistoryModel>
   $Res call({
     Object? page_no = null,
     Object? page_size = null,
+    Object? lot_no = null,
     Object? data = null,
   }) {
     return _then(_value.copyWith(
@@ -65,6 +68,10 @@ class _$HistoryModelCopyWithImpl<$Res, $Val extends HistoryModel>
           ? _value.page_size
           : page_size // ignore: cast_nullable_to_non_nullable
               as int,
+      lot_no: null == lot_no
+          ? _value.lot_no
+          : lot_no // ignore: cast_nullable_to_non_nullable
+              as String,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -81,7 +88,8 @@ abstract class _$$HistoryModelImplCopyWith<$Res>
       __$$HistoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int page_no, int page_size, List<RequestHistory> data});
+  $Res call(
+      {int page_no, int page_size, String lot_no, List<RequestHistory> data});
 }
 
 /// @nodoc
@@ -97,6 +105,7 @@ class __$$HistoryModelImplCopyWithImpl<$Res>
   $Res call({
     Object? page_no = null,
     Object? page_size = null,
+    Object? lot_no = null,
     Object? data = null,
   }) {
     return _then(_$HistoryModelImpl(
@@ -108,6 +117,10 @@ class __$$HistoryModelImplCopyWithImpl<$Res>
           ? _value.page_size
           : page_size // ignore: cast_nullable_to_non_nullable
               as int,
+      lot_no: null == lot_no
+          ? _value.lot_no
+          : lot_no // ignore: cast_nullable_to_non_nullable
+              as String,
       data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
@@ -122,6 +135,7 @@ class _$HistoryModelImpl with DiagnosticableTreeMixin implements _HistoryModel {
   const _$HistoryModelImpl(
       {this.page_no = 0,
       this.page_size = 0,
+      this.lot_no = '',
       final List<RequestHistory> data = const []})
       : _data = data;
 
@@ -134,6 +148,9 @@ class _$HistoryModelImpl with DiagnosticableTreeMixin implements _HistoryModel {
   @override
   @JsonKey()
   final int page_size;
+  @override
+  @JsonKey()
+  final String lot_no;
   final List<RequestHistory> _data;
   @override
   @JsonKey()
@@ -145,7 +162,7 @@ class _$HistoryModelImpl with DiagnosticableTreeMixin implements _HistoryModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'HistoryModel(page_no: $page_no, page_size: $page_size, data: $data)';
+    return 'HistoryModel(page_no: $page_no, page_size: $page_size, lot_no: $lot_no, data: $data)';
   }
 
   @override
@@ -155,6 +172,7 @@ class _$HistoryModelImpl with DiagnosticableTreeMixin implements _HistoryModel {
       ..add(DiagnosticsProperty('type', 'HistoryModel'))
       ..add(DiagnosticsProperty('page_no', page_no))
       ..add(DiagnosticsProperty('page_size', page_size))
+      ..add(DiagnosticsProperty('lot_no', lot_no))
       ..add(DiagnosticsProperty('data', data));
   }
 
@@ -166,12 +184,13 @@ class _$HistoryModelImpl with DiagnosticableTreeMixin implements _HistoryModel {
             (identical(other.page_no, page_no) || other.page_no == page_no) &&
             (identical(other.page_size, page_size) ||
                 other.page_size == page_size) &&
+            (identical(other.lot_no, lot_no) || other.lot_no == lot_no) &&
             const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, page_no, page_size,
+  int get hashCode => Object.hash(runtimeType, page_no, page_size, lot_no,
       const DeepCollectionEquality().hash(_data));
 
   @JsonKey(ignore: true)
@@ -192,6 +211,7 @@ abstract class _HistoryModel implements HistoryModel {
   const factory _HistoryModel(
       {final int page_no,
       final int page_size,
+      final String lot_no,
       final List<RequestHistory> data}) = _$HistoryModelImpl;
 
   factory _HistoryModel.fromJson(Map<String, dynamic> json) =
@@ -201,6 +221,8 @@ abstract class _HistoryModel implements HistoryModel {
   int get page_no;
   @override
   int get page_size;
+  @override
+  String get lot_no;
   @override
   List<RequestHistory> get data;
   @override

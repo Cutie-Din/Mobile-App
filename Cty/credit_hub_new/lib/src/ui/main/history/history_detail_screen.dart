@@ -73,10 +73,6 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
       child: BlocBuilder<HistoryCubit, HistoryState>(
         bloc: _cubit,
         builder: (context, state) {
-          if (state.status == HistoryStatus.loading) {
-            return const AppLoading();
-          }
-
           final transaction = state.data_received!;
           final statusName = transaction.status_name ?? "N/A";
 

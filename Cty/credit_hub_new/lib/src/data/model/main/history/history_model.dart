@@ -8,6 +8,7 @@ class HistoryModel with _$HistoryModel {
   const factory HistoryModel({
     @Default(0) final int page_no,
     @Default(0) final int page_size,
+    @Default('') String lot_no,
     @Default([]) List<RequestHistory> data,
   }) = _HistoryModel;
 

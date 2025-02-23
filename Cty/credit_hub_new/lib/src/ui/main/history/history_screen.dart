@@ -19,38 +19,42 @@ class _HistoryScreenState extends State<HistoryScreen> {
   ScrollController _scrollController = ScrollController();
   int pageNo = 1;
   int pageSize = 6;
-  bool isLoadingMore = false;
+  List<RequestHistory> requests = [];
 
-  List<RequestHistory> get filteredTransactions {
-    final requests = _cubit.state.data ?? [];
-    if (selectedType == 'Tất cả') return requests;
-    return requests.where((t) => t.status_name == selectedType).toList();
+  String format(double? value) {
+    if (value == null) return '';
+    return NumberFormat.decimalPattern('vi_VN').format(value);
   }
 
-  Future<void> _fetchData({bool refresh = false}) async {
-    if (refresh) {
-      pageNo = 1;
+  LinearGradient getStatus(String? status) {
+    if (status != null && status.contains("Chờ quyết toán")) {
+      return AppColors.waiting;
+    } else if (status != null && status.contains("Đã quyết toán")) {
+      return AppColors.confirmed;
+    } else if (status != null && status.contains("Không quyết toán")) {
+      return AppColors.cancelled;
+    } else {
+      return AppColors.uploading;
     }
+  }
+
+  Future<void> _fetchData() async {
     await _cubit.postHistory(page_no: pageNo, page_size: pageSize);
   }
 
-  void _loadMore() async {
-    if (!isLoadingMore) {
-      pageNo++;
-      await _fetchData();
-      setState(() {
-        isLoadingMore = false;
-      });
-    }
+  Future<void> _loadMore() async {
+    if (_cubit.state.status == HistoryStatus.loading) return;
+    pageNo++;
+    await _fetchData();
   }
 
   @override
   void initState() {
     super.initState();
-    _fetchData(refresh: true);
+    _fetchData();
 
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
         _loadMore();
       }
     });
@@ -61,11 +65,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return BlocListener<HistoryCubit, HistoryState>(
       bloc: _cubit,
       listener: (context, state) {
-        if (state.status == HistoryStatus.loading && pageNo == 1) {
+        if (state.status == HistoryStatus.loading) {
           AppLoading.show();
           return;
         }
         AppLoading.dismiss();
+        if (state.status == HistoryStatus.success) {
+          setState(() {
+            if (pageNo == 1) {
+              requests = List.from(state.data);
+            } else {
+              requests = List.from(requests)..addAll(state.data);
+            }
+          });
+        }
         if (state.status == HistoryStatus.failure) {
           AppDialog.show(context, msg: state.message);
           return;
@@ -112,12 +125,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
           ],
         ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            await _fetchData(refresh: true);
-          },
-          child: _buildContent(),
-        ),
+        body: _buildContent(),
       ),
     );
   }
@@ -140,10 +148,17 @@ class _HistoryScreenState extends State<HistoryScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: TextField(
         controller: searchController,
+        onChanged: (value) {
+          if (value.isNotEmpty) {
+            _cubit.searchHistory(lot_no: value);
+          } else {
+            _cubit.postHistory(page_no: pageNo, page_size: pageSize);
+          }
+        },
         decoration: InputDecoration(
           filled: true,
           fillColor: const Color(0xFFF0F5FE),
-          hintText: "Tìm kiếm",
+          hintText: "Nhập số lô để tìm kiếm",
           hintStyle: GoogleFonts.publicSans(
             fontSize: 13,
             fontWeight: FontWeight.w400,
@@ -210,63 +225,51 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   Widget _buildTransactionList() {
-    return BlocBuilder<HistoryCubit, HistoryState>(
-      bloc: _cubit,
-      builder: (context, state) {
-        if (state.status == HistoryStatus.loading && pageNo == 1) {
-          return const AppLoading();
-        }
+    return Expanded(
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: requests.length + 1,
+        itemBuilder: (context, index) {
+          if (index == requests.length) {
+            return _cubit.state.status == HistoryStatus.loading
+                ? const AppLoading()
+                : const SizedBox();
+          }
 
-        if (state.status == HistoryStatus.failure) {
-          return Center(
-            child: Text(
-              state.message ?? "Không thể tải dữ liệu",
-              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
+          final request = requests[index];
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
+            child: GestureDetector(
+              onTap: () {
+                Get.toNamed(
+                  AppRoute.historydetail.name,
+                  arguments: {"id": request.id},
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  color: AppColors.button,
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey.withOpacity(0.5), width: 1.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildRequestDetails(request.status_name),
+                    _buildRequestValues(
+                      request.lot_no,
+                      request.date_request,
+                      request.money_request,
+                    ),
+                  ],
+                ),
+              ),
             ),
           );
-        }
-
-        final requests = filteredTransactions;
-
-        return Expanded(
-          child: ListView.builder(
-            controller: _scrollController,
-            itemCount: requests.length + 1,
-            itemBuilder: (context, index) {
-              if (index < requests.length) {
-                final request = requests[index];
-
-                return _buildRecentRequests();
-              } else if (isLoadingMore) {
-                return const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              } else {
-                return const SizedBox.shrink();
-              }
-            },
-          ),
-        );
-      },
+        },
+      ),
     );
-  }
-
-  String format(double? value) {
-    if (value == null) return '';
-    return NumberFormat.decimalPattern('vi_VN').format(value);
-  }
-
-  LinearGradient getStatus(String? status) {
-    if (status != null && status.contains("Chờ quyết toán")) {
-      return AppColors.waiting;
-    } else if (status != null && status.contains("Đã quyết toán")) {
-      return AppColors.confirmed;
-    } else if (status != null && status.contains("Không quyết toán")) {
-      return AppColors.cancelled;
-    } else {
-      return AppColors.uploading;
-    }
   }
 
   Widget _buildAmountRow(num money) {
@@ -287,76 +290,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
           color: AppColors.primary,
         ),
       ],
-    );
-  }
-
-  Widget _buildRecentRequests() {
-    return BlocBuilder<HistoryCubit, HistoryState>(
-      bloc: _cubit,
-      builder: (context, state) {
-        if (state.status == HistoryStatus.loading) {
-          return const AppLoading();
-        }
-
-        if (state.status == HistoryStatus.failure) {
-          return Center(
-            child: Text(
-              state.message ?? "Không thể tải dữ liệu",
-              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-          );
-        }
-
-        final requests = state.data;
-
-        if (requests.isEmpty) {
-          return Center(
-            child: Text(
-              "Không có yêu cầu nào gần đây",
-              style: GoogleFonts.publicSans(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
-          );
-        }
-
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: requests.length,
-          itemBuilder: (context, index) {
-            final request = requests[index];
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
-              child: GestureDetector(
-                onTap: () {
-                  Get.toNamed(
-                    AppRoute.historydetail.name,
-                    arguments: {"id": request.id}, // Đúng ID của từng request
-                  );
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: AppColors.button,
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.grey.withOpacity(0.5), width: 1.0),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildRequestDetails(request.status_name),
-                      _buildRequestValues(
-                        request.lot_no,
-                        request.date_request,
-                        request.money_request,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
     );
   }
 
