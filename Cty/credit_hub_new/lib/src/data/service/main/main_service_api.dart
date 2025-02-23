@@ -109,4 +109,12 @@ class MainServiceApi extends BaseRemoteSource implements MainRepository {
     });
     return response;
   }
+
+  @override
+  Future<BaseResponse> searchAccount({required AccountModel param}) {
+    final response = callApiWithErrorParser(service.searchAccount(param)).then((httpResponse) {
+      return httpResponse.data;
+    });
+    return response;
+  }
 }

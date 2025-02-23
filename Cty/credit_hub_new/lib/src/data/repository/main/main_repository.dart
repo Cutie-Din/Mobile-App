@@ -18,4 +18,5 @@ abstract class MainRepository {
   Future<BaseResponse> updateAccount({required AccountDetail param});
   Future<BaseResponse> deleteAccount({required AccountDetail param});
   Future<BaseResponse> getAccount({required int id});
+  Future<BaseResponse> searchAccount({required AccountModel param});
 }

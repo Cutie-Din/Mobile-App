@@ -47,4 +47,8 @@ class MainRepositoryImpl implements MainRepository {
   @override
   Future<BaseResponse> updateAccount({required AccountDetail param}) =>
       repo.updateAccount(param: param);
+
+  @override
+  Future<BaseResponse> searchAccount({required AccountModel param}) =>
+      repo.searchAccount(param: param);
 }

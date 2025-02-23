@@ -22,6 +22,9 @@ AccountModel _$AccountModelFromJson(Map<String, dynamic> json) {
 mixin _$AccountModel {
   int get page_no => throw _privateConstructorUsedError;
   int get page_size => throw _privateConstructorUsedError;
+  String get lot_no => throw _privateConstructorUsedError;
+  String get from_date => throw _privateConstructorUsedError;
+  String get to_date => throw _privateConstructorUsedError;
   List<DropdownBank> get dropdownbank => throw _privateConstructorUsedError;
   List<AccountDetail> get data => throw _privateConstructorUsedError;
 
@@ -40,6 +43,9 @@ abstract class $AccountModelCopyWith<$Res> {
   $Res call(
       {int page_no,
       int page_size,
+      String lot_no,
+      String from_date,
+      String to_date,
       List<DropdownBank> dropdownbank,
       List<AccountDetail> data});
 }
@@ -59,6 +65,9 @@ class _$AccountModelCopyWithImpl<$Res, $Val extends AccountModel>
   $Res call({
     Object? page_no = null,
     Object? page_size = null,
+    Object? lot_no = null,
+    Object? from_date = null,
+    Object? to_date = null,
     Object? dropdownbank = null,
     Object? data = null,
   }) {
@@ -71,6 +80,18 @@ class _$AccountModelCopyWithImpl<$Res, $Val extends AccountModel>
           ? _value.page_size
           : page_size // ignore: cast_nullable_to_non_nullable
               as int,
+      lot_no: null == lot_no
+          ? _value.lot_no
+          : lot_no // ignore: cast_nullable_to_non_nullable
+              as String,
+      from_date: null == from_date
+          ? _value.from_date
+          : from_date // ignore: cast_nullable_to_non_nullable
+              as String,
+      to_date: null == to_date
+          ? _value.to_date
+          : to_date // ignore: cast_nullable_to_non_nullable
+              as String,
       dropdownbank: null == dropdownbank
           ? _value.dropdownbank
           : dropdownbank // ignore: cast_nullable_to_non_nullable
@@ -94,6 +115,9 @@ abstract class _$$AccountModelImplCopyWith<$Res>
   $Res call(
       {int page_no,
       int page_size,
+      String lot_no,
+      String from_date,
+      String to_date,
       List<DropdownBank> dropdownbank,
       List<AccountDetail> data});
 }
@@ -111,6 +135,9 @@ class __$$AccountModelImplCopyWithImpl<$Res>
   $Res call({
     Object? page_no = null,
     Object? page_size = null,
+    Object? lot_no = null,
+    Object? from_date = null,
+    Object? to_date = null,
     Object? dropdownbank = null,
     Object? data = null,
   }) {
@@ -123,6 +150,18 @@ class __$$AccountModelImplCopyWithImpl<$Res>
           ? _value.page_size
           : page_size // ignore: cast_nullable_to_non_nullable
               as int,
+      lot_no: null == lot_no
+          ? _value.lot_no
+          : lot_no // ignore: cast_nullable_to_non_nullable
+              as String,
+      from_date: null == from_date
+          ? _value.from_date
+          : from_date // ignore: cast_nullable_to_non_nullable
+              as String,
+      to_date: null == to_date
+          ? _value.to_date
+          : to_date // ignore: cast_nullable_to_non_nullable
+              as String,
       dropdownbank: null == dropdownbank
           ? _value._dropdownbank
           : dropdownbank // ignore: cast_nullable_to_non_nullable
@@ -141,6 +180,9 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
   const _$AccountModelImpl(
       {this.page_no = 0,
       this.page_size = 0,
+      this.lot_no = '',
+      this.from_date = '',
+      this.to_date = '',
       final List<DropdownBank> dropdownbank = const [],
       final List<AccountDetail> data = const []})
       : _dropdownbank = dropdownbank,
@@ -155,6 +197,15 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
   @override
   @JsonKey()
   final int page_size;
+  @override
+  @JsonKey()
+  final String lot_no;
+  @override
+  @JsonKey()
+  final String from_date;
+  @override
+  @JsonKey()
+  final String to_date;
   final List<DropdownBank> _dropdownbank;
   @override
   @JsonKey()
@@ -175,7 +226,7 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AccountModel(page_no: $page_no, page_size: $page_size, dropdownbank: $dropdownbank, data: $data)';
+    return 'AccountModel(page_no: $page_no, page_size: $page_size, lot_no: $lot_no, from_date: $from_date, to_date: $to_date, dropdownbank: $dropdownbank, data: $data)';
   }
 
   @override
@@ -185,6 +236,9 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
       ..add(DiagnosticsProperty('type', 'AccountModel'))
       ..add(DiagnosticsProperty('page_no', page_no))
       ..add(DiagnosticsProperty('page_size', page_size))
+      ..add(DiagnosticsProperty('lot_no', lot_no))
+      ..add(DiagnosticsProperty('from_date', from_date))
+      ..add(DiagnosticsProperty('to_date', to_date))
       ..add(DiagnosticsProperty('dropdownbank', dropdownbank))
       ..add(DiagnosticsProperty('data', data));
   }
@@ -197,6 +251,10 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
             (identical(other.page_no, page_no) || other.page_no == page_no) &&
             (identical(other.page_size, page_size) ||
                 other.page_size == page_size) &&
+            (identical(other.lot_no, lot_no) || other.lot_no == lot_no) &&
+            (identical(other.from_date, from_date) ||
+                other.from_date == from_date) &&
+            (identical(other.to_date, to_date) || other.to_date == to_date) &&
             const DeepCollectionEquality()
                 .equals(other._dropdownbank, _dropdownbank) &&
             const DeepCollectionEquality().equals(other._data, _data));
@@ -208,6 +266,9 @@ class _$AccountModelImpl with DiagnosticableTreeMixin implements _AccountModel {
       runtimeType,
       page_no,
       page_size,
+      lot_no,
+      from_date,
+      to_date,
       const DeepCollectionEquality().hash(_dropdownbank),
       const DeepCollectionEquality().hash(_data));
 
@@ -229,6 +290,9 @@ abstract class _AccountModel implements AccountModel {
   const factory _AccountModel(
       {final int page_no,
       final int page_size,
+      final String lot_no,
+      final String from_date,
+      final String to_date,
       final List<DropdownBank> dropdownbank,
       final List<AccountDetail> data}) = _$AccountModelImpl;
 
@@ -239,6 +303,12 @@ abstract class _AccountModel implements AccountModel {
   int get page_no;
   @override
   int get page_size;
+  @override
+  String get lot_no;
+  @override
+  String get from_date;
+  @override
+  String get to_date;
   @override
   List<DropdownBank> get dropdownbank;
   @override

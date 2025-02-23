@@ -18,6 +18,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   TextEditingController searchController = TextEditingController();
   ScrollController _scrollController = ScrollController();
   int pageNo = 1;
+  int pageSize = 6;
   bool isLoadingMore = false;
 
   List<RequestHistory> get filteredTransactions {
@@ -30,7 +31,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     if (refresh) {
       pageNo = 1;
     }
-    await _cubit.postHistory(page_no: pageNo, page_size: 5);
+    await _cubit.postHistory(page_no: pageNo, page_size: pageSize);
   }
 
   void _loadMore() async {
