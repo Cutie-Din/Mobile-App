@@ -18,8 +18,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
   TextEditingController searchController = TextEditingController();
   ScrollController _scrollController = ScrollController();
   int pageNo = 1;
-  int pageSize = 6;
+  int pageSize = 10;
   List<RequestHistory> requests = [];
+  bool isSearching = false;
 
   String format(double? value) {
     if (value == null) return '';
@@ -54,7 +55,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
     _fetchData();
 
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
+      if (!isSearching &&
+          _scrollController.position.pixels >= _scrollController.position.maxScrollExtent) {
         _loadMore();
       }
     });
@@ -70,15 +72,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
           return;
         }
         AppLoading.dismiss();
-        if (state.status == HistoryStatus.success) {
-          setState(() {
-            if (pageNo == 1) {
-              requests = List.from(state.data);
-            } else {
-              requests = List.from(requests)..addAll(state.data);
-            }
-          });
-        }
         if (state.status == HistoryStatus.failure) {
           AppDialog.show(context, msg: state.message);
           return;
@@ -125,7 +118,19 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
           ],
         ),
-        body: _buildContent(),
+        body: BlocBuilder<HistoryCubit, HistoryState>(
+          bloc: _cubit,
+          builder: (context, state) {
+            if (state.status == HistoryStatus.success) {
+              if (pageNo == 1) {
+                requests = List.from(state.data);
+              } else {
+                requests = List.from(requests)..addAll(state.data);
+              }
+            }
+            return _buildContent();
+          },
+        ),
       ),
     );
   }
@@ -150,9 +155,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
         controller: searchController,
         onChanged: (value) {
           if (value.isNotEmpty) {
+            setState(() {
+              isSearching = true;
+            });
             _cubit.searchHistory(lot_no: value);
           } else {
-            _cubit.postHistory(page_no: pageNo, page_size: pageSize);
+            setState(() {
+              isSearching = false;
+              _cubit.postHistory(page_no: pageNo, page_size: pageSize);
+            });
           }
         },
         decoration: InputDecoration(
@@ -231,9 +242,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         itemCount: requests.length + 1,
         itemBuilder: (context, index) {
           if (index == requests.length) {
-            return _cubit.state.status == HistoryStatus.loading
-                ? const AppLoading()
-                : const SizedBox();
+            return const SizedBox();
           }
 
           final request = requests[index];
@@ -241,6 +250,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
             child: GestureDetector(
               onTap: () {
+                print('ID của request: ${request.id}');
                 Get.toNamed(
                   AppRoute.historydetail.name,
                   arguments: {"id": request.id},

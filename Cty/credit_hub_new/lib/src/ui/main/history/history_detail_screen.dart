@@ -20,6 +20,7 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
     final transactionId = arguments?["id"];
 
     if (transactionId != null) {
+      print('ID nhận được là: $transactionId');
       _cubit.getHistoryDetail(id: transactionId);
     }
 
@@ -73,7 +74,11 @@ class _HistoryDetailScreenState extends State<HistoryDetailScreen> {
       child: BlocBuilder<HistoryCubit, HistoryState>(
         bloc: _cubit,
         builder: (context, state) {
+          if (state.data_received == null) {
+            return Text("Hehe không có dữ liệu!");
+          }
           final transaction = state.data_received!;
+
           final statusName = transaction.status_name ?? "N/A";
 
           return Column(
